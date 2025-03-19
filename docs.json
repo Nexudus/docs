@@ -2,11 +2,6 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "maple",
   "name": "Nexudus",
-  "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
-  },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
