@@ -7,34 +7,25 @@
     "dark": "#ff9c00"
   },
   "name": "Nexudus",
-  "favicon": "/logo/logo.png",
+  "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
         "tab": "Guides",
-        "dropdowns": [
+        "groups": [
           {
-            "dropdown": "Getting Started",
-            "icon": "bolt",
-            "groups": [
-              {
-                "group": "Get Started",
-                "pages": ["introduction", "quickstart/inventory"]
-              },
-              {
-                "group": "Inventory set-up",
-                "pages": ["inventory/products", "inventory/plans"]
-              }
-            ]
+            "group": "Get Started",
+            "pages": ["introduction", "quickstart", "development"]
           },
           {
-            "dropdown": "Reference",
-            "icon": "book",
-            "groups": [
-              {
-                "group": "Inventory",
-                "pages": ["reference/billing/products"]
-              }
+            "group": "Essentials",
+            "pages": [
+              "essentials/markdown",
+              "essentials/code",
+              "essentials/images",
+              "essentials/settings",
+              "essentials/navigation",
+              "essentials/reusable-snippets"
             ]
           }
         ]
@@ -47,7 +38,7 @@
             "pages": ["api-reference/introduction"]
           },
           {
-            "group": "Business",
+            "group": "Endpoint Examples",
             "pages": [
               "api-reference/endpoint/get",
               "api-reference/endpoint/create",
@@ -57,11 +48,30 @@
           }
         ]
       }
-    ]
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Documentation",
+          "href": "https://mintlify.com/docs",
+          "icon": "book-open-cover"
+        },
+        {
+          "anchor": "Community",
+          "href": "https://mintlify.com/community",
+          "icon": "slack"
+        },
+        {
+          "anchor": "Blog",
+          "href": "https://mintlify.com/blog",
+          "icon": "newspaper"
+        }
+      ]
+    }
   },
   "logo": {
-    "light": "/logo/logo.png",
-    "dark": "/logo/logo.png"
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
   },
   "navbar": {
     "links": [
@@ -81,14 +91,6 @@
       "x": "https://x.com/mintlify",
       "github": "https://github.com/mintlify",
       "linkedin": "https://linkedin.com/company/mintlify"
-    }
-  },
-  "api": {
-    "mdx": {
-      "server": "https://spaces.nexudus.com/api",
-      "auth": {
-        "method": "bearer"
-      }
     }
   }
 }

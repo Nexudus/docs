@@ -1,0 +1,11 @@
+#content-area img {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+#content-area iframe {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+footer .sm\:flex {
+  display: none !important;
+}
