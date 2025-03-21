@@ -1,0 +1,33 @@
+{
+  "name": "Nexudus Platform",
+  "paths": {
+    "frontend": "C:\\CODE\\nexudus-coworking-admin-v3.2\\src\\"
+  },
+  "entities": [
+    {
+      "name": "Product",
+      "frontEndFiles": [
+        {
+          "name": "General",
+          "type": "Tab",
+          "path": "components\\pages\\billing\\products\\general.tsx"
+        },
+        {
+          "name": "Benefits",
+          "type": "Tab",
+          "path": "components\\pages\\billing\\products\\benefits.tsx"
+        },
+        {
+          "name": "Availability",
+          "type": "Tab",
+          "path": "components\\pages\\billing\\products\\availability.tsx"
+        },
+        {
+          "name": "Integrations",
+          "type": "Tab",
+          "path": "components\\pages\\billing\\products\\advanced.tsx"
+        }
+      ]
+    }
+  ]
+}

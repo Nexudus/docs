@@ -1,0 +1,114 @@
+---
+title: "Products"
+description: "Set up products and services available to your customers."
+---
+
+### What are products?
+
+In the context of the Nexudus Platform, **products** are items or services that can be sold through the platform. These include anything a space operator might offer to customers, such as:
+
+- Physical goods (e.g., snacks, drinks, merchandise)
+- One-off services (e.g., meeting room bookings, printing credits)
+- Add-ons or extras (e.g., locker rental, mailbox services)
+
+Products can be sold via different sales channels across the platform, such as the **Admin Panel**, **Member's Portal**, **NexKiosk**, **Passport by Nexudus**, and integrated **Point of Sale (POS)** systems. Each product can have customizable settings, including pricing, taxes, availability, inventory tracking, and visibility to specific customer types or plans.
+
+### Field reference
+
+#### 📝 **Product Details**
+
+| **Field**                             | **Description**                                                                   | **Tips & Notes**                                                                       |
+| ------------------------------------- | --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| **Product name**                      | The name of the product as shown to customers.                                    | Must be unique within each of your locations.                                          |
+| **Available at**                      | Select the location where this product is available.                              | Choose a "network" location to make it available in all locations within that network. |
+| **Product description**               | A detailed description of the product.                                            | Displayed in the portal and app. Make it clear and customer-friendly.                  |
+| **Unit price**                        | The cost for one unit of the product.                                             | Includes currency selection.                                                           |
+| **Prorate if included with contract** | Adjusts this product’s price automatically when it's part of a prorated contract. | Applies to current and future purchases. Use with caution.                             |
+
+---
+
+#### 🌐 **Portal and Apps**
+
+| **Field**                      | **Description**                                                 | **Tips & Notes**                                    |
+| ------------------------------ | --------------------------------------------------------------- | --------------------------------------------------- |
+| **Product image**              | Image displayed in the store and app.                           | Choose a clear, high-quality image.                 |
+| **Display on website and App** | Toggle visibility of this product in customer-facing platforms. | Uncheck to hide internal-only products.             |
+| **Category**                   | Grouping label to organize products.                            | Used for filtering/searching in the portal and app. |
+| **Display position**           | The order in which this product appears in listings.            | Lower numbers show up first.                        |
+
+---
+
+#### 🔗 **Purchase Links**
+
+_(Visible only after saving the product)_
+
+| **Field**                            | **Description**                                               | **Tips & Notes**                              |
+| ------------------------------------ | ------------------------------------------------------------- | --------------------------------------------- |
+| **Purchase link (new customers)**    | URL to purchase the product via the signup flow.              | Great for sharing via email or your website.  |
+| **Invite link (existing customers)** | URL for current members to buy the product directly.          | Can be added to newsletters or chat messages. |
+| **Always invoice purchaser**         | Bills the individual instead of their team’s paying customer. | Use when the buyer should always be charged.  |
+
+---
+
+#### 🏷️ **Inventory & Custom Fields**
+
+| **Field**              | **Description**                                          | **Tips & Notes**                                |
+| ---------------------- | -------------------------------------------------------- | ----------------------------------------------- |
+| **Inventory settings** | Additional options related to billing or stock tracking. | Only shown if inventory tracking is enabled.    |
+| **Custom fields**      | Any extra fields you've configured for your business.    | Useful for collecting product-specific details. |
+
+#### 🎁 **Benefits**
+
+Products in Nexudus can include benefits such as time credits, printing credits, passes, or monetary credits. These benefits are automatically granted to customers who purchase the product.
+
+Use the table below to understand what each benefit does and when to use it.
+
+#### 🧾 **Product Benefit Types**
+
+| **Benefit Type**    | **Description**                                                                           | **When to Use**                                                        |
+| ------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| **Money credit**    | Allows customers to use a balance (e.g. £50) for bookings or purchases within your space. | Useful for prepaid plans where customers spend credit instead of cash. |
+| **Time credit**     | Grants customers a set number of hours they can use to book meeting rooms or resources.   | Ideal for memberships offering limited monthly hours.                  |
+| **Passes**          | Gives customers a set number of passes to check in or access the space.                   | Perfect for drop-in plans (e.g., 10-day pass).                         |
+| **Printing credit** | Allocates a certain amount of printing value to the customer.                             | Use when selling plans that include printing benefits.                 |
+
+📌 **Notes**
+
+- Each benefit type is configured separately within its own tab.
+- You can assign one or multiple types of benefits to the same product.
+- Totals for each benefit type are shown in badges next to each tab.
+- Changes are applied automatically to any customers who purchase the product.
+
+---
+
+### 📦 Availability
+
+This section lets you control **who can purchase this product** and whether you want to **track its stock**. Use the table below to understand each option.
+
+---
+
+#### 👥 **Purchase Settings**
+
+| **Field**                            | **Description**                                                                 | **Tips & Notes**                                                       |
+| ------------------------------------ | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| **This product can be purchased as** | Defines if the product is sold as a one-off or recurring product.               | Options include one-time purchase or subscription (recurrent).         |
+| **This product can be purchased by** | Specifies which customers can buy the product.                                  | You can restrict availability to members, contacts, or specific plans. |
+| **Plans**                            | Select specific plans customers must be in to be able to purchase this product. | Only appears when making this product only available to members.       |
+
+---
+
+#### 📦 **Stock Management**
+
+| **Field**                            | **Description**                                      | **Tips & Notes**                                                  |
+| ------------------------------------ | ---------------------------------------------------- | ----------------------------------------------------------------- |
+| **Monitor stock levels**             | Enables stock tracking for this product.             | Useful for physical items or limited digital goods.               |
+| **Prevent stock to fall below zero** | Stops sales when no units are left.                  | Ideal for physical products or when syncing stock to POS systems. |
+| **Alert me when stock is below**     | Set a minimum stock threshold to trigger alerts.     | Only appears when stock tracking is enabled.                      |
+| **Stock Keeping Unit (SKU)**         | A unique identifier for your internal stock records. | Helpful when integrating with POS or inventory systems.           |
+
+<Warning>
+  If the product is synced with Square and stock tracking is enabled without
+  allowing negative stock, sync issues may occur if the stock levels in Square
+  and Nexudus don't match. To avoid these errors, consider disabling 'Prevent
+  stock to fall below zero'.
+</Warning>

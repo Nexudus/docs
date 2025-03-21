@@ -19,7 +19,7 @@
             "groups": [
               {
                 "group": "Get Started",
-                "pages": ["introduction", "quickstart/inventory"]
+                "pages": ["introduction", "quickstart/inventory/inventory"]
               },
               {
                 "group": "Inventory set-up",

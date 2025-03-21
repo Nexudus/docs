@@ -1,0 +1,24 @@
+---
+title: {{record.name}}
+description: {{response.short_description}}
+---
+
+{{response.description}}
+
+### Field reference
+
+{{#each response.reference}}
+
+#### {{this.icon}} **{{this.name}}**
+
+{{this.description}}
+
+| **Field**                             | **Description**                      | **Tips & Notes**      |
+| ------------------------------------- | ------------------------------------ | --------------------- |
+{{#each this.fields}}
+| **{{this.name}}**                     | {{this.description}}                 | {{this.notes}}.                                          |
+{{/each}}
+<Note>{{this.notes}}</Note>
+{{/each}}
+---
+{{content.notes}}
