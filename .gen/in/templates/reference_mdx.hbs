@@ -1,13 +1,23 @@
 ---
-title: {{record.name}}
-description: {{response.short_description}}
+title: {{entityData.name_plural}}
+description: {{short_description}}
 ---
 
-{{response.description}}
+### What is a {{entityData.name}}?
+{{description}}
+
+### When to use {{entityData.name_plural}}?
+{{when}}
+
+### Some examples
+
+{{#each examples}}
+- {{this}}
+{{/each}}
 
 ### Field reference
 
-{{#each response.reference}}
+{{#each reference}}
 
 #### {{this.icon}} **{{this.name}}**
 
@@ -16,9 +26,13 @@ description: {{response.short_description}}
 | **Field**                             | **Description**                      | **Tips & Notes**      |
 | ------------------------------------- | ------------------------------------ | --------------------- |
 {{#each this.fields}}
-| **{{this.name}}**                     | {{this.description}}                 | {{this.notes}}.                                          |
+| **{{this.name}}**                     | {{this.description}}                 | {{this.notes}}                                          |
 {{/each}}
-<Note>{{this.notes}}</Note>
+{{#if this.messages}}
+<Note>{{this.messages}}</Note>
+{{/if}}
 {{/each}}
 ---
-{{content.notes}}
+{{#if notes}}
+{{notes}}
+{{/if}}

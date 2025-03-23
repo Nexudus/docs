@@ -1,0 +1,29 @@
+Extract all fields from each of the files below representing each of the tabs in the front-end code to help the users understand what they are and how to use them.
+
+{{#each tabFiles}}
+--
+TAB NAME: {{this.name}}
+CONTENTS START
+{{this.contents}}
+CONTENTS END
+--
+{{/each}}
+
+
+RESPONSE JSON FORMAT:
+{
+    "reference": [
+        {
+            "name": "the name of form section",
+            "icon": "select an emoji icon relevant for this section.",
+            "description": "(~ 50 words) a description of this section"
+            "messages": "optional: any messages based on conditional rendering or other messages found in the code."
+            "fields": [
+                "name": "the label of the field",
+                "description": "the description of the field.",
+                "notes": "any notes or hints about this field."
+            ]
+        }
+    ]
+    "notes": "optional: include any notes IF the UI has any specific logic or warnings."
+}

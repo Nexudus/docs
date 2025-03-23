@@ -1,0 +1,12 @@
+{
+    "short_description": "Understanding Membership Plans in Nexudus",
+    "description": "In the Nexudus Platform, **Plans** are recurring membership options that define the access and services available to members. These plans can include options like hot-desk monthly memberships, private offices, virtual offices, part-time access plans, and dedicated desks. Members with active contracts for these plans are considered part of your community, while those without are simply contacts. Plans help manage and automate billing, access, and member benefits.",
+    "when": "Use **Plans** when you want to offer recurring memberships that provide ongoing access and services. Avoid using Plans for one-off access, day passes, or non-recurring sales, as these do not fit the recurring nature of Plans.",
+    "examples": [
+        "Hot-desk monthly membership",
+        "Private office",
+        "Virtual offices",
+        "Part-time access plans",
+        "Dedicated desk"
+    ]
+}

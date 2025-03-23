@@ -1,0 +1,27 @@
+Describe what "Plans" are in this context.
+
+Good Examples of "Plans" can be
+- Hot-desk monthly membership
+- Private office
+- Virtual offices
+- Part-time access plans
+- Dedicated desk
+
+Bad Examples of "Plans" can be
+- One off access / day passes
+- Day pass bundles
+- Non recurring sales
+
+Some additional notes about "Plans":
+- Customers in a plan (with an active contract for a plan) are regarded as members.
+- Customers not in a plan (with no active contract for a plan) are regarded as contacts.
+- The Virtual offices tab is only shown when the plan is a virtual office plan.
+
+
+RESPONSE JSON FORMAT:
+{
+    "short_description": "A short description to use in the title of this page.",
+    "description": "(~100 words) Describe in a clear way what "Plans" are in the Nexudus Platform. Use markdown to format the text for best legibility."
+    "when": "(~50 words) Describe in a clear way when to use or not to use "Plans",
+    "examples": "A list of typical use of Plans"
+}

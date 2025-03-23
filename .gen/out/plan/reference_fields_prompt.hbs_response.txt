@@ -1,0 +1,18 @@
+
+{
+    "reference": [
+        {
+            "name": "Legal terms",
+            "icon": "📜",
+            "description": "This section allows you to define the legal terms and conditions that customers must agree to when signing up for a plan. If these terms are updated, customers will need to agree to them again upon their next login.",
+            "fields": [
+                {
+                    "name": "Terms and Conditions",
+                    "description": "The legal terms and conditions for the plan.",
+                    "notes": "Use Markdown to format the terms and conditions."
+                }
+            ]
+        }
+    ],
+    "notes": "If the terms and conditions are changed, customers will be prompted to agree to the new terms the next time they access the portal or app."
+}

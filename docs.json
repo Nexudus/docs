@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "maple",
+  "theme": "mint",
   "colors": {
     "primary": "#ff9c00",
     "light": "#ff9c00",
@@ -19,11 +19,92 @@
             "groups": [
               {
                 "group": "Get Started",
-                "pages": ["introduction", "quickstart/inventory/inventory"]
-              },
-              {
-                "group": "Inventory set-up",
-                "pages": ["inventory/products", "inventory/plans"]
+
+                "pages": [
+                  "introduction",
+                  {
+                    "group": "Inventory set-up",
+                    "icon": "box",
+                    "pages": [
+                      {
+                        "group": "Products",
+                        "pages": [
+                          "quickstart/inventory/simple-product",
+                          "quickstart/inventory/day-pass",
+                          "quickstart/inventory/credit-bundles"
+                        ]
+                      },
+                      {
+                        "group": "Plans",
+                        "pages": [
+                          "quickstart/inventory/basic-monthly-plan",
+                          "quickstart/inventory/prorated-plan",
+                          "quickstart/inventory/plan-benefits",
+                          "quickstart/inventory/virtual-office",
+                          "quickstart/inventory/plans-advanced"
+                        ]
+                      },
+                      {
+                        "group": "Meeting spaces",
+                        "pages": [
+                          "quickstart/inventory/meeting-room",
+                          "quickstart/inventory/hot-desk-bank",
+                          "quickstart/inventory/resources-advanced"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Payments set-up",
+                    "icon": "circle-dollar-to-slot",
+                    "pages": [
+                      {
+                        "group": "Credit cards",
+                        "pages": [
+                          "quickstart/inventory/stripe-checkout",
+                          "quickstart/inventory/other-cc-gateways"
+                        ]
+                      },
+                      {
+                        "group": "Bank payments",
+                        "pages": [
+                          "quickstart/inventory/gocardless",
+                          "quickstart/inventory/stripe-ach",
+                          "quickstart/inventory/other-bank-gateways"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Your first sale",
+                    "icon": "cart-shopping",
+                    "pages": [
+                      {
+                        "group": "Products",
+                        "pages": [
+                          "quickstart/sales/one-off-product",
+                          "quickstart/sales/recurrent-product"
+                        ]
+                      },
+                      {
+                        "group": "Contracts",
+                        "pages": ["quickstart/sales/contracts"]
+                      },
+                      {
+                        "group": "Bookings",
+                        "pages": [
+                          "quickstart/sales/single-booking",
+                          "quickstart/sales/recurrent-booking"
+                        ]
+                      },
+                      {
+                        "group": "Events",
+                        "pages": ["quickstart/sales/event"]
+                      },
+                      "quickstart/sales/invoicing"
+                    ]
+                  }
+                ]
               }
             ]
           },
@@ -33,7 +114,10 @@
             "groups": [
               {
                 "group": "Inventory",
-                "pages": ["reference/billing/products"]
+                "pages": [
+                  "reference/billing/products",
+                  "reference/billing/tariffs"
+                ]
               }
             ]
           }

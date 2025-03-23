@@ -1,0 +1,66 @@
+Extract all fields from each of the files below representing each of the tabs in the front-end code to help the users understand what they are and how to use them.
+
+TAB NAME: Legal
+CONTENTS START
+import {
+  EuiCallOut,
+  EuiForm,
+  EuiFormRow,
+  EuiSpacer,
+  EuiText,
+} from &#x27;@elastic/eui&#x27;;
+import React, { ReactElement } from &#x27;react&#x27;;
+import { Tariff } from &#x27;~/src/types/billing/tariff&#x27;;
+import { formMethods } from &#x27;~/src/components/forms/useFormMethods&#x27;;
+import { Trans, useTranslation } from &#x27;react-i18next&#x27;;
+import FormSectionHeader from &#x27;~/src/components/forms/formSectionHeader&#x27;;
+import InlineNumberInputFormControl from &#x27;~/src/components/forms/controls/inlineNumberInputFormControl/inlineNumberInputFormControl&#x27;;
+import MarkdownFormControl from &#x27;~/src/components/forms/controls/markdownFormControl/markdownFormControl&#x27;;
+const TariffLegalForm &#x3D; ({
+  methods,
+}: {
+  methods: formMethods&lt;Tariff&gt;;
+}): ReactElement &#x3D;&gt; {
+  const { t } &#x3D; useTranslation();
+
+  return (
+    &lt;EuiForm&gt;
+      &lt;FormSectionHeader
+        title&#x3D;{t(&#x27;Legal terms&#x27;)}
+        subtitle&#x3D;{t(
+          &#x27;Customers will be asked to agree to these terms when signing up to this plan. If you change these terms, customers in this plan will be asked to agree with the terms again the next time the access your portal or the app.&#x27;
+        )}
+      &gt;
+        &lt;EuiFormRow&gt;
+          &lt;MarkdownFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;TermsAndConditions&#x27;}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+      &lt;/FormSectionHeader&gt;
+    &lt;/EuiForm&gt;
+  );
+};
+
+export default TariffLegalForm;
+
+CONTENTS END
+
+
+RESPONSE JSON FORMAT:
+{
+    "reference": [
+        {
+            "name": "the name of form section",
+            "icon": "select an emoji icon relevant for this section.",
+            "description": "(~ 50 words) a description of this section"
+            "messages": "optional: any messages based on conditional rendering or other messages found in the code."
+            "fields": [
+                "name": "the label of the field",
+                "description": "the description of the field.",
+                "notes": "any notes or hints about this field."
+            ]
+        }
+    ]
+    "notes": "optional: include any notes IF the UI has any specific logic or warnings."
+}

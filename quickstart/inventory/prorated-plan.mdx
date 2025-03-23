@@ -1,0 +1,66 @@
+---
+title: Prorated plans
+description: Learn how prorated plans can automatically adjust the first and last invoices of a contract based on the number of days in the billing cycle.
+---
+
+Prorated plans are a great way to offer fair and accurate billing to your members, especially when they sign up or cancel their contracts mid-cycle. With prorating, the first and last invoices of a contract are automatically adjusted based on the number of days between the sign-up/cancellation dates and the contract's billing day.
+
+## How Prorating Works
+
+Prorating discounts the initial and last invoices of a contract based on the number of days between:
+
+*   The sign-up date and the billing day of the contract for the initial invoice.
+*   The cancellation date and the billing day of the contract for the last invoice.
+
+<Warning>
+    It's important to note that **benefits are not prorated**.
+</Warning>
+
+### First Invoice Discount
+
+You can control the maximum number of days between the start date and the next billing day for prorating to apply using the **Discount the first invoice for up to X days based on how many days are left in the first billing cycle** setting.
+
+For example, if you set this option to 15 days, and a member signs up for a plan 10 days before their first billing cycle, they'll get a discount on their first invoice. However, if they sign up 20 days before their first billing cycle, the invoice won't be prorated.
+
+Let's say you have a plan that costs 300 per month, and the billing cycle starts on the 1st of each month. If a member signs up on the 16th of the month, their first invoice will be prorated to reflect the 15 days remaining in the month. In this case, the first invoice would be around $150 (300/30), a 50% discount, as only half of the month is being billed.
+
+### Last Invoice Discount
+
+The **Discount the last invoice based on the day members leave contracts for this plan** option adjusts the last invoice based on the number of days between the billing day and the day the member cancels their plan. 
+
+For example, if a member's billing cycle starts on the 1st of each month, and they cancel their plan on the 15th of the month, their last invoice will be prorated to reflect the 15 days they won't be using the plan.
+
+### Accurate Day Calculation
+
+Prorating accounts for the actual number of days in each month. This ensures accurate billing, regardless of whether a month has 28, 30, or 31 days.
+
+### Adding a product with benefits
+
+<Steps>
+ <Step title="Navigate to Plans">
+  1. In the left-hand menu, navigate to **Inventory**.
+  2. Under **Sales**, click on the **Plans** option.
+ </Step>
+ <Step title="Add a New Plan">
+  1.  Click the **+ Add plan** button in the upper right corner of the screen.
+  2.  Select which type of plan to create. For this example, select **Manual entry**.
+ </Step>
+ <Step title="Define Plan Details">
+  1.  In the **Plan name** field, enter a descriptive name for your plan.  For this example, the plan name is "Dedicated Desk."
+  2.  In the **Plan description** field, provide a brief description of the plan.  For this example, the plan description is "A dedicated desk available and assigned to you every day of the month."
+ </Step>
+ <Step title="Set Pricing">
+  1. Click on the **Pricing** tab at the top of the "Add plan" window.
+  2. In the **Price** field, enter the monthly price for the plan. For this example, enter "350"
+  3. Leave the **Every** dropdown set to "1 month."
+  4. Select **Discount the first invoice for up to 31 days based on how many days are left in the first billing cycle**. Adjust the number of days as needed.
+  5. Select **Discount the last invoice based on the day members leave contracts for this plan**.
+ </Step>
+ <Step title="Save the Plan">
+  1.  Click the **Save changes** button in the bottom right corner of the window.
+ </Step>
+</Steps>
+
+<Card horizontal title="Learn more about plans" icon="book" href="/reference/billing/tariffs">
+    Access this section to learn in detail about plans and their settings.
+</Card>

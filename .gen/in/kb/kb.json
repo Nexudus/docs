@@ -6,6 +6,19 @@
   "entities": [
     {
       "name": "Product",
+      "name_plural": "Products",
+      "examples": [
+        "Day passes or bundles of day passes",
+        "Coffee and other drinks",
+        "Benefit bundles: printing credit, money or time credit",
+        "Meeting rooms additional services",
+        "Other services"
+      ],
+      "bad_examples": [
+        "Meeting rooms",
+        "Event tickets",
+        "Memberships or subscriptions"
+      ],
       "frontEndFiles": [
         {
           "name": "General",
@@ -26,6 +39,74 @@
           "name": "Integrations",
           "type": "Tab",
           "path": "components\\pages\\billing\\products\\advanced.tsx"
+        }
+      ]
+    },
+    {
+      "name": "Plan",
+      "name_plural": "Plans",
+      "examples": [
+        "Hot-desk monthly membership",
+        "Private office",
+        "Virtual offices",
+        "Part-time access plans",
+        "Dedicated desk"
+      ],
+      "bad_examples": [
+        "One off access / day passes",
+        "Day pass bundles",
+        "Non recurring sales"
+      ],
+      "notes": [
+        "Customers in a plan (with an active contract for a plan) are regarded as members.",
+        "Customers not in a plan (with no active contract for a plan) are regarded as contacts.",
+        "The Virtual offices tab is only shown when the plan is a virtual office plan."
+      ],
+      "frontEndFiles": [
+        {
+          "name": "General",
+          "type": "Tab",
+          "path": "\\components\\pages\\billing\\plans\\general.tsx"
+        },
+        {
+          "name": "Pricing",
+          "type": "Tab",
+          "path": "\\components\\pages\\billing\\plans\\pricing.tsx"
+        },
+        {
+          "name": "Virtual Office onboarding",
+          "type": "Tab",
+          "path": "\\components\\pages\\billing\\plans\\components\\onboarding.tsx"
+        },
+        {
+          "name": "Virtual Office delivery settings",
+          "type": "Tab",
+          "path": "\\components\\pages\\billing\\plans\\components\\deliveries.tsx"
+        },
+        {
+          "name": "Benefits",
+          "type": "Tab",
+          "path": "\\components\\pages\\billing\\plans\\benefits.tsx"
+        },
+        {
+          "name": "Limits",
+          "type": "Tab",
+          "path": "\\components\\pages\\billing\\plans\\limits.tsx"
+        },
+        {
+          "name": "Restrictions",
+          "type": "Tab",
+          "path": "\\components\\pages\\billing\\plans\\restrictions.tsx"
+        },
+        {
+          "name": "Deposits",
+          "type": "Tab",
+          "path": "\\components\\pages\\billing\\plans\\deposits.tsx"
+        },
+        {
+          "name": "Legal",
+          "type": "Tab",
+          "path": "\\components\\pages\\billing\\plans\\legal.tsx"
         }
       ]
     }

@@ -1,20 +1,20 @@
-import OpenAI from "openai";
-import dotenv from "dotenv";
+import fs from 'fs';
+import OpenAI from 'openai';
+import dotenv from 'dotenv';
 dotenv.config();
 
-export const jsonWriterInstructions =
-  "ALL your responses MUST BE VALID EXCLUSIVELY JSON string. Do not wrap response in markdown syntax";
-
 const client = new OpenAI({
-  apiKey: process.env["OPENAI_API_KEY"],
+  apiKey: process.env['OPENAI_API_KEY'],
 });
 
-export const complete = async ({ input, instructions }) => {
+export const complete = async ({ input, instructions = '' }) => {
+  const sharedInstructions = fs.readFileSync('./.gen/in/instructions.txt');
   const response = await client.responses.create({
-    model: "gpt-4o",
-    instructions,
+    model: 'gpt-4o',
+    instructions: `${sharedInstructions}.\n${instructions}`,
+    temperature: 0,
     input,
   });
 
-  return response.output_text.replace("```json", "").replace("```", "");
+  return response.output_text.replace('```json', '').replace('```', '');
 };

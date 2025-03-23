@@ -1,0 +1,2717 @@
+Extract all fields from each of the files below representing each of the tabs in the front-end code to help the users understand what they are and how to use them.
+
+--
+TAB NAME: General
+CONTENTS START
+import React, { ReactElement, useEffect, useState } from &#x27;react&#x27;;
+import { useTranslation } from &#x27;react-i18next&#x27;;
+import { EuiButton, EuiForm, EuiFormRow, EuiSpacer } from &#x27;@elastic/eui&#x27;;
+import _ from &#x27;lodash&#x27;;
+
+import { useStores } from &#x27;~/src/stores/useStores&#x27;;
+import { Tariff } from &#x27;~/src/types/billing/tariff&#x27;;
+import { useCustomFields } from &#x27;~/src/services/useApiState&#x27;;
+import ShowIfNetwork from &#x27;~/src/env/showIfNetwork/showIfNetwork&#x27;;
+import { formMethods } from &#x27;~/src/components/forms/useFormMethods&#x27;;
+import { NexudusApiServiceInst } from &#x27;~/src/services/NexudusApiService&#x27;;
+import FormSectionHeader from &#x27;~/src/components/forms/formSectionHeader&#x27;;
+import { InventoryBillingData } from &#x27;../billingData/inventoryBillingData&#x27;;
+import { XmlCustomFieldFactory } from &#x27;~/src/components/customFields/xmlCustomFieldFactory&#x27;;
+import HtmlFormControl from &#x27;~/src/components/forms/controls/htmlFormControl/htmlFormControl&#x27;;
+import TextFormControl from &#x27;~/src/components/forms/controls/textFormControl/textFormControl&#x27;;
+import NumberFormControl from &#x27;~/src/components/forms/controls/numberFormControl/numberFormControl&#x27;;
+import BusinessDropdownControl from &#x27;~/src/components/forms/controls/entities/businessDropdownControl&#x27;;
+import CheckboxFormControl from &#x27;~/src/components/forms/controls/checkboxFormControl/checkboxFormControl&#x27;;
+import ClipboardTextFieldFormControl from &#x27;~/src/components/forms/controls/clipboardTextFieldFormControl/clipboardTextFieldFormControl&#x27;;
+import { useVirtualOfficesSubscriptionDetails } from &#x27;../../settings&#x27;;
+import { FormCallout } from &#x27;~/src/components/formCallout/FormCallout&#x27;;
+import { VirtualOfficeCallout } from &#x27;./components/virtualOfficeCallout&#x27;;
+
+const TariffGeneralForm &#x3D; ({
+  methods,
+}: {
+  methods: formMethods&lt;Tariff&gt;;
+}): ReactElement &#x3D;&gt; {
+  const { t } &#x3D; useTranslation();
+  const { appStore, nxApiStore } &#x3D; useStores();
+  const [groupNames, setGroupNames] &#x3D; useState([]);
+  const business &#x3D; nxApiStore.getBusiness(methods.record.BusinessId);
+  const customFields &#x3D; useCustomFields(&#x27;Tariff&#x27;);
+
+  useEffect(() &#x3D;&gt; {
+    if (!(methods.record.Id &gt; 0))
+      methods.updateRecordWithObject({
+        ...methods.record,
+        Price: 0,
+        InvoiceEvery: 1,
+        InvoiceEveryWeeks: 0,
+        DefaultInvoicingDay: 1,
+      });
+  }, []);
+
+  useEffect(() &#x3D;&gt; {
+    NexudusApiServiceInst.getList(Tariff.Inst, 1, 5000, &#x27;GroupName&#x27;).then(
+      (data) &#x3D;&gt;
+        setGroupNames(
+          _.uniqBy(
+            data.Records.filter((r) &#x3D;&gt; r.GroupName),
+            &#x27;GroupName&#x27;
+          )
+        )
+    );
+  }, []);
+  const { virtualOfficeActive } &#x3D; useVirtualOfficesSubscriptionDetails();
+
+  return (
+    &lt;EuiForm&gt;
+      &lt;FormSectionHeader
+        title&#x3D;{t(&#x27;Plan details&#x27;)}
+        subtitle&#x3D;{
+          appStore.versionHasBilling
+            ? t(
+                &#x27;Plans represent services customers subscribe to, they usually represent your coworking memberships or private offices inventory. Plans can include benefits such as booking or printing credit, which will be assigned to customers signing up to them.&#x27;
+              )
+            : t(
+                &#x27;Schedule types let you organize occupier schedules into different categories based on the benefits they include or what resources they have access to.&#x27;
+              )
+        }
+      &gt;
+        &lt;EuiFormRow&gt;
+          &lt;TextFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;Name&#x27;}
+            showLocalizedText&#x3D;{true}
+            label&#x3D;{t(&#x27;Plan name&#x27;)}
+            helpText&#x3D;{t(&#x27;Must be unique within each of your locations&#x27;)}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;ShowIfNetwork&gt;
+          &lt;EuiFormRow&gt;
+            &lt;BusinessDropdownControl&lt;Tariff&gt;
+              methods&#x3D;{methods}
+              propertyName&#x3D;{&#x27;BusinessId&#x27;}
+              label&#x3D;{t(&#x27;Available at&#x27;)}
+              helpIconText&#x3D;{t(
+                &quot;The location this plan is available at. If you choose a &#x27;network&#x27; location, the plan will be available at all locations in that network.&quot;
+              )}
+            /&gt;
+          &lt;/EuiFormRow&gt;
+        &lt;/ShowIfNetwork&gt;
+        {!appStore.versionHasBilling &amp;&amp; (
+          &lt;EuiFormRow&gt;
+            &lt;&gt;
+              {methods.record.InvoiceEvery &gt; 0 &amp;&amp; (
+                &lt;NumberFormControl
+                  methods&#x3D;{methods}
+                  label&#x3D;{t(&#x27;Cycle&#x27;)}
+                  defaultValue&#x3D;{1}
+                  propertyName&#x3D;{&#x27;InvoiceEvery&#x27;}
+                  unit&#x3D;{
+                    methods.record.InvoiceEvery &gt; 1 ? t(&#x27;months&#x27;) : t(&#x27;month&#x27;)
+                  }
+                /&gt;
+              )}
+            &lt;/&gt;
+          &lt;/EuiFormRow&gt;
+        )}
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;HtmlFormControl
+            methods&#x3D;{methods}
+            showLocalizedText&#x3D;{true}
+            propertyName&#x3D;{&#x27;Description&#x27;}
+            label&#x3D;{t(&#x27;Plan description&#x27;)}
+            height&#x3D;{150}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+
+        &lt;EuiFormRow&gt;
+          &lt;XmlCustomFieldFactory
+            customFields&#x3D;{customFields}
+            methods&#x3D;{methods}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+      &lt;/FormSectionHeader&gt;
+
+      &lt;FormSectionHeader
+        title&#x3D;{t(&#x27;Virtual Office&#x27;)}
+        subtitle&#x3D;{t(
+          &quot;When you enable a Virtual Office plan, you&#x27;ll see a Virtual Office tab at the top of your screen. This is where you can easily manage all the details of your Virtual Office offering.&quot;
+        )}
+      &gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;&gt;
+            &lt;CheckboxFormControl
+              methods&#x3D;{methods}
+              propertyName&#x3D;{&#x27;IsVirtualOffice&#x27;}
+              disabled&#x3D;{
+                methods.record.ActiveContracts &gt; 0 || !virtualOfficeActive
+              }
+              label&#x3D;{t(&#x27;This plan is a virtual office plan&#x27;)}
+            /&gt;
+            {!virtualOfficeActive &amp;&amp; (
+              &lt;&gt;
+                &lt;VirtualOfficeCallout /&gt;
+              &lt;/&gt;
+            )}
+          &lt;/&gt;
+        &lt;/EuiFormRow&gt;
+      &lt;/FormSectionHeader&gt;
+
+      &lt;FormSectionHeader
+        title&#x3D;{t(&#x27;Portal and Apps&#x27;)}
+        subtitle&#x3D;{t(
+          &#x27;Select if and how this product will be listed in the portal and the members App.&#x27;
+        )}
+      &gt;
+        &lt;EuiFormRow&gt;
+          &lt;CheckboxFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;Visible&#x27;}
+            label&#x3D;{t(&#x27;Display this plan on the website and the App&#x27;)}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        {methods.record.Visible &amp;&amp; (
+          &lt;&gt;
+            &lt;EuiFormRow&gt;
+              &lt;TextFormControl
+                suggestions&#x3D;{groupNames.map((g) &#x3D;&gt; g.GroupName)}
+                methods&#x3D;{methods}
+                propertyName&#x3D;{&#x27;GroupName&#x27;}
+                label&#x3D;{t(&#x27;Category&#x27;)}
+              /&gt;
+            &lt;/EuiFormRow&gt;
+
+            &lt;EuiFormRow&gt;
+              &lt;NumberFormControl
+                methods&#x3D;{methods}
+                unit&#x3D;{t(
+                  &#x27;{DisplayOrder, selectordinal, one {st} two {nd} few {rd} other {th}}&#x27;,
+                  { DisplayOrder: methods.record.DisplayOrder }
+                )}
+                propertyName&#x3D;{&#x27;DisplayOrder&#x27;}
+                label&#x3D;{t(&#x27;The position to display this plan at&#x27;)}
+              /&gt;
+            &lt;/EuiFormRow&gt;
+          &lt;/&gt;
+        )}
+      &lt;/FormSectionHeader&gt;
+      {methods.record.Id &gt; 0 &amp;&amp; (
+        &lt;FormSectionHeader
+          title&#x3D;{t(&#x27;Purchase links&#x27;)}
+          subtitle&#x3D;{t(
+            &#x27;Share the links below to invite new or existing customers to sign up to this plan.&#x27;
+          )}
+        &gt;
+          &lt;EuiFormRow label&#x3D;{t(&#x27;Invite link (new customers)&#x27;)}&gt;
+            &lt;ClipboardTextFieldFormControl
+              value&#x3D;{&#x60;${business.HomeUrl}en/signup/priceplan/${methods.record.UniqueId}&#x60;}
+            /&gt;
+          &lt;/EuiFormRow&gt;
+          &lt;EuiFormRow label&#x3D;{t(&#x27;Purchase link (existing customers)&#x27;)}&gt;
+            &lt;ClipboardTextFieldFormControl
+              value&#x3D;{&#x60;${business.HomeUrl}login?returnurl&#x3D;${encodeURIComponent(
+                &#x60;/en/signup/priceplan/${methods.record.UniqueId}&#x60;
+              )}&#x60;}
+            /&gt;
+          &lt;/EuiFormRow&gt;
+        &lt;/FormSectionHeader&gt;
+      )}
+      &lt;InventoryBillingData
+        businessId&#x3D;{methods.record.BusinessId}
+        methods&#x3D;{methods}
+      /&gt;
+    &lt;/EuiForm&gt;
+  );
+};
+
+export default TariffGeneralForm;
+
+CONTENTS END
+--
+--
+TAB NAME: Pricing
+CONTENTS START
+import {
+  EuiFlexGroup,
+  EuiFlexItem,
+  EuiForm,
+  EuiFormRow,
+  EuiSuperSelect,
+  EuiText,
+} from &#x27;@elastic/eui&#x27;;
+import React, { Fragment, ReactElement, useEffect, useState } from &#x27;react&#x27;;
+import { Tariff } from &#x27;~/src/types/billing/tariff&#x27;;
+import { formMethods } from &#x27;~/src/components/forms/useFormMethods&#x27;;
+import { Trans, useTranslation } from &#x27;react-i18next&#x27;;
+import PriceWithCurrencyDropdownControl from &#x27;~/src/components/forms/controls/priceWithCurrencyDropdownControl/priceWithCurrencyDropdownControl&#x27;;
+import FormSectionHeader from &#x27;~/src/components/forms/formSectionHeader&#x27;;
+import NumberFormControl from &#x27;~/src/components/forms/controls/numberFormControl/numberFormControl&#x27;;
+import InlineNumberInputFormControl from &#x27;~/src/components/forms/controls/inlineNumberInputFormControl/inlineNumberInputFormControl&#x27;;
+import BooleanRadioButtonGroupFormControl from &#x27;~/src/components/forms/controls/booleanRadioButtonGroupFormControl/booleanRadioButtonGroupFormControl&#x27;;
+import { NexudusApiServiceInst } from &#x27;~/src/services/NexudusApiService&#x27;;
+import { Currency } from &#x27;~/src/types/sys/currency&#x27;;
+import CheckboxFormControl from &#x27;~/src/components/forms/controls/checkboxFormControl/checkboxFormControl&#x27;;
+import EnumFormControl from &#x27;~/src/components/forms/controls/enumFormControl/enumFormControl&#x27;;
+const TariffPricingForm &#x3D; ({
+  methods,
+}: {
+  methods: formMethods&lt;Tariff&gt;;
+}): ReactElement &#x3D;&gt; {
+  const [currencies, setCurrencies] &#x3D; useState&lt;Currency[]&gt;([]);
+  const { t } &#x3D; useTranslation();
+
+  useEffect(() &#x3D;&gt; {
+    NexudusApiServiceInst.getList(Currency.Inst, 1, 5000, &#x27;Name&#x27;).then((data) &#x3D;&gt;
+      setCurrencies(data.Records)
+    );
+  }, []);
+
+  useEffect(() &#x3D;&gt; {
+    if (!(methods.record.InvoiceEvery + methods.record.InvoiceEveryWeeks &gt;&#x3D; 0))
+      methods.updateRecord(&#x27;InvoiceEvery&#x27;, 1);
+    else if (
+      methods.record.InvoiceEvery &gt; 0 &amp;&amp;
+      methods.record.InvoiceEveryWeeks &gt; 0
+    )
+      methods.updateRecord(&#x27;InvoiceEveryWeeks&#x27;, 0);
+    else if (
+      methods.record.InvoiceEveryWeeks &gt; 0 &amp;&amp;
+      methods.record.InvoiceEvery &gt; 0
+    )
+      methods.updateRecord(&#x27;InvoiceEvery&#x27;, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [methods.record.InvoiceEvery, methods.record.InvoiceEveryWeeks]);
+
+  useEffect(() &#x3D;&gt; {
+    if (!methods.record.ProrateDaysBefore)
+      methods.updateRecord(&#x27;ProrateCancellations&#x27;, false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [methods.record.ProrateDaysBefore]);
+
+  const currency &#x3D; currencies.find((c) &#x3D;&gt; c.Id &#x3D;&#x3D; methods.record.CurrencyId);
+
+  return (
+    &lt;EuiForm&gt;
+      &lt;FormSectionHeader
+        title&#x3D;{t(&#x27;Pricing&#x27;)}
+        subtitle&#x3D;{t(
+          &#x27;Plans can be priced per any number of weeks or months. Customers with an active contract for this plan will be invoiced this amount every this number of months or weeks.&#x27;
+        )}
+      &gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;EuiFlexGroup gutterSize&#x3D;&quot;s&quot; alignItems&#x3D;&quot;center&quot;&gt;
+            &lt;EuiFlexItem grow&#x3D;{false}&gt;
+              &lt;EuiFormRow&gt;
+                &lt;PriceWithCurrencyDropdownControl
+                  methods&#x3D;{methods}
+                  propertyName&#x3D;{&#x27;Price&#x27;}
+                  currencyPropertyName&#x3D;{&#x27;CurrencyId&#x27;}
+                  label&#x3D;{t(&#x27;Price&#x27;)}
+                /&gt;
+              &lt;/EuiFormRow&gt;
+            &lt;/EuiFlexItem&gt;
+            &lt;EuiFlexItem grow&#x3D;{false}&gt;
+              &lt;EuiFormRow&gt;
+                &lt;&gt;
+                  {methods.record.InvoiceEvery &gt; 0 &amp;&amp; (
+                    &lt;NumberFormControl
+                      methods&#x3D;{methods}
+                      label&#x3D;{t(&#x27;Every&#x27;)}
+                      defaultValue&#x3D;{1}
+                      propertyName&#x3D;{&#x27;InvoiceEvery&#x27;}
+                      style&#x3D;{{ width: 120 }}
+                    /&gt;
+                  )}
+                  {!(methods.record.InvoiceEvery &gt; 0) &amp;&amp; (
+                    &lt;NumberFormControl
+                      methods&#x3D;{methods}
+                      label&#x3D;{t(&#x27;Every&#x27;)}
+                      defaultValue&#x3D;{1}
+                      propertyName&#x3D;{&#x27;InvoiceEveryWeeks&#x27;}
+                      style&#x3D;{{ width: 120 }}
+                    /&gt;
+                  )}
+                &lt;/&gt;
+              &lt;/EuiFormRow&gt;
+            &lt;/EuiFlexItem&gt;
+            &lt;EuiFlexItem&gt;
+              &lt;EuiFormRow&gt;
+                &lt;EuiSuperSelect
+                  style&#x3D;{{ marginTop: 25, minWidth: 330 }}
+                  options&#x3D;{[
+                    {
+                      value: &#x27;month&#x27;,
+                      inputDisplay: t(
+                        &#x27;{InvoiceEvery, plural, one {month} other {months}}&#x27;,
+                        {
+                          InvoiceEvery: methods.record.InvoiceEvery,
+                        }
+                      ),
+                      dropdownDisplay: (
+                        &lt;Fragment&gt;
+                          &lt;strong&gt;
+                            {t(
+                              &#x27;{InvoiceEvery} {InvoiceEvery, plural, one {month} other {months}}&#x27;,
+                              {
+                                InvoiceEvery:
+                                  parseInt(
+                                    &#x60;${methods.record.InvoiceEveryWeeks ?? &#x27;0&#x27;}&#x60;
+                                  ) +
+                                  parseInt(
+                                    &#x60;${methods.record.InvoiceEvery ?? &#x27;0&#x27;}&#x60;
+                                  ),
+                              }
+                            )}
+                          &lt;/strong&gt;
+                          &lt;EuiText size&#x3D;&quot;s&quot; color&#x3D;&quot;subdued&quot;&gt;
+                            &lt;p className&#x3D;&quot;euiTextColor--subdued&quot;&gt;
+                              {t(
+                                &#x27;Invoice contracts of this plan every {InvoiceEvery} {InvoiceEvery, plural, one {month} other {months}} either based on the day the customer signed up or on a fixed day of the month.&#x27;,
+                                {
+                                  InvoiceEvery:
+                                    parseInt(
+                                      &#x60;${
+                                        methods.record.InvoiceEveryWeeks ?? &#x27;0&#x27;
+                                      }&#x60;
+                                    ) +
+                                    parseInt(
+                                      &#x60;${methods.record.InvoiceEvery ?? &#x27;0&#x27;}&#x60;
+                                    ),
+                                }
+                              )}
+                            &lt;/p&gt;
+                          &lt;/EuiText&gt;
+                        &lt;/Fragment&gt;
+                      ),
+                    },
+                    {
+                      value: &#x27;week&#x27;,
+                      inputDisplay: t(
+                        &#x27;{InvoiceEvery, plural, one {week} other {weeks}}&#x27;,
+                        {
+                          InvoiceEvery: methods.record.InvoiceEveryWeeks,
+                        }
+                      ),
+                      dropdownDisplay: (
+                        &lt;Fragment&gt;
+                          &lt;strong&gt;
+                            {t(
+                              &#x27;{InvoiceEvery} {InvoiceEvery, plural, one {week} other {weeks}}&#x27;,
+                              {
+                                InvoiceEvery:
+                                  parseInt(
+                                    &#x60;${methods.record.InvoiceEveryWeeks ?? 0}&#x60;
+                                  ) +
+                                  parseInt(
+                                    &#x60;${methods.record.InvoiceEvery ?? 0}&#x60;
+                                  ),
+                              }
+                            )}
+                          &lt;/strong&gt;
+                          &lt;EuiText size&#x3D;&quot;s&quot; color&#x3D;&quot;subdued&quot;&gt;
+                            &lt;p className&#x3D;&quot;euiTextColor--subdued&quot;&gt;
+                              {t(
+                                &#x27;Invoice contracts of this plan every {InvoiceEvery} {InvoiceEvery, plural, one {week} other {weeks}} always on Monday shortly after midnight.&#x27;,
+                                {
+                                  InvoiceEvery:
+                                    parseInt(
+                                      &#x60;${methods.record.InvoiceEveryWeeks ?? 0}&#x60;
+                                    ) +
+                                    parseInt(
+                                      &#x60;${methods.record.InvoiceEvery ?? 0}&#x60;
+                                    ),
+                                }
+                              )}
+                            &lt;/p&gt;
+                          &lt;/EuiText&gt;
+                        &lt;/Fragment&gt;
+                      ),
+                    },
+                  ]}
+                  valueOfSelected&#x3D;{
+                    methods.record.InvoiceEvery &gt; 0 ? &#x27;month&#x27; : &#x27;week&#x27;
+                  }
+                  onChange&#x3D;{(value) &#x3D;&gt; {
+                    const newRecord &#x3D; { ...methods.record };
+                    if (value &#x3D;&#x3D; &#x27;month&#x27;) {
+                      newRecord.InvoiceEvery &#x3D; newRecord.InvoiceEveryWeeks ?? 1;
+                      newRecord.InvoiceEveryWeeks &#x3D; 0;
+                    } else {
+                      newRecord.InvoiceEveryWeeks &#x3D; newRecord.InvoiceEvery ?? 1;
+                      newRecord.InvoiceEvery &#x3D; 0;
+                    }
+                    methods.updateRecordWithObject(newRecord);
+                  }}
+                /&gt;
+              &lt;/EuiFormRow&gt;
+            &lt;/EuiFlexItem&gt;
+          &lt;/EuiFlexGroup&gt;
+        &lt;/EuiFormRow&gt;
+      &lt;/FormSectionHeader&gt;
+
+      {
+        &lt;FormSectionHeader
+          title&#x3D;{t(&#x27;Additional invoices&#x27;)}
+          subtitle&#x3D;{t(
+            &#x27;Select if additional invoices should be issued in between the ones for the plan charges if members on this plan have made other purchases.&#x27;
+          )}
+        &gt;
+          &lt;EuiFormRow fullWidth&gt;
+            &lt;CheckboxFormControl
+              methods&#x3D;{methods}
+              label&#x3D;{t(&#x27;Create additional invoices during the billing cycle.&#x27;)}
+              propertyName&#x3D;{&#x27;AutoRaiseInvoices&#x27;}
+            /&gt;
+          &lt;/EuiFormRow&gt;
+          {methods.record.AutoRaiseInvoices &amp;&amp; (
+            &lt;EuiFormRow fullWidth&gt;
+              &lt;EuiFlexGroup gutterSize&#x3D;&quot;s&quot;&gt;
+                &lt;EuiFlexItem grow&#x3D;{false} style&#x3D;{{ width: 120 }}&gt;
+                  &lt;EuiFormRow&gt;
+                    &lt;&gt;
+                      {methods.record.RaiseInvoiceEvery &gt; 0 &amp;&amp; (
+                        &lt;NumberFormControl
+                          methods&#x3D;{methods}
+                          label&#x3D;{t(&#x27;Every&#x27;)}
+                          propertyName&#x3D;{&#x27;RaiseInvoiceEvery&#x27;}
+                        /&gt;
+                      )}
+                      {!(methods.record.RaiseInvoiceEvery &gt; 0) &amp;&amp; (
+                        &lt;NumberFormControl
+                          methods&#x3D;{methods}
+                          label&#x3D;{t(&#x27;Every&#x27;)}
+                          propertyName&#x3D;{&#x27;RaiseInvoiceEveryWeeks&#x27;}
+                        /&gt;
+                      )}
+                    &lt;/&gt;
+                  &lt;/EuiFormRow&gt;
+                &lt;/EuiFlexItem&gt;
+                &lt;EuiFlexItem&gt;
+                  &lt;EuiFormRow hasEmptyLabelSpace&gt;
+                    &lt;EuiSuperSelect
+                      options&#x3D;{[
+                        {
+                          value: &#x27;month&#x27;,
+                          inputDisplay: t(
+                            &#x27;{InvoiceEvery, plural, one {month} other {months}}&#x27;,
+                            {
+                              InvoiceEvery:
+                                methods.record.RaiseInvoiceEvery ??
+                                methods.record.RaiseInvoiceEveryWeeks,
+                            }
+                          ),
+                          dropdownDisplay: (
+                            &lt;Fragment&gt;
+                              &lt;strong&gt;
+                                {t(
+                                  &#x27;{InvoiceEvery} {InvoiceEvery, plural, one {month} other {months}}&#x27;,
+                                  {
+                                    InvoiceEvery:
+                                      methods.record.RaiseInvoiceEvery ??
+                                      methods.record.RaiseInvoiceEveryWeeks,
+                                  }
+                                )}
+                              &lt;/strong&gt;
+                              &lt;EuiText size&#x3D;&quot;s&quot; color&#x3D;&quot;subdued&quot;&gt;
+                                &lt;p className&#x3D;&quot;euiTextColor--subdued&quot;&gt;
+                                  {t(
+                                    &#x27;Create additional invoices, if needed, {InvoiceEvery} {InvoiceEvery, plural, one {month} other {months}} either based on the day the customer signed up or on a fixed day of the month.&#x27;,
+                                    {
+                                      InvoiceEvery:
+                                        methods.record.RaiseInvoiceEvery ??
+                                        methods.record.RaiseInvoiceEveryWeeks,
+                                    }
+                                  )}
+                                &lt;/p&gt;
+                              &lt;/EuiText&gt;
+                            &lt;/Fragment&gt;
+                          ),
+                        },
+                        {
+                          value: &#x27;week&#x27;,
+                          inputDisplay: t(
+                            &#x27;{InvoiceEvery, plural, one {week} other {weeks}}&#x27;,
+                            {
+                              InvoiceEvery:
+                                methods.record.RaiseInvoiceEveryWeeks ??
+                                methods.record.RaiseInvoiceEvery,
+                            }
+                          ),
+                          dropdownDisplay: (
+                            &lt;Fragment&gt;
+                              &lt;strong&gt;
+                                {t(
+                                  &#x27;{InvoiceEvery} {InvoiceEvery, plural, one {week} other {weeks}}&#x27;,
+                                  {
+                                    InvoiceEvery:
+                                      methods.record.RaiseInvoiceEveryWeeks ??
+                                      methods.record.RaiseInvoiceEvery,
+                                  }
+                                )}
+                              &lt;/strong&gt;
+                              &lt;EuiText size&#x3D;&quot;s&quot; color&#x3D;&quot;subdued&quot;&gt;
+                                &lt;p className&#x3D;&quot;euiTextColor--subdued&quot;&gt;
+                                  {t(
+                                    &#x27;Invoice contracts of this plan every {InvoiceEvery} {InvoiceEvery, plural, one {week} other {weeks}} always on Monday shortly after midnight.&#x27;,
+                                    {
+                                      InvoiceEvery:
+                                        methods.record.RaiseInvoiceEveryWeeks ??
+                                        methods.record.RaiseInvoiceEvery,
+                                    }
+                                  )}
+                                &lt;/p&gt;
+                              &lt;/EuiText&gt;
+                            &lt;/Fragment&gt;
+                          ),
+                        },
+                      ]}
+                      valueOfSelected&#x3D;{
+                        methods.record.RaiseInvoiceEvery &gt; 0 ? &#x27;month&#x27; : &#x27;week&#x27;
+                      }
+                      onChange&#x3D;{(value) &#x3D;&gt; {
+                        const newRecord &#x3D; { ...methods.record };
+                        if (value &#x3D;&#x3D; &#x27;month&#x27;) {
+                          newRecord.RaiseInvoiceEvery &#x3D;
+                            newRecord.RaiseInvoiceEveryWeeks ?? 1;
+                          newRecord.RaiseInvoiceEveryWeeks &#x3D; null;
+                        } else {
+                          newRecord.RaiseInvoiceEveryWeeks &#x3D;
+                            newRecord.RaiseInvoiceEvery ?? 1;
+                          newRecord.RaiseInvoiceEvery &#x3D; null;
+                        }
+                        methods.updateRecordWithObject(newRecord);
+                      }}
+                    /&gt;
+                  &lt;/EuiFormRow&gt;
+                &lt;/EuiFlexItem&gt;
+              &lt;/EuiFlexGroup&gt;
+            &lt;/EuiFormRow&gt;
+          )}
+        &lt;/FormSectionHeader&gt;
+      }
+
+      &lt;FormSectionHeader
+        title&#x3D;{t(&#x27;Billing day and prorating&#x27;)}
+        subtitle&#x3D;{t(
+          &#x27;When all customers in this plan pay the same day of the month, you can adjust the first invoice for customers joining any other day of the month based on how many days are between the day they join and their regular billing day.&#x27;
+        )}
+      &gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            min&#x3D;{1}
+            max&#x3D;{28}
+            defaultValue&#x3D;{1}
+            displayText&#x3D;{t(
+              &#x27;{dayOfMonth}{dayOfMonth, selectordinal, one {st} two {nd} few {rd} other {th}} of every {InvoiceEvery, plural, one {} other {{InvoiceEvery}}} {InvoiceEvery, plural, one {month} other {months}}&#x27;,
+              {
+                InvoiceEvery: methods.record.InvoiceEvery,
+                dayOfMonth: methods.record.DefaultInvoicingDay ?? 1,
+              }
+            )}
+            unit&#x3D;{t(
+              &#x27;{dayOfMonth, selectordinal, one {st} two {nd} few {rd} other {th}}&#x27;,
+              {
+                dayOfMonth: methods.record.DefaultInvoicingDay ?? 1,
+              }
+            )}
+            propertyName&#x3D;{&#x27;DefaultInvoicingDay&#x27;}
+            label&#x3D;{t(&#x27;Default billing day&#x27;)}
+            yesLabel&#x3D;{
+              &#x27;Invoice &lt;b&gt;new contracts&lt;/b&gt; for this plan always on the &lt;input/&gt;&#x27;
+            }
+            noLabel&#x3D;{t(
+              &#x27;Invoice &lt;b&gt;new contracts&lt;/b&gt; for this plan on the &lt;b&gt;day the customer signs up&lt;/b&gt; to this plan.&#x27;
+            )}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;ProrateDaysBefore&#x27;}
+            unit&#x3D;{t(&#x27;days&#x27;)}
+            min&#x3D;{0}
+            defaultValue&#x3D;{Math.ceil(30.5 * methods.record.InvoiceEvery) ?? 30}
+            displayText&#x3D;{t(&#x27;{days} {days, plural, one {day} other {days}}&#x27;, {
+              days:
+                methods.record.ProrateDaysBefore ??
+                Math.ceil(30.5 * methods.record.InvoiceEvery),
+            })}
+            label&#x3D;{t(&#x27;First invoice prorated discount&#x27;)}
+            yesLabel&#x3D;{t(
+              &#x27;&lt;b&gt;Discount the first invoice&lt;/b&gt; for up to &lt;input/&gt; based on how many days are left in the first billing cycle.&#x27;
+            )}
+            noLabel&#x3D;{t(
+              &#x27;Always charge the &lt;b&gt;first invoice in full&lt;/b&gt; regardless of the day of the month contracts start.&#x27;
+            )}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            disabled&#x3D;{!methods.record.ProrateDaysBefore}
+            methods&#x3D;{methods}
+            min&#x3D;{1}
+            max&#x3D;{28}
+            defaultValue&#x3D;{1}
+            displayText&#x3D;{t(
+              &#x27;{dayOfMonth}{dayOfMonth, selectordinal, one {st} two {nd} few {rd} other {th}} of the month&#x27;,
+              {
+                dayOfMonth: methods.record.ProrateDayOfMonth ?? 1,
+              }
+            )}
+            unit&#x3D;{t(
+              &#x27;{dayOfMonth, selectordinal, one {st} two {nd} few {rd} other {th}}&#x27;,
+              {
+                dayOfMonth:
+                  methods.record.ProrateDayOfMonth ??
+                  methods.record.DefaultInvoicingDay,
+              }
+            )}
+            propertyName&#x3D;{&#x27;ProrateDayOfMonth&#x27;}
+            label&#x3D;{t(&#x27;Prorate day of month&#x27;)}
+            yesLabel&#x3D;{t(
+              &#x27;Apply prorate discount to first invoice &lt;b&gt;based on the &lt;/b&gt; &lt;input/&gt;&#x27;
+            )}
+            noLabel&#x3D;{t(
+              &#x27;Apply prorate discount to first invoice &lt;b&gt;based on billing day&lt;/b&gt;.&#x27;
+            )}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;BooleanRadioButtonGroupFormControl
+            methods&#x3D;{methods}
+            disabled&#x3D;{!methods.record.ProrateDaysBefore}
+            options&#x3D;{[
+              {
+                id: &#x27;false&#x27;,
+                data: false,
+                label: (
+                  &lt;Trans defaults&#x3D;&quot;Always &lt;strong&gt;charge last invoice in full&lt;/strong&gt; regardless of the day of the month the contract ends.&quot; /&gt;
+                ),
+              },
+              {
+                id: &#x27;true&#x27;,
+                data: true,
+                label: (
+                  &lt;Trans defaults&#x3D;&quot;&lt;strong&gt;Discount the last invoice&lt;/strong&gt; based on the day members leave contracts for this plan.&quot; /&gt;
+                ),
+              },
+            ]}
+            propertyName&#x3D;{&#x27;ProrateCancellations&#x27;}
+            label&#x3D;{t(&#x27;Last invoice prorated discount&#x27;)}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;AdvanceInvoiceCycles&#x27;}
+            unit&#x3D;{t(&#x27;cycles&#x27;)}
+            min&#x3D;{1}
+            defaultValue&#x3D;{1}
+            displayText&#x3D;{t(
+              &#x27;{cycles} {cycles, plural, one {additional billing cycle} other {additional billing cycles}}&#x27;,
+              {
+                cycles: methods.record.AdvanceInvoiceCycles ?? 1,
+              }
+            )}
+            label&#x3D;{t(&#x27;Advance payments&#x27;)}
+            yesLabel&#x3D;{t(&#x27;Invoice &lt;input/&gt; when contracts of this plan start.&#x27;)}
+            noLabel&#x3D;{t(
+              &#x27;Invoice only &lt;b&gt;one billing cycle&lt;/b&gt; when contracts of this plan start.&#x27;
+            )}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;EnumFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;BookingDueDateStrategy&#x27;}
+            enumName&#x3D;&quot;eTariffBookingDueDateStrategy&quot;
+            label&#x3D;{t(
+              &#x27;The charges for bookings made by members in this plan will be due:&#x27;
+            )}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+      &lt;/FormSectionHeader&gt;
+      &lt;FormSectionHeader
+        title&#x3D;{t(&#x27;Minimum price&#x27;)}
+        subtitle&#x3D;{t(
+          &#x27;Use this section to make sure members of this plan pay a minimum price for it. Use the options below to indicate what type of charges to use when computing the minimum amount to charge customers in this plan. Minimum prices will not apply to the first invoiced period of contracts for this plan.&#x27;
+        )}
+      &gt;
+        &lt;EuiFormRow style&#x3D;{{ maxWidth: 150 }}&gt;
+          &lt;NumberFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;MinimumPrice&#x27;}
+            currency&#x3D;{currency?.Code}
+            label&#x3D;{t(&#x27;Minimum price&#x27;)}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;CheckboxFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;MinimumPriceIncludeTimePasses&#x27;}
+            label&#x3D;{
+              &lt;Trans defaults&#x3D;&quot;Consider &lt;strong&gt;passes&lt;/strong&gt; when computing the minimum price to charge for this plan.&quot; /&gt;
+            }
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;CheckboxFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;MinimumPriceIncludeExtraServices&#x27;}
+            label&#x3D;{
+              &lt;Trans defaults&#x3D;&quot;Consider &lt;strong&gt;bookings&lt;/strong&gt; when computing the minimum price to charge for this plan.&quot; /&gt;
+            }
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;CheckboxFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;MinimumPriceIncludeEvents&#x27;}
+            label&#x3D;{
+              &lt;Trans defaults&#x3D;&quot;Consider &lt;strong&gt;events&lt;/strong&gt; when computing the minimum price to charge for this plan.&quot; /&gt;
+            }
+          /&gt;
+        &lt;/EuiFormRow&gt;
+      &lt;/FormSectionHeader&gt;
+    &lt;/EuiForm&gt;
+  );
+};
+
+export default TariffPricingForm;
+
+CONTENTS END
+--
+--
+TAB NAME: Virtual Office onboarding
+CONTENTS START
+import React, { ReactElement, useEffect } from &#x27;react&#x27;;
+import { Trans, useTranslation } from &#x27;react-i18next&#x27;;
+import {
+  EuiButton,
+  EuiFormRow,
+  EuiSpacer,
+  EuiSwitch,
+  EuiText,
+} from &#x27;@elastic/eui&#x27;;
+
+import { routes } from &#x27;~/src/env/routes&#x27;;
+import { useStores } from &#x27;~/src/stores/useStores&#x27;;
+import { Tariff } from &#x27;~/src/types/billing/tariff&#x27;;
+import { FormPage } from &#x27;~/src/types/content/formPage&#x27;;
+import { useIdentityChecksBusinessSettings } from &#x27;~/src/hooks&#x27;;
+import { formMethods } from &#x27;~/src/components/forms/useFormMethods&#x27;;
+import FormSectionHeader from &#x27;~/src/components/forms/formSectionHeader&#x27;;
+import { IdentityCheckProviderEnum } from &#x27;~/src/types/spaces/coworkerIdentityCheck&#x27;;
+import { StripeIntegrationWarning } from &#x27;../../../crm/coworkerIdentityChecks/components&#x27;;
+import EnumFormControl from &#x27;~/src/components/forms/controls/enumFormControl/enumFormControl&#x27;;
+import EntityDropdownControl from &#x27;~/src/components/forms/controls/entities/entityDropdownControl&#x27;;
+import TextAreaFormControl from &#x27;~/src/components/forms/controls/textFormControl/textAreaFormControl&#x27;;
+import CheckboxFormControl from &#x27;~/src/components/forms/controls/checkboxFormControl/checkboxFormControl&#x27;;
+
+export const VirtualOfficeOnboarding &#x3D; ({
+  methods,
+}: {
+  methods: formMethods&lt;Tariff&gt;;
+}): ReactElement &#x3D;&gt; {
+  const { appStore } &#x3D; useStores();
+  const { t } &#x3D; useTranslation();
+  const {
+    addressCheckSetting,
+    identityCheckSetting,
+    saveDescriptionsToBusinessSettings,
+  } &#x3D; useIdentityChecksBusinessSettings({
+    topMostBusinessId: appStore.topMostBusiness?.Id,
+    addressField: &#x27;AddressIdentityCheckDescription&#x27;,
+    identityField: &#x27;IdentityCheckDescription&#x27;,
+  });
+
+  const pasteAddressCheckDescription &#x3D; () &#x3D;&gt; {
+    methods.updateRecord(
+      &#x27;AddressIdentityCheckDescription&#x27;,
+      addressCheckSetting
+    );
+  };
+
+  const pasteIdentityCheckDescription &#x3D; () &#x3D;&gt; {
+    methods.updateRecord(&#x27;IdentityCheckDescription&#x27;, identityCheckSetting);
+  };
+
+  useEffect(() &#x3D;&gt; {
+    methods.setOnBeforeSave(() &#x3D;&gt; saveDescriptionsToBusinessSettings);
+
+    return () &#x3D;&gt; methods.setOnBeforeSave(null);
+  }, []);
+
+  return (
+    &lt;FormSectionHeader
+      title&#x3D;{t(&#x27;Virtual office onboarding&#x27;)}
+      subtitle&#x3D;{t(&#x27;Configure virtual office features.&#x27;)}
+    &gt;
+      &lt;EuiFormRow fullWidth&gt;
+        &lt;&gt;
+          &lt;CheckboxFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;RequestAddressIdentityCheck&#x27;}
+            label&#x3D;{
+              &lt;Trans&gt;
+                Customers in this plan are required to{&#x27; &#x27;}
+                &lt;strong&gt;provide proof of address&lt;/strong&gt;.
+              &lt;/Trans&gt;
+            }
+          /&gt;
+          &lt;EuiText style&#x3D;{{ marginLeft: &#x27;55px&#x27; }} size&#x3D;&quot;s&quot; color&#x3D;&quot;subdued&quot;&gt;
+            {t(
+              &#x27;When this setting is enabled, customer’s contract will be automatically paused until they pass the initial verification.&#x27;
+            )}
+          &lt;/EuiText&gt;
+        &lt;/&gt;
+      &lt;/EuiFormRow&gt;
+
+      {Boolean(methods.record.RequestAddressIdentityCheck) &amp;&amp; (
+        &lt;&gt;
+          &lt;EuiFormRow style&#x3D;{{ maxWidth: &#x27;500px&#x27;, marginLeft: &#x27;55px&#x27; }}&gt;
+            &lt;&gt;
+              &lt;EnumFormControl
+                type&#x3D;&quot;select&quot;
+                methods&#x3D;{methods}
+                enumName&#x3D;{&#x27;eIdentityCheckProvider&#x27;}
+                propertyName&#x3D;{&#x27;AddressIdentityCheckProvider&#x27;}
+                filterOptions&#x3D;{(option) &#x3D;&gt; option.Id &#x3D;&#x3D;&#x3D; 1}
+                label&#x3D;{t(&#x27;Select how you would like to check proof of address&#x27;)}
+              /&gt;
+              &lt;EuiText size&#x3D;&quot;s&quot; color&#x3D;&quot;subdued&quot;&gt;
+                &lt;Trans&gt;
+                  If required, you can update any individual identity check
+                  verification preference in the{&#x27; &#x27;}
+                  &lt;a
+                    style&#x3D;{{ textDecoration: &#x27;underline&#x27; }}
+                    target&#x3D;&quot;_blank&quot;
+                    href&#x3D;{routes.identityChecks}
+                  &gt;
+                    Identity Checks
+                  &lt;/a&gt;{&#x27; &#x27;}
+                  section.
+                &lt;/Trans&gt;
+              &lt;/EuiText&gt;
+            &lt;/&gt;
+          &lt;/EuiFormRow&gt;
+
+          &lt;EuiFormRow style&#x3D;{{ maxWidth: &#x27;500px&#x27;, marginLeft: &#x27;55px&#x27; }}&gt;
+            &lt;&gt;
+              &lt;TextAreaFormControl
+                methods&#x3D;{methods}
+                maxTextLength&#x3D;{255}
+                propertyName&#x3D;{&#x27;AddressIdentityCheckDescription&#x27;}
+                helpText&#x3D;{t(
+                  &#x27;We will save this information for you to use it next time.&#x27;
+                )}
+                label&#x3D;{t(
+                  &#x27;Let your customers know which documents you accept as proof of address&#x27;
+                )}
+              /&gt;
+              &lt;small&gt;
+                &lt;EuiButton
+                  size&#x3D;&quot;s&quot;
+                  color&#x3D;&quot;text&quot;
+                  iconType&#x3D;&quot;copy&quot;
+                  disabled&#x3D;{!addressCheckSetting}
+                  onClick&#x3D;{pasteAddressCheckDescription}
+                &gt;
+                  {t(&#x27;Reuse previous list&#x27;)}
+                &lt;/EuiButton&gt;
+              &lt;/small&gt;
+            &lt;/&gt;
+          &lt;/EuiFormRow&gt;
+
+          &lt;EuiFormRow style&#x3D;{{ width: &#x27;150px&#x27;, marginLeft: &#x27;55px&#x27; }}&gt;
+            &lt;EnumFormControl
+              type&#x3D;&quot;select&quot;
+              defaultEnum&#x3D;{1}
+              ordered&#x3D;{false}
+              methods&#x3D;{methods}
+              label&#x3D;{t(&#x27;Repeat the check&#x27;)}
+              enumName&#x3D;{&#x27;eIdentityCheckRepeatPattern&#x27;}
+              propertyName&#x3D;{&#x27;AddressIdentityCheckRepeatPattern&#x27;}
+            /&gt;
+          &lt;/EuiFormRow&gt;
+          &lt;EuiFormRow style&#x3D;{{ maxWidth: &#x27;550px&#x27;, marginLeft: &#x27;55px&#x27; }}&gt;
+            &lt;EuiSwitch
+              checked&#x3D;{methods.record.KeepPausedIfAddressMismatch}
+              onChange&#x3D;{(ev) &#x3D;&gt; {
+                methods.updateRecord(
+                  &#x27;KeepPausedIfAddressMismatch&#x27;,
+                  ev.target.checked
+                );
+              }}
+              label&#x3D;{t(
+                &#x27;Keep contracts paused, if the customer passes verification but their business or home address is outside your location country.&#x27;
+              )}
+            /&gt;
+          &lt;/EuiFormRow&gt;
+        &lt;/&gt;
+      )}
+
+      &lt;EuiFormRow fullWidth&gt;
+        &lt;&gt;
+          &lt;CheckboxFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;RequestIdentityCheck&#x27;}
+            label&#x3D;{
+              &lt;Trans&gt;
+                Customers in this plan are required to{&#x27; &#x27;}
+                &lt;strong&gt;provide proof of ID.&lt;/strong&gt;
+              &lt;/Trans&gt;
+            }
+          /&gt;
+          &lt;EuiText style&#x3D;{{ marginLeft: &#x27;55px&#x27; }} size&#x3D;&quot;s&quot; color&#x3D;&quot;subdued&quot;&gt;
+            {t(
+              &#x27;When this setting is enabled, customer’s contract will be automatically paused until they pass the initial verification.&#x27;
+            )}
+          &lt;/EuiText&gt;
+        &lt;/&gt;
+      &lt;/EuiFormRow&gt;
+
+      {Boolean(methods.record.RequestIdentityCheck) &amp;&amp; (
+        &lt;&gt;
+          &lt;EuiFormRow style&#x3D;{{ maxWidth: &#x27;500px&#x27;, marginLeft: &#x27;55px&#x27; }}&gt;
+            &lt;&gt;
+              &lt;EnumFormControl
+                type&#x3D;&quot;select&quot;
+                methods&#x3D;{methods}
+                enumName&#x3D;{&#x27;eIdentityCheckProvider&#x27;}
+                propertyName&#x3D;{&#x27;IdentityCheckProvider&#x27;}
+                label&#x3D;{t(&#x27;Select how you would like to check proof of ID&#x27;)}
+              /&gt;
+              &lt;EuiText size&#x3D;&quot;s&quot; color&#x3D;&quot;subdued&quot;&gt;
+                &lt;Trans&gt;
+                  If required, you can update any individual identity check
+                  verification preference in the{&#x27; &#x27;}
+                  &lt;a
+                    style&#x3D;{{ textDecoration: &#x27;underline&#x27; }}
+                    target&#x3D;&quot;_blank&quot;
+                    href&#x3D;{routes.identityChecks}
+                  &gt;
+                    Identity Checks
+                  &lt;/a&gt;{&#x27; &#x27;}
+                  section.
+                &lt;/Trans&gt;
+              &lt;/EuiText&gt;
+
+              &lt;EuiSpacer size&#x3D;&quot;m&quot; /&gt;
+
+              &lt;StripeIntegrationWarning
+                identityCheckProvider&#x3D;{methods.record.IdentityCheckProvider}
+              /&gt;
+            &lt;/&gt;
+          &lt;/EuiFormRow&gt;
+
+          {methods.record[&#x27;IdentityCheckProvider&#x27;] !&#x3D;&#x3D;
+            IdentityCheckProviderEnum.StripeIdentity &amp;&amp; (
+            &lt;EuiFormRow style&#x3D;{{ maxWidth: &#x27;500px&#x27;, marginLeft: &#x27;55px&#x27; }}&gt;
+              &lt;&gt;
+                &lt;TextAreaFormControl
+                  methods&#x3D;{methods}
+                  maxTextLength&#x3D;{255}
+                  propertyName&#x3D;{&#x27;IdentityCheckDescription&#x27;}
+                  helpText&#x3D;{t(
+                    &#x27;We will save this information for you to use it next time.&#x27;
+                  )}
+                  label&#x3D;{t(
+                    &#x27;Let your customers know which documents you accept as proof of identity&#x27;
+                  )}
+                /&gt;
+                &lt;small&gt;
+                  &lt;EuiButton
+                    size&#x3D;&quot;s&quot;
+                    color&#x3D;&quot;text&quot;
+                    iconType&#x3D;&quot;copy&quot;
+                    disabled&#x3D;{!identityCheckSetting}
+                    onClick&#x3D;{pasteIdentityCheckDescription}
+                  &gt;
+                    {t(&#x27;Reuse previous list&#x27;)}
+                  &lt;/EuiButton&gt;
+                &lt;/small&gt;
+              &lt;/&gt;
+            &lt;/EuiFormRow&gt;
+          )}
+
+          &lt;EuiFormRow style&#x3D;{{ width: &#x27;150px&#x27;, marginLeft: &#x27;55px&#x27; }}&gt;
+            &lt;EnumFormControl
+              type&#x3D;&quot;select&quot;
+              ordered&#x3D;{false}
+              defaultEnum&#x3D;{1}
+              methods&#x3D;{methods}
+              label&#x3D;{t(&#x27;Repeat the check&#x27;)}
+              enumName&#x3D;{&#x27;eIdentityCheckRepeatPattern&#x27;}
+              propertyName&#x3D;{&#x27;IdentityCheckRepeatPattern&#x27;}
+            /&gt;
+          &lt;/EuiFormRow&gt;
+        &lt;/&gt;
+      )}
+      &lt;EuiFormRow style&#x3D;{{ maxWidth: &#x27;550px&#x27; }}&gt;
+        &lt;EuiSwitch
+          checked&#x3D;{methods.record.SendOnBoardingFormByEmail}
+          onChange&#x3D;{(ev) &#x3D;&gt; {
+            methods.updateRecordWithObject({
+              SendOnBoardingFormByEmail: ev.target.checked,
+              FormPageId: ev.target.checked ? methods.record.FormPageId : null,
+            });
+          }}
+          label&#x3D;{t(
+            &#x27;Send custom onboarding form to any customers purchasing this plan.&#x27;
+          )}
+        /&gt;
+      &lt;/EuiFormRow&gt;
+
+      {Boolean(methods.record.SendOnBoardingFormByEmail) &amp;&amp; (
+        &lt;&gt;
+          &lt;EuiFormRow style&#x3D;{{ width: &#x27;500px&#x27;, marginLeft: &#x27;55px&#x27; }}&gt;
+            &lt;EntityDropdownControl
+              label&#x3D;{t(&#x27;Select form&#x27;)}
+              methods&#x3D;{methods}
+              isClearable
+              listRecordFieldName&#x3D;&quot;Name&quot;
+              propertyName&#x3D;{&#x27;FormPageId&#x27;}
+              listRecordType&#x3D;{FormPage.Inst}
+            /&gt;
+          &lt;/EuiFormRow&gt;
+
+          &lt;EuiFormRow style&#x3D;{{ width: &#x27;500px&#x27;, marginLeft: &#x27;55px&#x27; }}&gt;
+            &lt;EuiText size&#x3D;&quot;s&quot; color&#x3D;&quot;subdued&quot;&gt;
+              &lt;Trans&gt;
+                This form will be shared after plan purchase as a part of
+                onboarding and identity checks. To add a new form, navigate to
+                the{&#x27; &#x27;}
+                &lt;a
+                  target&#x3D;&quot;_blank&quot;
+                  href&#x3D;{routes.formPages}
+                  style&#x3D;{{ textDecoration: &#x27;underline&#x27; }}
+                &gt;
+                  Forms
+                &lt;/a&gt;{&#x27; &#x27;}
+                section.
+              &lt;/Trans&gt;
+            &lt;/EuiText&gt;
+          &lt;/EuiFormRow&gt;
+        &lt;/&gt;
+      )}
+    &lt;/FormSectionHeader&gt;
+  );
+};
+
+CONTENTS END
+--
+--
+TAB NAME: Virtual Office delivery settings
+CONTENTS START
+import React, { ReactElement, useEffect, useState } from &#x27;react&#x27;;
+import { useTranslation } from &#x27;react-i18next&#x27;;
+import {
+  EuiButton,
+  EuiButtonIcon,
+  EuiComboBox,
+  EuiComboBoxOptionOption,
+  EuiFlexGroup,
+  EuiFlexItem,
+  EuiFormRow,
+  EuiHorizontalRule,
+  EuiSpacer,
+  EuiText,
+} from &#x27;@elastic/eui&#x27;;
+
+import {
+  EnumValue,
+  NexudusApiServiceInst,
+} from &#x27;~/src/services/NexudusApiService&#x27;;
+import { Tariff } from &#x27;~/src/types/billing/tariff&#x27;;
+import { getEnumTranslation } from &#x27;~/src/i18n/enums&#x27;;
+import { DeliveryTypesModal } from &#x27;./deliveryCategoriesModal&#x27;;
+import { formMethods } from &#x27;~/src/components/forms/useFormMethods&#x27;;
+import FormSectionHeader from &#x27;~/src/components/forms/formSectionHeader&#x27;;
+import NumberFormControl from &#x27;~/src/components/forms/controls/numberFormControl/numberFormControl&#x27;;
+import ProductDropdownControl from &#x27;~/src/components/forms/controls/entities/productDropdownControl&#x27;;
+import { useDidUpdateEffect } from &#x27;~/src/hooks/useDidUpdateEffect&#x27;;
+import _ from &#x27;lodash&#x27;;
+
+export interface DeliveryTypeItem {
+  value: number;
+  label: string;
+  propertyName: string;
+}
+
+export interface DeliveryHandlingPreferenceItem {
+  label: string;
+  propertyName: string;
+  action: string;
+}
+
+const DELIVERY_HANDLING_ENUM &#x3D; &#x27;eDeliveryHandlingPreference&#x27;;
+const DELIVERY_TYPE_ENUM &#x3D; &#x27;eDeliveryType&#x27;;
+
+export enum DeliveryHandlingPreference {
+  StoreForCollection &#x3D; 1,
+  Forward &#x3D; 2,
+  OpenScanForward &#x3D; 3,
+  OpenScanRecycle &#x3D; 4,
+  OpenScanShred &#x3D; 5,
+  OpenScanStoreForCollection &#x3D; 6,
+  Recycle &#x3D; 7,
+  ReturnToSender &#x3D; 8,
+  Shred &#x3D; 9,
+  DepositCheck &#x3D; 10,
+  Unknown &#x3D; 11,
+}
+
+export enum DeliveryType {
+  Mail &#x3D; 1,
+  Parcel &#x3D; 2,
+  Check &#x3D; 3,
+  Publicity &#x3D; 4,
+  Other &#x3D; 5,
+}
+
+const DELIVERY_ACTIONS &#x3D; [
+  &#x27;Shred&#x27;,
+  &#x27;Forward&#x27;,
+  &#x27;Recycle&#x27;,
+  &#x27;Scan&#x27;,
+  &#x27;Return&#x27;,
+  &#x27;Deposit&#x27;,
+  &#x27;Store&#x27;,
+];
+
+export const VirtualOfficeDeliveries &#x3D; ({
+  methods,
+}: {
+  methods: formMethods&lt;Tariff&gt;;
+}): ReactElement &#x3D;&gt; {
+  const { t } &#x3D; useTranslation();
+  const [deliveryHandlingEnum, setDeliveryHandlingEnum] &#x3D; useState&lt;EnumValue[]&gt;(
+    []
+  );
+  const [deliveryTypesEnum, setDeliveryTypesEnum] &#x3D; useState&lt;EnumValue[]&gt;([]);
+  const [selectedDeliveryTypes, setSelectedDeliveryTypes] &#x3D; useState&lt;
+    DeliveryTypeItem[]
+  &gt;([]);
+
+  const [selectedDeliveryHandlingTypes, setSelectedDeliveryHandlingTypes] &#x3D;
+    useState&lt;DeliveryHandlingPreferenceItem[]&gt;([]);
+
+  const [isDeliveryTypesModalOpen, setDeliveryTypesModalOpen] &#x3D; useState(false);
+  const canAddDeliveryType &#x3D;
+    selectedDeliveryTypes.length &lt; deliveryTypesEnum.length - 1;
+  const canDeleteDeliveryType &#x3D; selectedDeliveryTypes.length !&#x3D;&#x3D; 1;
+
+  // start
+  const getPropertyNameByDeliveryType &#x3D; (deliveryType: DeliveryType) &#x3D;&gt; {
+    const propertyNames &#x3D; {
+      [DeliveryType.Mail]: &#x27;DeliveryPreferencesMail&#x27;,
+      [DeliveryType.Parcel]: &#x27;DeliveryPreferencesParcels&#x27;,
+      [DeliveryType.Check]: &#x27;DeliveryPreferencesChecks&#x27;,
+      [DeliveryType.Publicity]: &#x27;DeliveryPreferencesPublicity&#x27;,
+    };
+
+    return propertyNames[deliveryType];
+  };
+
+  const getMappedDeliveryTypes &#x3D; (
+    deliveryTypes: EnumValue[]
+  ): DeliveryTypeItem[] &#x3D;&gt; {
+    return deliveryTypes.map((deliveryType) &#x3D;&gt; ({
+      value: deliveryType.Id,
+      label: getEnumTranslation(t, DELIVERY_TYPE_ENUM, deliveryType.Name),
+      propertyName: getPropertyNameByDeliveryType(deliveryType.Id),
+    }));
+  };
+
+  const getMappedDeliveryPreferences &#x3D; (filter?: (option) &#x3D;&gt; boolean) &#x3D;&gt; {
+    const allTypes &#x3D; deliveryHandlingEnum
+      .map((handlingType) &#x3D;&gt; ({
+        label: getEnumTranslation(t, DELIVERY_HANDLING_ENUM, handlingType.Name),
+        value: handlingType.Id,
+      }))
+      .filter((o) &#x3D;&gt; o.value !&#x3D;&#x3D; DeliveryHandlingPreference.Unknown);
+
+    if (filter) {
+      return allTypes.filter(filter);
+    }
+
+    return allTypes;
+  };
+
+  const getSelectedOptions &#x3D; (
+    propertyName: string
+  ): EuiComboBoxOptionOption[] &#x3D;&gt; {
+    const mappedPreferences &#x3D; getMappedDeliveryPreferences();
+
+    return mappedPreferences.filter(
+      (r) &#x3D;&gt; methods.record[propertyName]?.indexOf(r.value) &gt; -1
+    );
+  };
+
+  const onDeliveryHandlingChange &#x3D; (
+    selectedOptions: EuiComboBoxOptionOption&lt;any&gt;[],
+    propertyName: string
+  ): void &#x3D;&gt; {
+    const value &#x3D; selectedOptions.map((opt) &#x3D;&gt; parseInt(opt.value));
+
+    methods.updateRecord(propertyName as keyof Tariff, value);
+  };
+
+  const clearRecordValue &#x3D; (propertyName: string) &#x3D;&gt; {
+    methods.updateRecord(propertyName as keyof Tariff, []);
+  };
+
+  const cleanDeliveryTypeProductsValues &#x3D; (
+    deliveryTypes: DeliveryTypeItem[]
+  ) &#x3D;&gt; {
+    const deliveryActions &#x3D; getDeliveryActions(deliveryTypes);
+
+    const actionsToRemove &#x3D; DELIVERY_ACTIONS.filter(
+      (action) &#x3D;&gt; !deliveryActions.some((ac) &#x3D;&gt; ac &#x3D;&#x3D; action)
+    );
+
+    actionsToRemove.forEach((action) &#x3D;&gt; {
+      methods.updateRecord(&#x60;Products${action}&#x60; as keyof Tariff, []);
+    });
+  };
+
+  const getDefaultDeliveryType &#x3D; (
+    deliveryTypesEnum: EnumValue[]
+  ): DeliveryTypeItem[] &#x3D;&gt; {
+    return getMappedDeliveryTypes([deliveryTypesEnum[0]]);
+  };
+
+  const getSelectedDeliveryTypes &#x3D; (
+    deliveryTypesEnum: EnumValue[]
+  ): DeliveryTypeItem[] &#x3D;&gt; {
+    const allDeliveryTypes &#x3D; getMappedDeliveryTypes(deliveryTypesEnum);
+
+    return allDeliveryTypes.filter(
+      (type) &#x3D;&gt; methods.record[type.propertyName]?.length &gt; 0
+    );
+  };
+
+  const populateDefaultMailOptions &#x3D; () &#x3D;&gt; {
+    const defaultMailOptions &#x3D; getMappedDeliveryPreferences((option) &#x3D;&gt;
+      [
+        DeliveryHandlingPreference.Forward,
+        DeliveryHandlingPreference.OpenScanForward,
+        DeliveryHandlingPreference.OpenScanStoreForCollection,
+        DeliveryHandlingPreference.StoreForCollection,
+      ].includes(option.value)
+    );
+
+    onDeliveryHandlingChange(
+      defaultMailOptions,
+      getPropertyNameByDeliveryType(DeliveryType.Mail)
+    );
+
+    const defaultParcelOptions &#x3D; getMappedDeliveryPreferences((option) &#x3D;&gt;
+      [
+        DeliveryHandlingPreference.Forward,
+        DeliveryHandlingPreference.StoreForCollection,
+      ].includes(option.value)
+    );
+
+    onDeliveryHandlingChange(
+      defaultParcelOptions,
+      getPropertyNameByDeliveryType(DeliveryType.Parcel)
+    );
+  };
+
+  const populateSelectedDeliveryTypes &#x3D; (deliveryTypesEnum: EnumValue[]) &#x3D;&gt; {
+    const defaultType &#x3D; getDefaultDeliveryType(deliveryTypesEnum);
+    const allSelected &#x3D; getSelectedDeliveryTypes(deliveryTypesEnum);
+    const hasSelectedTypes &#x3D; allSelected.length &gt; 0;
+    const selectedTypes &#x3D; hasSelectedTypes ? allSelected : defaultType;
+
+    if (!hasSelectedTypes &amp;&amp; !(methods.record.Id &gt; 0)) {
+      populateDefaultMailOptions();
+    }
+
+    setSelectedDeliveryTypes(selectedTypes);
+  };
+
+  const removeDeliveryType &#x3D; (
+    deliveryTypeId: DeliveryType,
+    propertyName: string
+  ): void &#x3D;&gt; {
+    const filteredTypes &#x3D; selectedDeliveryTypes.filter(
+      (deliveryType) &#x3D;&gt; deliveryType.value !&#x3D;&#x3D; deliveryTypeId
+    );
+
+    clearRecordValue(propertyName);
+    cleanDeliveryTypeProductsValues(filteredTypes);
+    setSelectedDeliveryTypes(filteredTypes);
+  };
+
+  const confirmDeliveryHandlingTypes &#x3D; (deliveryTypes: EnumValue[]): void &#x3D;&gt; {
+    const mappedDeliveryTypes &#x3D; getMappedDeliveryTypes(deliveryTypes);
+    setSelectedDeliveryTypes(mappedDeliveryTypes);
+  };
+
+  useEffect(() &#x3D;&gt; {
+    NexudusApiServiceInst.getEnumValues(DELIVERY_HANDLING_ENUM).then((data) &#x3D;&gt;
+      setDeliveryHandlingEnum(data)
+    );
+  }, []);
+
+  useEffect(() &#x3D;&gt; {
+    NexudusApiServiceInst.getEnumValues(DELIVERY_TYPE_ENUM).then(
+      (deliveryTypes) &#x3D;&gt; {
+        setDeliveryTypesEnum(deliveryTypes);
+      }
+    );
+  }, []);
+
+  useEffect(() &#x3D;&gt; {
+    if (deliveryTypesEnum.length &gt; 0 &amp;&amp; deliveryHandlingEnum.length &gt; 0) {
+      populateSelectedDeliveryTypes(deliveryTypesEnum);
+    }
+  }, [deliveryHandlingEnum, deliveryTypesEnum]);
+
+  // end
+
+  const getHandlingOptionsByType &#x3D; (deliveryType: DeliveryType) &#x3D;&gt; {
+    const options &#x3D; {
+      [DeliveryType.Mail]: getMappedDeliveryPreferences(
+        (option) &#x3D;&gt;
+          ![DeliveryHandlingPreference.DepositCheck].includes(option.value)
+      ),
+      [DeliveryType.Check]: getMappedDeliveryPreferences(
+        (option) &#x3D;&gt;
+          ![
+            DeliveryHandlingPreference.Recycle,
+            DeliveryHandlingPreference.OpenScanRecycle,
+            DeliveryHandlingPreference.Shred,
+            DeliveryHandlingPreference.OpenScanShred,
+          ].includes(option.value)
+      ),
+      [DeliveryType.Publicity]: getMappedDeliveryPreferences(
+        (option) &#x3D;&gt;
+          ![DeliveryHandlingPreference.DepositCheck].includes(option.value)
+      ),
+      [DeliveryType.Parcel]: getMappedDeliveryPreferences(
+        (option) &#x3D;&gt;
+          ![
+            DeliveryHandlingPreference.Recycle,
+            DeliveryHandlingPreference.OpenScanRecycle,
+            DeliveryHandlingPreference.Shred,
+            DeliveryHandlingPreference.OpenScanForward,
+            DeliveryHandlingPreference.OpenScanShred,
+            DeliveryHandlingPreference.OpenScanStoreForCollection,
+            DeliveryHandlingPreference.DepositCheck,
+          ].includes(option.value)
+      ),
+    };
+
+    return options[deliveryType];
+  };
+
+  const getDeliveryActionTrans &#x3D; (actionProperty: string) &#x3D;&gt; {
+    const translations &#x3D; {
+      Forward: t(&#x27;Forward&#x27;),
+      Shred: t(&#x27;Shred&#x27;),
+      Recycle: t(&#x27;Recycle&#x27;),
+      Scan: t(&#x27;Scan&#x27;),
+      Store: t(&#x27;Store&#x27;),
+      Return: t(&#x27;Return to sender&#x27;),
+      Deposit: t(&#x27;Deposit a check&#x27;),
+      Collect: t(&#x27;Collect&#x27;),
+    };
+
+    return translations[actionProperty];
+  };
+
+  const getAllSelectedDeliveryTypesValues &#x3D; (
+    deliveryTypes: DeliveryTypeItem[]
+  ): DeliveryHandlingPreference[] &#x3D;&gt; {
+    return deliveryTypes.reduce(
+      (prev, curr) &#x3D;&gt; [
+        ...new Set([...prev, ...methods.record[curr.propertyName]]),
+      ],
+      []
+    );
+  };
+
+  const getDeliveryActions &#x3D; (deliveryTypes: DeliveryTypeItem[]) &#x3D;&gt; {
+    const selectedValues &#x3D; getAllSelectedDeliveryTypesValues(deliveryTypes);
+
+    return selectedValues.reduce(
+      (prev, curr) &#x3D;&gt; [...new Set([...prev, ...getDeliveryActionByType(curr)])],
+      []
+    );
+  };
+
+  const updateSelectedHandlingTypes &#x3D; () &#x3D;&gt; {
+    const deliveryActions &#x3D; getDeliveryActions(selectedDeliveryTypes);
+    const allHandlingActions &#x3D; deliveryActions.map((action) &#x3D;&gt; {
+      return {
+        label: getDeliveryActionTrans(action),
+        propertyName: &#x60;Products${action}&#x60;,
+        action,
+      };
+    });
+    if (deliveryActions.indexOf(&#x27;Store&#x27;) &gt; -1) {
+      allHandlingActions.push({
+        action: &#x27;Collect&#x27;,
+        label: t(&#x27;Collect&#x27;),
+        propertyName: &#x27;ProductsCollect&#x27;,
+      });
+    }
+
+    setSelectedDeliveryHandlingTypes(allHandlingActions);
+  };
+
+  const getDeliveryActionByType &#x3D; (
+    deliveryType: DeliveryHandlingPreference
+  ): string[] &#x3D;&gt; {
+    const deliveryActions &#x3D; {
+      [DeliveryHandlingPreference.Shred]: [&#x27;Shred&#x27;],
+      [DeliveryHandlingPreference.Forward]: [&#x27;Forward&#x27;],
+      [DeliveryHandlingPreference.Recycle]: [&#x27;Recycle&#x27;],
+      [DeliveryHandlingPreference.OpenScanForward]: [&#x27;Scan&#x27;, &#x27;Forward&#x27;],
+      [DeliveryHandlingPreference.OpenScanRecycle]: [&#x27;Scan&#x27;, &#x27;Recycle&#x27;],
+      [DeliveryHandlingPreference.OpenScanShred]: [&#x27;Scan&#x27;, &#x27;Shred&#x27;],
+      [DeliveryHandlingPreference.OpenScanStoreForCollection]: [
+        &#x27;Scan&#x27;,
+        &#x27;Store&#x27;,
+      ],
+      [DeliveryHandlingPreference.ReturnToSender]: [&#x27;Return&#x27;],
+      [DeliveryHandlingPreference.DepositCheck]: [&#x27;Deposit&#x27;],
+      [DeliveryHandlingPreference.StoreForCollection]: [&#x27;Store&#x27;],
+    };
+
+    return deliveryActions[deliveryType];
+  };
+
+  const isCollectStep &#x3D; (propertyName: string) &#x3D;&gt;
+    propertyName.includes(&#x27;Collect&#x27;);
+
+  useEffect(() &#x3D;&gt; {
+    updateSelectedHandlingTypes();
+  }, [
+    methods.record.DeliveryPreferencesMail,
+    methods.record.DeliveryPreferencesParcels,
+    methods.record.DeliveryPreferencesChecks,
+    methods.record.DeliveryPreferencesPublicity,
+    selectedDeliveryTypes,
+  ]);
+
+  useDidUpdateEffect(() &#x3D;&gt; {
+    cleanDeliveryTypeProductsValues(selectedDeliveryTypes);
+  }, [
+    methods.record.DeliveryPreferencesMail,
+    methods.record.DeliveryPreferencesParcels,
+    methods.record.DeliveryPreferencesChecks,
+    methods.record.DeliveryPreferencesPublicity,
+  ]);
+
+  return (
+    &lt;&gt;
+      &lt;FormSectionHeader title&#x3D;{t(&#x27;Virtual Office delivery handling&#x27;)}&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;&gt;
+            &lt;EuiText size&#x3D;&quot;m&quot; color&#x3D;&quot;black&quot;&gt;
+              &lt;strong&gt;
+                {t(&#x27;Link delivery categories and their handling options.&#x27;)}
+              &lt;/strong&gt;
+            &lt;/EuiText&gt;
+
+            &lt;EuiText size&#x3D;&quot;s&quot; color&#x3D;&quot;black&quot;&gt;
+              {t(
+                &quot;Select the delivery categories you would like to offer for this plan&#x27;s customers. This lets you manage delivery options and link any associated charges.&quot;
+              )}
+            &lt;/EuiText&gt;
+          &lt;/&gt;
+        &lt;/EuiFormRow&gt;
+
+        {_.sortBy(selectedDeliveryTypes, (x) &#x3D;&gt; x.label).map((deliveryType) &#x3D;&gt; {
+          return (
+            &lt;EuiFormRow fullWidth&gt;
+              &lt;EuiFlexGroup
+                gutterSize&#x3D;&quot;s&quot;
+                responsive&#x3D;{false}
+                alignItems&#x3D;&quot;center&quot;
+                justifyContent&#x3D;&quot;flexStart&quot;
+              &gt;
+                &lt;EuiFlexItem grow&#x3D;{false} style&#x3D;{{ minWidth: &#x27;200px&#x27; }}&gt;
+                  &lt;EuiText
+                    size&#x3D;&quot;s&quot;
+                    color&#x3D;&quot;black&quot;
+                    style&#x3D;{{
+                      height: &#x27;100%&#x27;,
+                      display: &#x27;flex&#x27;,
+                      alignItems: &#x27;center&#x27;,
+                    }}
+                  &gt;
+                    &lt;strong&gt;{deliveryType.label}&lt;/strong&gt;
+                  &lt;/EuiText&gt;
+                &lt;/EuiFlexItem&gt;
+
+                &lt;EuiFlexItem grow&#x3D;{false}&gt;
+                  &lt;EuiFormRow
+                    label&#x3D;{t(&#x27;Select delivery handling option&#x27;)}
+                    helpText&#x3D;{t(
+                      &#x27;To access more delivery handling options, ensure they are enabled above.&#x27;
+                    )}
+                  &gt;
+                    &lt;EuiFlexGroup gutterSize&#x3D;&quot;s&quot;&gt;
+                      &lt;EuiComboBox
+                        isClearable
+                        singleSelection&#x3D;{false}
+                        placeholder&#x3D;{t(&#x27;No handling options&#x27;)}
+                        options&#x3D;{getHandlingOptionsByType(deliveryType.value)}
+                        selectedOptions&#x3D;{getSelectedOptions(
+                          deliveryType.propertyName
+                        )}
+                        onChange&#x3D;{(selectedItems) &#x3D;&gt;
+                          onDeliveryHandlingChange(
+                            selectedItems,
+                            deliveryType.propertyName
+                          )
+                        }
+                      /&gt;
+
+                      &lt;EuiButtonIcon
+                        size&#x3D;&quot;m&quot;
+                        color&#x3D;&quot;text&quot;
+                        display&#x3D;&quot;base&quot;
+                        iconType&#x3D;&quot;trash&quot;
+                        title&#x3D;{t(&#x27;Delete&#x27;)}
+                        isDisabled&#x3D;{!canDeleteDeliveryType}
+                        onClick&#x3D;{() &#x3D;&gt;
+                          removeDeliveryType(
+                            deliveryType.value,
+                            deliveryType.propertyName
+                          )
+                        }
+                      /&gt;
+                    &lt;/EuiFlexGroup&gt;
+                  &lt;/EuiFormRow&gt;
+                &lt;/EuiFlexItem&gt;
+              &lt;/EuiFlexGroup&gt;
+            &lt;/EuiFormRow&gt;
+          );
+        })}
+
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;EuiButton
+            fill
+            iconType&#x3D;&quot;plus&quot;
+            isDisabled&#x3D;{!canAddDeliveryType}
+            onClick&#x3D;{() &#x3D;&gt; setDeliveryTypesModalOpen(true)}
+          &gt;
+            {t(&#x27;Add delivery type(s)&#x27;)}
+          &lt;/EuiButton&gt;
+        &lt;/EuiFormRow&gt;
+
+        &lt;EuiHorizontalRule margin&#x3D;&quot;l&quot; /&gt;
+
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;&gt;
+            &lt;EuiText size&#x3D;&quot;m&quot; color&#x3D;&quot;black&quot;&gt;
+              &lt;strong&gt;{t(&#x27;Link charges to delivery handling options.&#x27;)}&lt;/strong&gt;
+            &lt;/EuiText&gt;
+          &lt;/&gt;
+        &lt;/EuiFormRow&gt;
+
+        {_.sortBy(selectedDeliveryHandlingTypes, (x) &#x3D;&gt; x.label).map(
+          (handlingType) &#x3D;&gt; {
+            return (
+              &lt;EuiFormRow fullWidth&gt;
+                &lt;EuiFlexGroup
+                  gutterSize&#x3D;&quot;s&quot;
+                  responsive&#x3D;{false}
+                  alignItems&#x3D;&quot;flexStart&quot;
+                  justifyContent&#x3D;&quot;flexStart&quot;
+                &gt;
+                  &lt;EuiFlexItem
+                    grow&#x3D;{false}
+                    style&#x3D;{{ minWidth: &#x27;200px&#x27;, marginTop: &#x27;20px&#x27; }}
+                  &gt;
+                    &lt;EuiText
+                      size&#x3D;&quot;s&quot;
+                      color&#x3D;&quot;black&quot;
+                      style&#x3D;{{
+                        height: &#x27;100%&#x27;,
+                        display: &#x27;flex&#x27;,
+                        alignItems: &#x27;center&#x27;,
+                        maxWidth: &#x27;200px&#x27;,
+                      }}
+                    &gt;
+                      &lt;strong&gt;{handlingType.label}&lt;/strong&gt;
+                    &lt;/EuiText&gt;
+                  &lt;/EuiFlexItem&gt;
+
+                  &lt;EuiFlexItem grow&#x3D;{false}&gt;
+                    &lt;EuiFlexGroup
+                      gutterSize&#x3D;&quot;s&quot;
+                      direction&#x3D;&quot;column&quot;
+                      style&#x3D;{{ minWidth: 400 }}
+                    &gt;
+                      {isCollectStep(handlingType.propertyName) &amp;&amp; (
+                        &lt;EuiFormRow&gt;
+                          &lt;&gt;
+                            &lt;NumberFormControl
+                              unit&#x3D;{&#x27;days&#x27;}
+                              methods&#x3D;{methods}
+                              propertyName&#x3D;{&#x27;MaximumDeliveryStorageDays&#x27;}
+                              label&#x3D;{t(&#x27;Maximum number of free storage days&#x27;)}
+                            /&gt;
+                            &lt;EuiSpacer size&#x3D;&quot;s&quot; /&gt;
+                            &lt;EuiText
+                              size&#x3D;&quot;xs&quot;
+                              color&#x3D;&quot;subdued&quot;
+                              style&#x3D;{{ maxWidth: &#x27;200px&#x27; }}
+                            &gt;
+                              {t(
+                                &#x27;We will suggest a charge to collect the delivery based on the number of days the delivery has been stored after the free storage days.&#x27;
+                              )}
+                            &lt;/EuiText&gt;
+                          &lt;/&gt;
+                        &lt;/EuiFormRow&gt;
+                      )}
+                      &lt;ProductDropdownControl
+                        isClearable
+                        methods&#x3D;{methods}
+                        singleSelection&#x3D;{false}
+                        label&#x3D;{t(&#x27;Link charge(s)&#x27;)}
+                        placeholder&#x3D;{t(&#x27;No handling charge&#x27;)}
+                        propertyName&#x3D;{handlingType.propertyName as keyof Tariff}
+                      /&gt;
+                    &lt;/EuiFlexGroup&gt;
+                  &lt;/EuiFlexItem&gt;
+                &lt;/EuiFlexGroup&gt;
+              &lt;/EuiFormRow&gt;
+            );
+          }
+        )}
+      &lt;/FormSectionHeader&gt;
+
+      &lt;FormSectionHeader
+        title&#x3D;{t(&#x27;Contacts limits&#x27;)}
+        subtitle&#x3D;{t(
+          &#x27;Define company alias, nominated recipient and forwarding address limits&#x27;
+        )}
+      &gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;NumberFormControl
+            methods&#x3D;{methods}
+            unit&#x3D;{t(&#x27;aliases&#x27;)}
+            propertyName&#x3D;{&#x27;MaximumCompanyAliases&#x27;}
+            label&#x3D;{t(&#x27;Maximum additional company aliases &#x27;)}
+            helpText&#x3D;{t(
+              &#x27;The number of additional company aliases, excluding the one provided during onboarding.&#x27;
+            )}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;NumberFormControl
+            methods&#x3D;{methods}
+            unit&#x3D;{t(&#x27;recipients&#x27;)}
+            propertyName&#x3D;{&#x27;MaximumRecipients&#x27;}
+            label&#x3D;{t(
+              &#x27;Maximum additional recipients (excluding onboarded beneficiaries)&#x27;
+            )}
+            helpText&#x3D;{t(
+              &#x27;The number of additional nominated recipients, excluding those provided during onboarding.&#x27;
+            )}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;NumberFormControl
+            methods&#x3D;{methods}
+            unit&#x3D;{t(&#x27;addresses&#x27;)}
+            propertyName&#x3D;{&#x27;MaximumAddresses&#x27;}
+            label&#x3D;{t(&#x27;Maximum forwarding addresses per recipient&#x27;)}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+      &lt;/FormSectionHeader&gt;
+
+      {isDeliveryTypesModalOpen &amp;&amp; (
+        &lt;DeliveryTypesModal
+          deliveryTypesEnum&#x3D;{deliveryTypesEnum}
+          onConfirm&#x3D;{confirmDeliveryHandlingTypes}
+          selectedDeliveryTypes&#x3D;{selectedDeliveryTypes}
+          closeModal&#x3D;{() &#x3D;&gt; setDeliveryTypesModalOpen(false)}
+        /&gt;
+      )}
+    &lt;/&gt;
+  );
+};
+
+CONTENTS END
+--
+--
+TAB NAME: Benefits
+CONTENTS START
+import { EuiBadge, EuiForm, EuiFormRow } from &#x27;@elastic/eui&#x27;;
+import React, { ReactElement, useEffect, useMemo, useState } from &#x27;react&#x27;;
+import { Tariff } from &#x27;~/src/types/billing/tariff&#x27;;
+import { formMethods } from &#x27;~/src/components/forms/useFormMethods&#x27;;
+import { useTranslation } from &#x27;react-i18next&#x27;;
+import FormSectionHeader from &#x27;~/src/components/forms/formSectionHeader&#x27;;
+import TariffBookingCreditListPage from &#x27;../tariffBookingCredits&#x27;;
+import {
+  NexudusApiServiceInst,
+  QueryItem,
+  sortDirection,
+} from &#x27;~/src/services/NexudusApiService&#x27;;
+import { TariffBookingCredit } from &#x27;~/src/types/billing/tariffBookingCredit&#x27;;
+import TariffExtraServiceListPage from &#x27;../tariffExtraServices&#x27;;
+import { TariffExtraService } from &#x27;~/src/types/billing/tariffExtraService&#x27;;
+import RouteTabbedContent from &#x27;~/src/components/forms/routeTabbedContent&#x27;;
+import TariffTimePassListPage from &#x27;../tariffTimePass&#x27;;
+import { TariffTimePass } from &#x27;~/src/types/billing/tariffTimePass&#x27;;
+import { routes } from &#x27;~/src/env/routes&#x27;;
+import { observer } from &#x27;mobx-react-lite&#x27;;
+import { useStores } from &#x27;~/src/stores/useStores&#x27;;
+import TariffPrintingCreditListPage from &#x27;../tariffPrintingCredits&#x27;;
+import _ from &#x27;lodash&#x27;;
+import InlineNumberInputFormControl from &#x27;~/src/components/forms/controls/inlineNumberInputFormControl/inlineNumberInputFormControl&#x27;;
+import ShowIfVersion, {
+  currentVersionHasModule,
+} from &#x27;~/src/env/showIfVersion/showIfVersion&#x27;;
+import { LoadingContent } from &#x27;~/src/components/display/LoadingContent&#x27;;
+
+const TariffBenefitsForm &#x3D; observer(
+  ({ methods }: { methods: formMethods&lt;Tariff&gt; }): ReactElement &#x3D;&gt; {
+    const { t } &#x3D; useTranslation();
+    const { appStore } &#x3D; useStores();
+
+    const bookingCreditQuery: QueryItem&lt;TariffBookingCredit&gt;[] &#x3D; [
+      {
+        name: &#x27;TariffId&#x27;,
+        value: methods.record.Id,
+        type: &#x27;entity&#x27;,
+      },
+    ];
+    const timeCreditQuery: QueryItem&lt;TariffExtraService&gt;[] &#x3D; [
+      {
+        name: &#x27;TariffId&#x27;,
+        value: methods.record.Id,
+        type: &#x27;entity&#x27;,
+      },
+      {
+        name: &#x27;ExtraServiceIsPrintingCredit&#x27;,
+        foreignEntityName: &#x27;extraService&#x27;,
+        value: false,
+        type: &#x27;boolean&#x27;,
+      },
+    ];
+
+    const timePassCreditQuery: QueryItem&lt;TariffTimePass&gt;[] &#x3D; [
+      {
+        name: &#x27;TariffId&#x27;,
+        value: methods.record.Id,
+        type: &#x27;entity&#x27;,
+      },
+    ];
+
+    const printingCreditQuery: QueryItem&lt;TariffExtraService&gt;[] &#x3D; [
+      {
+        name: &#x27;TariffId&#x27;,
+        value: methods.record.Id,
+        type: &#x27;entity&#x27;,
+      },
+      {
+        name: &#x27;ExtraServiceIsPrintingCredit&#x27;,
+        foreignEntityName: &#x27;extraService&#x27;,
+        value: true,
+        type: &#x27;boolean&#x27;,
+      },
+    ];
+
+    const [tariffExtraService, setTariffExtraService] &#x3D; useState&lt;number&gt;();
+    const [tariffTimePass, setTariffTimePass] &#x3D; useState&lt;number&gt;();
+    const [tariffBookingCredit, setTariffBookingCredit] &#x3D; useState&lt;number&gt;();
+    const [extraServiceIsPrintingCredit, setExtraServiceIsPrintingCredit] &#x3D;
+      useState&lt;number&gt;();
+
+    /**
+     * This calculates the totals for each tab section and reloads
+     * the list when any of these records are deleted/created/updated
+     */
+    useEffect(() &#x3D;&gt; {
+      NexudusApiServiceInst.getTotalRecords(
+        TariffExtraService.Inst,
+        timeCreditQuery
+      ).then(setTariffExtraService);
+
+      NexudusApiServiceInst.getTotalRecords(
+        TariffExtraService.Inst,
+        printingCreditQuery
+      ).then(setExtraServiceIsPrintingCredit);
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [appStore.lastRecordUpdateTimeStamp.tariffExtraService]);
+
+    useEffect(() &#x3D;&gt; {
+      NexudusApiServiceInst.getList(
+        TariffTimePass.Inst,
+        1,
+        5000,
+        &#x27;Id&#x27;,
+        sortDirection.Ascending,
+        timePassCreditQuery
+      ).then((data) &#x3D;&gt;
+        setTariffTimePass(_.sumBy(data.Records, &#x27;PassesIncluded&#x27;))
+      );
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [appStore.lastRecordUpdateTimeStamp.tariffTimePass]);
+
+    useEffect(() &#x3D;&gt; {
+      NexudusApiServiceInst.getTotalRecords(
+        TariffBookingCredit.Inst,
+        bookingCreditQuery
+      ).then(setTariffBookingCredit);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [appStore.lastRecordUpdateTimeStamp.tariffBookingCredit]);
+
+    const hasLoadedData &#x3D;
+      extraServiceIsPrintingCredit !&#x3D; null &amp;&amp;
+      tariffTimePass !&#x3D; null &amp;&amp;
+      tariffExtraService !&#x3D; null &amp;&amp;
+      tariffBookingCredit !&#x3D; null;
+    const subTabs &#x3D; useMemo(
+      () &#x3D;&gt; [
+        ...(currentVersionHasModule([&#x27;Finance&#x27;])
+          ? [
+              {
+                id: &#x27;tariffBookingCredits&#x27;,
+                name: (
+                  &lt;span&gt;
+                    &lt;span style&#x3D;{{ marginRight: 10 }}&gt;{t(&#x27;Money credit&#x27;)}&lt;/span&gt;
+                    {tariffBookingCredit &gt; 0 &amp;&amp; (
+                      &lt;EuiBadge&gt;{tariffBookingCredit}&lt;/EuiBadge&gt;
+                    )}
+                  &lt;/span&gt;
+                ),
+                content: (
+                  &lt;TariffBookingCreditListPage query&#x3D;{bookingCreditQuery} /&gt;
+                ),
+              },
+            ]
+          : []),
+        {
+          id: &#x27;tariffExtraServices&#x27;,
+          name: (
+            &lt;span&gt;
+              &lt;span style&#x3D;{{ marginRight: 10 }}&gt;{t(&#x27;Time credit&#x27;)}&lt;/span&gt;
+              {tariffExtraService &gt; 0 &amp;&amp; (
+                &lt;EuiBadge&gt;{tariffExtraService}&lt;/EuiBadge&gt;
+              )}
+            &lt;/span&gt;
+          ),
+          content: &lt;TariffExtraServiceListPage query&#x3D;{timeCreditQuery} /&gt;,
+        },
+        {
+          id: &#x27;tariffTimePasses&#x27;,
+          name: (
+            &lt;span&gt;
+              &lt;span style&#x3D;{{ marginRight: 10 }}&gt;{t(&#x27;Passes&#x27;)}&lt;/span&gt;
+              {tariffTimePass &gt; 0 &amp;&amp; &lt;EuiBadge&gt;{tariffTimePass}&lt;/EuiBadge&gt;}
+            &lt;/span&gt;
+          ),
+          content: &lt;TariffTimePassListPage query&#x3D;{timePassCreditQuery} /&gt;,
+        },
+        {
+          id: &#x27;tariffPrintingCredits&#x27;,
+          name: (
+            &lt;span&gt;
+              &lt;span style&#x3D;{{ marginRight: 10 }}&gt;{t(&#x27;Printing credit&#x27;)}&lt;/span&gt;
+              {extraServiceIsPrintingCredit &gt; 0 &amp;&amp; (
+                &lt;EuiBadge&gt;{extraServiceIsPrintingCredit}&lt;/EuiBadge&gt;
+              )}
+            &lt;/span&gt;
+          ),
+          content: &lt;TariffPrintingCreditListPage query&#x3D;{printingCreditQuery} /&gt;,
+        },
+      ],
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [methods.record.Id, hasLoadedData]
+    );
+
+    return (
+      &lt;EuiForm&gt;
+        &lt;FormSectionHeader
+          title&#x3D;{t(&#x27;Plan benefits&#x27;)}
+          subtitle&#x3D;{t(
+            &#x27;Provide booking time or credits, check-in time or printing credits to those customers contracting this plan.&#x27;
+          )}
+        &gt;
+          {!hasLoadedData &amp;&amp; &lt;LoadingContent /&gt;}
+          {hasLoadedData &amp;&amp; (
+            &lt;RouteTabbedContent
+              basePath&#x3D;{routes.tariffBenefits(methods.record.Id)}
+              tabs&#x3D;{subTabs}
+            /&gt;
+          )}
+        &lt;/FormSectionHeader&gt;
+        &lt;ShowIfVersion requireModules&#x3D;{[&#x27;Finance&#x27;]}&gt;
+          &lt;FormSectionHeader
+            title&#x3D;{t(&#x27;Discounts&#x27;)}
+            subtitle&#x3D;{t(
+              &#x27;Select if customers in this plan are eligible to discounts when making bookings, purchasing passes or other charges.&#x27;
+            )}
+          &gt;
+            &lt;EuiFormRow fullWidth&gt;
+              &lt;InlineNumberInputFormControl
+                methods&#x3D;{methods}
+                propertyName&#x3D;{&#x27;DiscountExtraServices&#x27;}
+                unit&#x3D;{t(&#x27;%&#x27;)}
+                min&#x3D;{0}
+                defaultValue&#x3D;{20}
+                displayText&#x3D;{(methods.record.DiscountExtraServices ?? 20) + &#x27;%&#x27;}
+                label&#x3D;{t(&#x27;Bookings&#x27;)}
+                yesLabel&#x3D;{t(
+                  &#x27;Members in this plan get &lt;input/&gt; off their &lt;b&gt;bookings&lt;/b&gt;.&#x27;
+                )}
+                noLabel&#x3D;{t(
+                  &#x27;Members in this plan do not get a discount in their &lt;b&gt;bookings&lt;/b&gt;&#x27;
+                )}
+              /&gt;
+            &lt;/EuiFormRow&gt;
+
+            &lt;EuiFormRow fullWidth&gt;
+              &lt;InlineNumberInputFormControl
+                methods&#x3D;{methods}
+                propertyName&#x3D;{&#x27;DiscountTimePasses&#x27;}
+                unit&#x3D;{t(&#x27;%&#x27;)}
+                min&#x3D;{0}
+                defaultValue&#x3D;{20}
+                displayText&#x3D;{(methods.record.DiscountTimePasses ?? 20) + &#x27;%&#x27;}
+                label&#x3D;{t(&#x27;Passes&#x27;)}
+                yesLabel&#x3D;{t(
+                  &#x27;Members in this plan get &lt;input/&gt; off their &lt;b&gt;passes&lt;/b&gt;. Including PAYG passes.&#x27;
+                )}
+                noLabel&#x3D;{t(
+                  &#x27;Members in this plan do not get a discount in their &lt;b&gt;passes&lt;/b&gt;.&#x27;
+                )}
+              /&gt;
+            &lt;/EuiFormRow&gt;
+            &lt;EuiFormRow fullWidth&gt;
+              &lt;InlineNumberInputFormControl
+                methods&#x3D;{methods}
+                propertyName&#x3D;{&#x27;DiscountCharges&#x27;}
+                unit&#x3D;{t(&#x27;%&#x27;)}
+                min&#x3D;{0}
+                defaultValue&#x3D;{20}
+                displayText&#x3D;{(methods.record.DiscountCharges ?? 20) + &#x27;%&#x27;}
+                label&#x3D;{t(&#x27;Charges&#x27;)}
+                yesLabel&#x3D;{t(
+                  &#x27;Members in this plan get &lt;input/&gt; off their &lt;b&gt;charges&lt;/b&gt;.&#x27;
+                )}
+                noLabel&#x3D;{t(
+                  &#x27;Members in this plan do not get a discount in their &lt;b&gt;charges&lt;/b&gt;.&#x27;
+                )}
+              /&gt;
+            &lt;/EuiFormRow&gt;
+          &lt;/FormSectionHeader&gt;
+        &lt;/ShowIfVersion&gt;
+      &lt;/EuiForm&gt;
+    );
+  }
+);
+
+export default TariffBenefitsForm;
+
+CONTENTS END
+--
+--
+TAB NAME: Limits
+CONTENTS START
+import { EuiForm, EuiFormRow, EuiHorizontalRule } from &#x27;@elastic/eui&#x27;;
+import React, { ReactElement } from &#x27;react&#x27;;
+import { Tariff } from &#x27;~/src/types/billing/tariff&#x27;;
+import { formMethods } from &#x27;~/src/components/forms/useFormMethods&#x27;;
+import { Trans, useTranslation } from &#x27;react-i18next&#x27;;
+import CheckboxFormControl from &#x27;~/src/components/forms/controls/checkboxFormControl/checkboxFormControl&#x27;;
+import FormSectionHeader from &#x27;~/src/components/forms/formSectionHeader&#x27;;
+import InlineNumberInputFormControl from &#x27;~/src/components/forms/controls/inlineNumberInputFormControl/inlineNumberInputFormControl&#x27;;
+import ShowIfVersion from &#x27;~/src/env/showIfVersion/showIfVersion&#x27;;
+
+const TariffLimitsForm &#x3D; ({
+  methods,
+}: {
+  methods: formMethods&lt;Tariff&gt;;
+}): ReactElement &#x3D;&gt; {
+  const { t } &#x3D; useTranslation();
+
+  return (
+    &lt;EuiForm&gt;
+      &lt;FormSectionHeader
+        title&#x3D;{t(&#x27;Plan limits&#x27;)}
+        subtitle&#x3D;{t(
+          &#x27;Set limits such as the maximum number of members in this plan, cancellation policies and other restrictions to be applied to customers in this plan.&#x27;
+        )}
+      &gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;CheckboxFormControl
+            methods&#x3D;{methods}
+            reversed&#x3D;{true}
+            propertyName&#x3D;{&#x27;DisablePortalCancellations&#x27;}
+            label&#x3D;{
+              &lt;Trans defaults&#x3D;&quot;Customers in this plan &lt;strong&gt;can cancel their plan&lt;/strong&gt; from the portal or the app.&quot; /&gt;
+            }
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;CheckboxFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;KeepNewAccountsOnHold&#x27;}
+            label&#x3D;{
+              &lt;Trans defaults&#x3D;&quot;&lt;strong&gt;Suspend&lt;/strong&gt; newly signed up customers joining the plan.&quot; /&gt;
+            }
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiHorizontalRule /&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;SubscribersLimit&#x27;}
+            unit&#x3D;{t(&#x27;members&#x27;)}
+            min&#x3D;{1}
+            defaultValue&#x3D;{100}
+            displayText&#x3D;{t(
+              &#x27;{members} {members, plural, one {member} other {members}}&#x27;,
+              {
+                members: methods.record.SubscribersLimit ?? 100,
+              }
+            )}
+            label&#x3D;{t(&#x27;Maximum number of members&#x27;)}
+            yesLabel&#x3D;{t(
+              &#x27;Limit the &lt;b&gt;number of customers&lt;/b&gt; in this plan to &lt;input/&gt;&#x27;
+            )}
+            noLabel&#x3D;{t(&#x27;This plan can accept any number of customers.&#x27;)}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;DefaultContractTerm&#x27;}
+            unit&#x3D;{t(&#x27;cycles&#x27;)}
+            min&#x3D;{0}
+            defaultValue&#x3D;{methods.record.InvoiceEvery &gt; 0 ? 1 : 7}
+            displayText&#x3D;{
+              methods.record.InvoiceEvery &gt; 0
+                ? t(&#x27;{months} {months, plural, one {month} other {months}}&#x27;, {
+                    months:
+                      (methods.record.DefaultContractTerm ?? 1) *
+                      methods.record.InvoiceEvery,
+                  })
+                : t(&#x27;{weeks} {weeks, plural, one {week} other {weeks}}&#x27;, {
+                    weeks:
+                      (methods.record.DefaultContractTerm ?? 1) *
+                      methods.record.InvoiceEveryWeeks,
+                  })
+            }
+            label&#x3D;{t(&#x27;Minimum contract term&#x27;)}
+            yesLabel&#x3D;{t(
+              &#x27;Contract of this plan &lt;b&gt;cannot be cancelled&lt;/b&gt; during the first &lt;input/&gt;&#x27;
+            )}
+            noLabel&#x3D;{t(&#x27;Contracts of this plan have &lt;b&gt;no minimum term&lt;/b&gt;.&#x27;)}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;CancellationLimitDays&#x27;}
+            unit&#x3D;{t(&#x27;days&#x27;)}
+            min&#x3D;{0}
+            defaultValue&#x3D;{30}
+            displayText&#x3D;{t(&#x27;{days} {days, plural, one {day} other {days}}&#x27;, {
+              days: methods.record.CancellationLimitDays ?? 30,
+            })}
+            label&#x3D;{t(&#x27;Cancellation notice period&#x27;)}
+            yesLabel&#x3D;{t(
+              &#x27;Customers in this plan must provide a &lt;b&gt;cancellation notice period of&lt;/b&gt; &lt;input/&gt;&#x27;
+            )}
+            noLabel&#x3D;{t(
+              &#x27;Customers in this plan can cancel with &lt;b&gt;no notice period&lt;/b&gt;.&#x27;
+            )}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;AutoCancelAfter&#x27;}
+            unit&#x3D;{t(&#x27;cycles&#x27;)}
+            min&#x3D;{0}
+            defaultValue&#x3D;{1}
+            displayText&#x3D;{t(
+              &#x27;{cycles} {cycles, plural, one {cycle} other {cycles}}&#x27;,
+              {
+                cycles: methods.record.AutoCancelAfter ?? 1,
+              }
+            )}
+            label&#x3D;{t(&#x27;Automatic cancellation&#x27;)}
+            yesLabel&#x3D;{t(
+              &#x27;Contracts for this will, by default, cancel automatically after &lt;input/&gt;&#x27;
+            )}
+            noLabel&#x3D;{t(
+              &#x27;Contracts for this plan &lt;b&gt;will not cancel automatically&lt;/b&gt;.&#x27;
+            )}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;ShowIfVersion requireModules&#x3D;{[&#x27;Finance&#x27;]}&gt;
+          &lt;EuiFormRow fullWidth&gt;
+            &lt;InlineNumberInputFormControl
+              methods&#x3D;{methods}
+              propertyName&#x3D;{&#x27;CancelMemeberAccountAfter&#x27;}
+              unit&#x3D;{t(&#x27;days&#x27;)}
+              min&#x3D;{0}
+              defaultValue&#x3D;{30}
+              displayText&#x3D;{t(&#x27;{days} {days, plural, one {day} other {days}}&#x27;, {
+                days: methods.record.CancelMemeberAccountAfter ?? 30,
+              })}
+              label&#x3D;{t(&#x27;Unpaid account cancellation&#x27;)}
+              yesLabel&#x3D;{t(
+                &#x27;Customer accounts in this plan will be &lt;b&gt;suspended&lt;/b&gt; if they have unpaid invoices due over &lt;input/&gt;&#x27;
+              )}
+              noLabel&#x3D;{t(
+                &#x27;Customer accounts in this plan will &lt;b&gt;remain active&lt;/b&gt; even if they have unpaid invoices.&#x27;
+              )}
+            /&gt;
+          &lt;/EuiFormRow&gt;
+        &lt;/ShowIfVersion&gt;
+      &lt;/FormSectionHeader&gt;
+    &lt;/EuiForm&gt;
+  );
+};
+
+export default TariffLimitsForm;
+
+CONTENTS END
+--
+--
+TAB NAME: Restrictions
+CONTENTS START
+import {
+  EuiCallOut,
+  EuiForm,
+  EuiFormRow,
+  EuiSpacer,
+  EuiText,
+} from &#x27;@elastic/eui&#x27;;
+import React, { ReactElement } from &#x27;react&#x27;;
+import { Tariff } from &#x27;~/src/types/billing/tariff&#x27;;
+import { formMethods } from &#x27;~/src/components/forms/useFormMethods&#x27;;
+import { Trans, useTranslation } from &#x27;react-i18next&#x27;;
+import FormSectionHeader from &#x27;~/src/components/forms/formSectionHeader&#x27;;
+import InlineNumberInputFormControl from &#x27;~/src/components/forms/controls/inlineNumberInputFormControl/inlineNumberInputFormControl&#x27;;
+import {
+  TimeUnitsBasedOnHours,
+  TimeUnitsBasedOnMinutes,
+} from &#x27;~/src/components/forms/controls/numberFormControl/numberFormControl&#x27;;
+const TariffRestrictionsForm &#x3D; ({
+  methods,
+}: {
+  methods: formMethods&lt;Tariff&gt;;
+}): ReactElement &#x3D;&gt; {
+  const { t } &#x3D; useTranslation();
+
+  return (
+    &lt;EuiForm&gt;
+      &lt;FormSectionHeader
+        title&#x3D;{t(&#x27;Access days restrictions&#x27;)}
+        subtitle&#x3D;{t(
+          &#x27;Set how many days customers in this plan can access your locations by checking in. Members of this plan can check in and out several times during the same calendar day using the same pass.&#x27;
+        )}
+      &gt;
+        &lt;EuiFormRow&gt;
+          &lt;EuiCallOut
+            size&#x3D;&quot;m&quot;
+            title&#x3D;{
+              &lt;Trans defaults&#x3D;&quot;&lt;strong&gt;Use these restrictions carefully!&lt;/strong&gt;&quot; /&gt;
+            }
+            iconType&#x3D;&quot;alert&quot;
+          &gt;
+            &lt;EuiText&gt;
+              {t(
+                &quot;These are hard limits! Once a customer in this plan reaches them, they will not be able to check in, book or bring more guests, even if they have additional passes or credit. Consider using the the &#x27;benefits&#x27; section to limit access to members in this plan.&quot;
+              )}
+            &lt;/EuiText&gt;
+          &lt;/EuiCallOut&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiSpacer size&#x3D;&quot;m&quot; /&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;CheckinPricePlanLimit&#x27;}
+            unit&#x3D;{t(&#x27;days&#x27;)}
+            min&#x3D;{0}
+            defaultValue&#x3D;{20}
+            displayText&#x3D;{t(&#x27;{days} {days, plural, one {day} other {days}}&#x27;, {
+              days: methods.record.CheckinPricePlanLimit ?? 20,
+            })}
+            label&#x3D;{t(&#x27;Days of access per billing cycle&#x27;)}
+            yesLabel&#x3D;{t(
+              &#x27;Limit the &lt;b&gt;number of days per billing cycle&lt;/b&gt; customers in this plan can access to &lt;input/&gt;&#x27;
+            )}
+            noLabel&#x3D;{t(&#x27;Customers in this plan can access any number of days.&#x27;)}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;CheckinMonthLimit&#x27;}
+            unit&#x3D;{t(&#x27;days&#x27;)}
+            min&#x3D;{0}
+            defaultValue&#x3D;{20}
+            displayText&#x3D;{t(&#x27;{days} {days, plural, one {day} other {days}}&#x27;, {
+              days: methods.record.CheckinMonthLimit ?? 20,
+            })}
+            label&#x3D;{t(&#x27;Days of access per month&#x27;)}
+            yesLabel&#x3D;{t(
+              &#x27;Limit the &lt;b&gt;number of days a month&lt;/b&gt; customers in this plan can access to &lt;input/&gt;&#x27;
+            )}
+            noLabel&#x3D;{t(&#x27;Customers in this plan can access any number of days.&#x27;)}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;CheckinWeekLimit&#x27;}
+            unit&#x3D;{t(&#x27;days&#x27;)}
+            min&#x3D;{0}
+            defaultValue&#x3D;{5}
+            displayText&#x3D;{t(&#x27;{days} {days, plural, one {day} other {days}}&#x27;, {
+              days: methods.record.CheckinWeekLimit ?? 5,
+            })}
+            label&#x3D;{t(&#x27;Days of access per week&#x27;)}
+            yesLabel&#x3D;{t(
+              &#x27;Limit the &lt;b&gt;number of days a week&lt;/b&gt; customers in this plan can access to &lt;input/&gt;&#x27;
+            )}
+            noLabel&#x3D;{t(&#x27;Customers in this plan can access any number of days.&#x27;)}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+      &lt;/FormSectionHeader&gt;
+
+      &lt;FormSectionHeader
+        title&#x3D;{t(&#x27;Access time restrictions&#x27;)}
+        subtitle&#x3D;{t(
+          &#x27;Set how long customers in this plan can access your locations by checking in.&#x27;
+        )}
+      &gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;HoursPricePlanLimit&#x27;}
+            unit&#x3D;{t(&#x27;hours&#x27;)}
+            min&#x3D;{0}
+            defaultValue&#x3D;{100}
+            displayText&#x3D;{t(
+              &#x27;{hours} {hours, plural, one {hour} other {hours}}&#x27;,
+              {
+                hours: methods.record.HoursPricePlanLimit ?? 100,
+              }
+            )}
+            inputUnits&#x3D;{TimeUnitsBasedOnHours(
+              t,
+              methods.record.HoursPricePlanLimit
+            )}
+            label&#x3D;{t(&#x27;Hours of access per billing cycle&#x27;)}
+            yesLabel&#x3D;{t(
+              &#x27;Limit the &lt;b&gt;number of hours per billing cycle&lt;/b&gt; customers in this plan can access to &lt;input/&gt;&#x27;
+            )}
+            noLabel&#x3D;{t(
+              &#x27;Customers in this plan can access any number of hours.&#x27;
+            )}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;HoursMonthLimit&#x27;}
+            unit&#x3D;{t(&#x27;hours&#x27;)}
+            min&#x3D;{0}
+            defaultValue&#x3D;{100}
+            displayText&#x3D;{t(
+              &#x27;{hours} {hours, plural, one {hour} other {hours}}&#x27;,
+              {
+                hours: methods.record.HoursMonthLimit ?? 100,
+              }
+            )}
+            inputUnits&#x3D;{TimeUnitsBasedOnHours(
+              t,
+              methods.record.HoursMonthLimit
+            )}
+            label&#x3D;{t(&#x27;Hours of access per month&#x27;)}
+            yesLabel&#x3D;{t(
+              &#x27;Limit the &lt;b&gt;number of hours a month&lt;/b&gt; customers in this plan can access to &lt;input/&gt;&#x27;
+            )}
+            noLabel&#x3D;{t(
+              &#x27;Customers in this plan can access any number of hours.&#x27;
+            )}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;HoursWeekLimit&#x27;}
+            unit&#x3D;{t(&#x27;hours&#x27;)}
+            min&#x3D;{0}
+            defaultValue&#x3D;{5}
+            displayText&#x3D;{t(
+              &#x27;{hours} {hours, plural, one {hour} other {hours}}&#x27;,
+              {
+                hours: methods.record.HoursWeekLimit ?? 5,
+              }
+            )}
+            inputUnits&#x3D;{TimeUnitsBasedOnHours(t, methods.record.HoursWeekLimit)}
+            label&#x3D;{t(&#x27;Hours of access per week&#x27;)}
+            yesLabel&#x3D;{t(
+              &#x27;Limit the &lt;b&gt;number of hours a week&lt;/b&gt; customers in this plan can access to &lt;input/&gt;&#x27;
+            )}
+            noLabel&#x3D;{t(
+              &#x27;Customers in this plan can access any number of hours.&#x27;
+            )}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+      &lt;/FormSectionHeader&gt;
+
+      &lt;FormSectionHeader
+        title&#x3D;{t(&#x27;Booking time restrictions&#x27;)}
+        subtitle&#x3D;{t(&#x27;Set how long customers in this plan can book resources.&#x27;)}
+      &gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;BookingMinuteMonthLimit&#x27;}
+            unit&#x3D;{t(&#x27;minutes&#x27;)}
+            min&#x3D;{0}
+            defaultValue&#x3D;{600}
+            displayText&#x3D;{t(
+              &#x27;{minutes} {minutes, plural, one {minute} other {minutes}}&#x27;,
+              {
+                minutes: methods.record.BookingMinuteMonthLimit ?? 600,
+              }
+            )}
+            inputUnits&#x3D;{TimeUnitsBasedOnMinutes(
+              t,
+              methods.record.BookingMinuteMonthLimit
+            )}
+            label&#x3D;{t(&#x27;Booking minutes per month&#x27;)}
+            yesLabel&#x3D;{t(
+              &#x27;Limit the &lt;b&gt;number of minutes a month&lt;/b&gt; customers in this plan can book &lt;input/&gt;&#x27;
+            )}
+            noLabel&#x3D;{t(
+              &#x27;Customers in this plan can book any number of minutes.&#x27;
+            )}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;BookingMinuteWeekLimit&#x27;}
+            unit&#x3D;{t(&#x27;minutes&#x27;)}
+            min&#x3D;{0}
+            defaultValue&#x3D;{60}
+            displayText&#x3D;{t(
+              &#x27;{minutes} {minutes, plural, one {minute} other {minutes}}&#x27;,
+              {
+                minutes: methods.record.BookingMinuteWeekLimit ?? 60,
+              }
+            )}
+            inputUnits&#x3D;{TimeUnitsBasedOnMinutes(
+              t,
+              methods.record.BookingMinuteWeekLimit
+            )}
+            label&#x3D;{t(&#x27;Booking minutes per week&#x27;)}
+            yesLabel&#x3D;{t(
+              &#x27;Limit the &lt;b&gt;number of minutes a week&lt;/b&gt; customers in this plan can book &lt;input/&gt;&#x27;
+            )}
+            noLabel&#x3D;{t(
+              &#x27;Customers in this plan can book any number of minutes.&#x27;
+            )}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+      &lt;/FormSectionHeader&gt;
+      &lt;FormSectionHeader
+        title&#x3D;{t(&#x27;Visitor restrictions&#x27;)}
+        subtitle&#x3D;{t(
+          &#x27;Set how many visitors can customers in this plan receive.&#x27;
+        )}
+      &gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;VisitorMonthLimit&#x27;}
+            unit&#x3D;{t(&#x27;visitors&#x27;)}
+            min&#x3D;{0}
+            defaultValue&#x3D;{8}
+            displayText&#x3D;{t(
+              &#x27;{visitors} {visitors, plural, one {visitor} other {visitors}}&#x27;,
+              {
+                visitors: methods.record.VisitorMonthLimit ?? 8,
+              }
+            )}
+            label&#x3D;{t(&#x27;Visitors per month&#x27;)}
+            yesLabel&#x3D;{t(
+              &#x27;Limit the &lt;b&gt;number of visitors a month&lt;/b&gt; customers can receive to &lt;input/&gt;&#x27;
+            )}
+            noLabel&#x3D;{t(
+              &#x27;Customers in this plan can have any number of visitors.&#x27;
+            )}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;VisitorWeekLimit&#x27;}
+            unit&#x3D;{t(&#x27;visitors&#x27;)}
+            min&#x3D;{0}
+            defaultValue&#x3D;{2}
+            displayText&#x3D;{t(
+              &#x27;{visitors} {visitors, plural, one {visitor} other {visitors}}&#x27;,
+              {
+                visitors: methods.record.VisitorWeekLimit ?? 2,
+              }
+            )}
+            label&#x3D;{t(&#x27;Visitors per week&#x27;)}
+            yesLabel&#x3D;{t(
+              &#x27;Limit the &lt;b&gt;number of visitors a week&lt;/b&gt; customers can receive to &lt;input/&gt;&#x27;
+            )}
+            noLabel&#x3D;{t(
+              &#x27;Customers in this plan can have any number of visitors.&#x27;
+            )}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+        &lt;EuiFormRow fullWidth&gt;
+          &lt;InlineNumberInputFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;VisitorDayLimit&#x27;}
+            unit&#x3D;{t(&#x27;visitors&#x27;)}
+            min&#x3D;{0}
+            defaultValue&#x3D;{1}
+            displayText&#x3D;{t(
+              &#x27;{visitors} {visitors, plural, one {visitor} other {visitors}}&#x27;,
+              {
+                visitors: methods.record.VisitorDayLimit ?? 1,
+              }
+            )}
+            label&#x3D;{t(&#x27;Visitors per day&#x27;)}
+            yesLabel&#x3D;{t(
+              &#x27;Limit the &lt;b&gt;number of visitors a day&lt;/b&gt; customers can receive to &lt;input/&gt;&#x27;
+            )}
+            noLabel&#x3D;{t(
+              &#x27;Customers in this plan can have any number of visitors.&#x27;
+            )}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+      &lt;/FormSectionHeader&gt;
+    &lt;/EuiForm&gt;
+  );
+};
+
+export default TariffRestrictionsForm;
+
+CONTENTS END
+--
+--
+TAB NAME: Deposits
+CONTENTS START
+import { EuiBadge, EuiForm } from &#x27;@elastic/eui&#x27;;
+import React, { ReactElement, useEffect, useMemo, useState } from &#x27;react&#x27;;
+import { Tariff } from &#x27;~/src/types/billing/tariff&#x27;;
+import { formMethods } from &#x27;~/src/components/forms/useFormMethods&#x27;;
+import { useTranslation } from &#x27;react-i18next&#x27;;
+import FormSectionHeader from &#x27;~/src/components/forms/formSectionHeader&#x27;;
+import {
+  NexudusApiServiceInst,
+  QueryItem,
+} from &#x27;~/src/services/NexudusApiService&#x27;;
+import RouteTabbedContent from &#x27;~/src/components/forms/routeTabbedContent&#x27;;
+import { routes } from &#x27;~/src/env/routes&#x27;;
+import { observer } from &#x27;mobx-react-lite&#x27;;
+import { useStores } from &#x27;~/src/stores/useStores&#x27;;
+import { TariffProduct } from &#x27;~/src/types/billing/tariffProduct&#x27;;
+import { TariffSignupProduct } from &#x27;~/src/types/billing/tariffSignupProduct&#x27;;
+import TariffSignupProductListPage from &#x27;../tariffSignupProduct&#x27;;
+import TariffProductListPage from &#x27;../tariffProduct&#x27;;
+import { LoadingContent } from &#x27;~/src/components/display/LoadingContent&#x27;;
+
+const TariffDepositsForm &#x3D; observer(
+  ({ methods }: { methods: formMethods&lt;Tariff&gt; }): ReactElement &#x3D;&gt; {
+    const { t } &#x3D; useTranslation();
+    const { appStore } &#x3D; useStores();
+
+    const tariffProductQuery: QueryItem&lt;TariffProduct&gt;[] &#x3D; [
+      {
+        name: &#x27;TariffId&#x27;,
+        value: methods.record.Id,
+        type: &#x27;entity&#x27;,
+      },
+    ];
+    const tariffSignupProductQuery: QueryItem&lt;TariffSignupProduct&gt;[] &#x3D; [
+      {
+        name: &#x27;TariffId&#x27;,
+        value: methods.record.Id,
+        type: &#x27;entity&#x27;,
+      },
+    ];
+
+    const [tariffProduct, setTariffProduct] &#x3D; useState&lt;number&gt;();
+    const [tariffSignupProduct, setTariffSignupProduct] &#x3D; useState&lt;number&gt;();
+    /**
+     * This calculates the totals for each tab section and reloads
+     * the list when any of these records are deleted/created/updated
+     */
+    useEffect(() &#x3D;&gt; {
+      NexudusApiServiceInst.getTotalRecords(
+        TariffProduct.Inst,
+        tariffProductQuery
+      ).then(setTariffProduct);
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [appStore.lastRecordUpdateTimeStamp.tariffProduct]);
+
+    useEffect(() &#x3D;&gt; {
+      NexudusApiServiceInst.getTotalRecords(
+        TariffSignupProduct.Inst,
+        tariffSignupProductQuery
+      ).then(setTariffSignupProduct);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [appStore.lastRecordUpdateTimeStamp.tariffSignupProduct]);
+
+    NexudusApiServiceInst.getTotalRecords(
+      TariffSignupProduct.Inst,
+      tariffSignupProductQuery
+    ).then(setTariffSignupProduct);
+
+    const hasLoadedData &#x3D; tariffProduct !&#x3D; null &amp;&amp; tariffSignupProduct !&#x3D; null;
+
+    const subTabs &#x3D; useMemo(
+      () &#x3D;&gt; [
+        {
+          id: &#x27;tariffSignupProducts&#x27;,
+          name: (
+            &lt;span&gt;
+              &lt;span style&#x3D;{{ marginRight: 10 }}&gt;
+                {t(&#x27;Deposits and sign-up fees&#x27;)}
+              &lt;/span&gt;
+              {tariffSignupProduct &gt; 0 &amp;&amp; (
+                &lt;EuiBadge&gt;{tariffSignupProduct}&lt;/EuiBadge&gt;
+              )}
+            &lt;/span&gt;
+          ),
+          content: (
+            &lt;TariffSignupProductListPage query&#x3D;{tariffSignupProductQuery} /&gt;
+          ),
+        },
+        {
+          id: &#x27;tariffProducts&#x27;,
+          name: (
+            &lt;span&gt;
+              &lt;span style&#x3D;{{ marginRight: 10 }}&gt;{t(&#x27;Plan components&#x27;)}&lt;/span&gt;
+
+              {tariffProduct &gt; 0 &amp;&amp; &lt;EuiBadge&gt;{tariffProduct}&lt;/EuiBadge&gt;}
+            &lt;/span&gt;
+          ),
+          content: &lt;TariffProductListPage query&#x3D;{tariffProductQuery} /&gt;,
+        },
+      ],
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [methods.record.Id, hasLoadedData]
+    );
+
+    return (
+      &lt;EuiForm&gt;
+        &lt;FormSectionHeader
+          title&#x3D;{t(&#x27;Deposits, fees and components&#x27;)}
+          subtitle&#x3D;{t(
+            &#x27;Charge customers one-off sign-up fees, security deposits and other components as part of their invoice for this plan.&#x27;
+          )}
+        &gt;
+          {!hasLoadedData &amp;&amp; &lt;LoadingContent /&gt;}
+          {hasLoadedData &amp;&amp; (
+            &lt;RouteTabbedContent
+              basePath&#x3D;{routes.tariffDeposits(methods.record.Id)}
+              tabs&#x3D;{subTabs}
+            /&gt;
+          )}
+        &lt;/FormSectionHeader&gt;
+      &lt;/EuiForm&gt;
+    );
+  }
+);
+
+export default TariffDepositsForm;
+
+CONTENTS END
+--
+--
+TAB NAME: Legal
+CONTENTS START
+import {
+  EuiCallOut,
+  EuiForm,
+  EuiFormRow,
+  EuiSpacer,
+  EuiText,
+} from &#x27;@elastic/eui&#x27;;
+import React, { ReactElement } from &#x27;react&#x27;;
+import { Tariff } from &#x27;~/src/types/billing/tariff&#x27;;
+import { formMethods } from &#x27;~/src/components/forms/useFormMethods&#x27;;
+import { Trans, useTranslation } from &#x27;react-i18next&#x27;;
+import FormSectionHeader from &#x27;~/src/components/forms/formSectionHeader&#x27;;
+import InlineNumberInputFormControl from &#x27;~/src/components/forms/controls/inlineNumberInputFormControl/inlineNumberInputFormControl&#x27;;
+import MarkdownFormControl from &#x27;~/src/components/forms/controls/markdownFormControl/markdownFormControl&#x27;;
+const TariffLegalForm &#x3D; ({
+  methods,
+}: {
+  methods: formMethods&lt;Tariff&gt;;
+}): ReactElement &#x3D;&gt; {
+  const { t } &#x3D; useTranslation();
+
+  return (
+    &lt;EuiForm&gt;
+      &lt;FormSectionHeader
+        title&#x3D;{t(&#x27;Legal terms&#x27;)}
+        subtitle&#x3D;{t(
+          &#x27;Customers will be asked to agree to these terms when signing up to this plan. If you change these terms, customers in this plan will be asked to agree with the terms again the next time the access your portal or the app.&#x27;
+        )}
+      &gt;
+        &lt;EuiFormRow&gt;
+          &lt;MarkdownFormControl
+            methods&#x3D;{methods}
+            propertyName&#x3D;{&#x27;TermsAndConditions&#x27;}
+          /&gt;
+        &lt;/EuiFormRow&gt;
+      &lt;/FormSectionHeader&gt;
+    &lt;/EuiForm&gt;
+  );
+};
+
+export default TariffLegalForm;
+
+CONTENTS END
+--
+
+
+RESPONSE JSON FORMAT:
+{
+    "reference": [
+        {
+            "name": "the name of form section",
+            "icon": "select an emoji icon relevant for this section.",
+            "description": "(~ 50 words) a description of this section"
+            "messages": "optional: any messages based on conditional rendering or other messages found in the code."
+            "fields": [
+                "name": "the label of the field",
+                "description": "the description of the field.",
+                "notes": "any notes or hints about this field."
+            ]
+        }
+    ]
+    "notes": "optional: include any notes IF the UI has any specific logic or warnings."
+}

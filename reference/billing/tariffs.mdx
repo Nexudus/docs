@@ -1,114 +1,238 @@
 ---
-title: "Products"
-description: "Set up products and services available to your customers."
+title: Plans
+description: Understanding Membership Plans in Nexudus
 ---
 
-### What are products?
+### What is a Plan?
 
-In the context of the Nexudus Platform, **products** are items or services that can be sold through the platform. These include anything a space operator might offer to customers, such as:
+In the Nexudus Platform, **Plans** are recurring membership options that define the access and services available to members. These plans can include options like hot-desk monthly memberships, private offices, virtual offices, part-time access plans, and dedicated desks. Members with active contracts for these plans are considered part of your community, while those without are simply contacts. Plans help manage and automate billing, access, and member benefits.
 
-- Physical goods (e.g., snacks, drinks, merchandise)
-- One-off services (e.g., meeting room bookings, printing credits)
-- Add-ons or extras (e.g., locker rental, mailbox services)
+### When to use Plans?
 
-Products can be sold via different sales channels across the platform, such as the **Admin Panel**, **Member's Portal**, **NexKiosk**, **Passport by Nexudus**, and integrated **Point of Sale (POS)** systems. Each product can have customizable settings, including pricing, taxes, availability, inventory tracking, and visibility to specific customer types or plans.
+Use **Plans** when you want to offer recurring memberships that provide ongoing access and services. Avoid using Plans for one-off access, day passes, or non-recurring sales, as these do not fit the recurring nature of Plans.
+
+### Some examples
+
+- Hot-desk monthly membership
+- Private office
+- Virtual offices
+- Part-time access plans
+- Dedicated desk
 
 ### Field reference
 
-#### 📝 **Product Details**
+#### 📋 **Plan details**
 
-| **Field**                             | **Description**                                                                   | **Tips & Notes**                                                                       |
-| ------------------------------------- | --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| **Product name**                      | The name of the product as shown to customers.                                    | Must be unique within each of your locations.                                          |
-| **Available at**                      | Select the location where this product is available.                              | Choose a "network" location to make it available in all locations within that network. |
-| **Product description**               | A detailed description of the product.                                            | Displayed in the portal and app. Make it clear and customer-friendly.                  |
-| **Unit price**                        | The cost for one unit of the product.                                             | Includes currency selection.                                                           |
-| **Prorate if included with contract** | Adjusts this product’s price automatically when it's part of a prorated contract. | Applies to current and future purchases. Use with caution.                             |
+This section allows you to define the basic details of the plan, including its name, location availability, and description. Plans represent services customers subscribe to, such as coworking memberships or private offices.
 
----
+| **Field**            | **Description**                         | **Tips & Notes**                                                                                           |
+| -------------------- | --------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| **Plan name**        | The name of the plan.                   | Must be unique within each of your locations.                                                              |
+| **Available at**     | The location this plan is available at. | If you choose a &#x27;network&#x27; location, the plan will be available at all locations in that network. |
+| **Cycle**            | The billing cycle for the plan.         | Displayed only if billing is not enabled.                                                                  |
+| **Plan description** | A detailed description of the plan.     | Supports localized text.                                                                                   |
+
+#### 🏢 **Virtual Office**
+
+This section allows you to enable and manage Virtual Office plans, providing a dedicated tab for managing all related details.
+
+| **Field**                              | **Description**                                 | **Tips & Notes**                                                                       |
+| -------------------------------------- | ----------------------------------------------- | -------------------------------------------------------------------------------------- |
+| **This plan is a virtual office plan** | Indicates if the plan is a virtual office plan. | Disabled if there are active contracts or if the virtual office feature is not active. |
 
 #### 🌐 **Portal and Apps**
 
-| **Field**                      | **Description**                                                 | **Tips & Notes**                                    |
-| ------------------------------ | --------------------------------------------------------------- | --------------------------------------------------- |
-| **Product image**              | Image displayed in the store and app.                           | Choose a clear, high-quality image.                 |
-| **Display on website and App** | Toggle visibility of this product in customer-facing platforms. | Uncheck to hide internal-only products.             |
-| **Category**                   | Grouping label to organize products.                            | Used for filtering/searching in the portal and app. |
-| **Display position**           | The order in which this product appears in listings.            | Lower numbers show up first.                        |
+This section determines if and how the plan will be displayed on the website and the members&#x27; app.
+
+| **Field**                                        | **Description**                                             | **Tips & Notes**                                                        |
+| ------------------------------------------------ | ----------------------------------------------------------- | ----------------------------------------------------------------------- |
+| **Display this plan on the website and the App** | Controls the visibility of the plan on the website and app. | If enabled, additional fields for category and display order are shown. |
+| **Category**                                     | The category under which the plan is listed.                | Suggestions are provided based on existing group names.                 |
+| **The position to display this plan at**         | The order in which the plan is displayed.                   | Determines the display order on the website and app.                    |
+
+#### 🔗 **Purchase links**
+
+This section provides links to invite new or existing customers to sign up for the plan.
+
+| **Field**                              | **Description**                                   | **Tips & Notes**                                      |
+| -------------------------------------- | ------------------------------------------------- | ----------------------------------------------------- |
+| **Invite link (new customers)**        | Link for new customers to sign up for the plan.   | Copy this link to share with potential new customers. |
+| **Purchase link (existing customers)** | Link for existing customers to purchase the plan. | Copy this link to share with current customers.       |
+
+<Note>Displayed only if the plan has been saved.</Note>
+
+#### 💰 **Pricing**
+
+Set the pricing for plans, including the frequency of invoicing. Customers will be billed based on the selected number of weeks or months.
+
+| **Field** | **Description**                                    | **Tips & Notes**                                      |
+| --------- | -------------------------------------------------- | ----------------------------------------------------- |
+| **Price** | The amount to be charged for the plan.             | Select the currency for the price.                    |
+| **Every** | Frequency of invoicing, either in weeks or months. | Choose between weeks or months for billing frequency. |
+
+#### 🧾 **Additional invoices**
+
+Decide if extra invoices should be issued for additional purchases during the billing cycle.
+
+| **Field**                                                | **Description**                                             | **Tips & Notes**                                                                 |
+| -------------------------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| **Create additional invoices during the billing cycle.** | Option to generate extra invoices for additional purchases. | Enable this to issue invoices for purchases made between regular billing cycles. |
+| **Every**                                                | Frequency for additional invoices, in weeks or months.      | Set the interval for issuing additional invoices.                                |
+
+#### 📅 **Billing day and prorating**
+
+Set the default billing day and options for prorating the first and last invoices.
+
+| **Field**                           | **Description**                                                         | **Tips & Notes**                                        |
+| ----------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------- |
+| **Default billing day**             | The day of the month when billing occurs.                               | Choose a specific day or the day the customer signs up. |
+| **First invoice prorated discount** | Discount the first invoice based on the days left in the billing cycle. | Set the number of days for prorating.                   |
+| **Prorate day of month**            | Day of the month for applying prorate discount.                         | Select a specific day for prorating.                    |
+| **Last invoice prorated discount**  | Option to discount the last invoice based on the contract end date.     | Choose whether to apply a discount to the last invoice. |
+| **Advance payments**                | Number of billing cycles to invoice in advance.                         | Set the number of cycles to bill upfront.               |
+| **Booking due date strategy**       | Determine when charges for bookings are due.                            | Select a strategy for booking charges.                  |
+
+#### 🔖 **Minimum price**
+
+Ensure a minimum price is charged for the plan, considering various types of charges.
+
+| **Field**             | **Description**                                      | **Tips & Notes**                                    |
+| --------------------- | ---------------------------------------------------- | --------------------------------------------------- |
+| **Minimum price**     | The lowest amount to be charged for the plan.        | Specify the minimum price in the selected currency. |
+| **Consider passes**   | Include passes when calculating the minimum price.   | Enable to factor in passes for minimum pricing.     |
+| **Consider bookings** | Include bookings when calculating the minimum price. | Enable to factor in bookings for minimum pricing.   |
+| **Consider events**   | Include events when calculating the minimum price.   | Enable to factor in events for minimum pricing.     |
+
+#### 🏢 **Virtual Office Onboarding**
+
+This section allows you to configure virtual office features, including identity and address verification for customers. It ensures that customers meet specific requirements before their contracts are activated.
+
+| **Field**                              | **Description**                                                                        | **Tips & Notes**                                                                          |
+| -------------------------------------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| **Request Address Identity Check**     | Customers in this plan are required to provide proof of address.                       | When enabled, the customer&#x27;s contract will be paused until verification is complete. |
+| **Address Identity Check Provider**    | Select how you would like to check proof of address.                                   | You can update preferences in the Identity Checks section.                                |
+| **Address Identity Check Description** | Let your customers know which documents you accept as proof of address.                | You can reuse a previous list if available.                                               |
+| **Repeat the Check (Address)**         | Set how often the address check should be repeated.                                    | Choose a repeat pattern for address verification.                                         |
+| **Keep Paused If Address Mismatch**    | Keep contracts paused if the customer&#x27;s address is outside your location country. | This applies even if the customer passes verification.                                    |
+| **Request Identity Check**             | Customers in this plan are required to provide proof of ID.                            | When enabled, the customer&#x27;s contract will be paused until verification is complete. |
+| **Identity Check Provider**            | Select how you would like to check proof of ID.                                        | You can update preferences in the Identity Checks section.                                |
+| **Identity Check Description**         | Let your customers know which documents you accept as proof of identity.               | You can reuse a previous list if available.                                               |
+| **Repeat the Check (Identity)**        | Set how often the identity check should be repeated.                                   | Choose a repeat pattern for identity verification.                                        |
+| **Send Onboarding Form by Email**      | Send a custom onboarding form to customers purchasing this plan.                       | Select a form to send as part of the onboarding process.                                  |
+| **Select Form**                        | Choose the form to send to customers.                                                  | Add new forms in the Forms section.                                                       |
+
+#### 📦 **Virtual Office delivery handling**
+
+This section allows you to configure delivery categories and their handling options for your virtual office plan. You can link delivery categories to specific handling actions and manage associated charges.
+
+| **Field**                                     | **Description**                                                      | **Tips & Notes**                                                      |
+| --------------------------------------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| **Select delivery handling option**           | Choose the handling options for each delivery type.                  | Ensure the handling options are enabled above to access more options. |
+| **Add delivery type(s)**                      | Add new delivery categories to offer for this plan&#x27;s customers. | You can only add delivery types if there are available options.       |
+| **Link charges to delivery handling options** | Link specific charges to each delivery handling option.              | Use the dropdown to select charges for each handling type.            |
+
+#### 📇 **Contacts limits**
+
+Define limits for company aliases, nominated recipients, and forwarding addresses. This helps manage the number of additional contacts and addresses associated with the plan.
+
+| **Field**                                      | **Description**                                                                                        | **Tips & Notes**                |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------- |
+| **Maximum additional company aliases**         | Set the number of additional company aliases allowed, excluding the one provided during onboarding.    | -    |
+| **Maximum additional recipients**              | Set the number of additional nominated recipients allowed, excluding those provided during onboarding. | - |
+| **Maximum forwarding addresses per recipient** | Set the maximum number of forwarding addresses allowed per recipient.                                  | -  |
+
+#### 🎁 **Plan Benefits**
+
+This section allows you to provide booking time or credits, check-in time, or printing credits to customers who are part of this plan.
+
+| **Field** | **Description** | **Tips & Notes** |
+| --------- | --------------- | ---------------- |
+
+#### 💸 **Discounts**
+
+This section lets you set discounts for customers in this plan when they make bookings, purchase passes, or incur other charges.
+
+| **Field**    | **Description**                   | **Tips & Notes**                                                                                   |
+| ------------ | --------------------------------- | -------------------------------------------------------------------------------------------------- |
+| **Bookings** | Discount percentage for bookings. | Members in this plan get a discount off their bookings.                      |
+| **Passes**   | Discount percentage for passes.   | Members in this plan get a discount off their passes, including PAYG passes. |
+| **Charges**  | Discount percentage for charges.  | Members in this plan get a discount off their charges.                       |
+
+#### 📊 **Plan limits**
+
+This section allows you to set various limits and restrictions for the plan, such as the maximum number of members, cancellation policies, and other customer-related restrictions.
+
+| **Field**                                                                    | **Description**                                                                 | **Tips & Notes**                                                     |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| **Customers in this plan can cancel their plan from the portal or the app.** | Allows customers to cancel their plan through the portal or app.                |       |
+| **Suspend newly signed up customers joining the plan.**                      | Automatically suspends new customers who sign up for this plan.                 | Useful for managing customer onboarding.                             |
+| **Maximum number of members**                                                | Sets a limit on the number of members allowed in this plan.                     | |
+| **Minimum contract term**                                                    | Specifies the minimum duration a contract must be held before cancellation.     | Calculated in cycles; default depends on billing frequency.          |
+| **Cancellation notice period**                                               | Defines the notice period required for cancellation.                            | Can be set to zero for no notice period.         |
+| **Automatic cancellation**                                                   | Determines if contracts will automatically cancel after a set number of cycles. | Default is 1 cycle; can be disabled.                                 |
+| **Unpaid account cancellation**                                              | Suspends customer accounts with unpaid invoices after a specified period.       | Only available if the Finance module is enabled; default is 30 days. |
+
+#### 📅 **Access days restrictions**
+
+Set the number of days customers in this plan can access your locations by checking in. Members can check in and out multiple times during the same day using the same pass.
+
+| **Field**                            | **Description**                                                  | **Tips & Notes**                                   |
+| ------------------------------------ | ---------------------------------------------------------------- | -------------------------------------------------- |
+| **Days of access per billing cycle** | Limit the number of days per billing cycle customers can access. | |
+| **Days of access per month**         | Limit the number of days per month customers can access.         | |
+| **Days of access per week**          | Limit the number of days per week customers can access.          | |
+
+<Note>
+  Use these restrictions carefully! These are hard limits. Once reached,
+  customers cannot check in, book, or bring more guests.
+</Note>
+
+#### ⏰ **Access time restrictions**
+
+Set the number of hours customers in this plan can access your locations by checking in.
+
+| **Field**                             | **Description**                                                   | **Tips & Notes**                                     |
+| ------------------------------------- | ----------------------------------------------------------------- | ---------------------------------------------------- |
+| **Hours of access per billing cycle** | Limit the number of hours per billing cycle customers can access. | |
+| **Hours of access per month**         | Limit the number of hours per month customers can access.         | |
+| **Hours of access per week**          | Limit the number of hours per week customers can access.          | |
+
+#### 📖 **Booking time restrictions**
+
+Set the number of minutes customers in this plan can book resources.
+
+| **Field**                     | **Description**                                           | **Tips & Notes**                                        |
+| ----------------------------- | --------------------------------------------------------- | ------------------------------------------------------- |
+| **Booking minutes per month** | Limit the number of minutes per month customers can book. | |
+| **Booking minutes per week**  | Limit the number of minutes per week customers can book.  | |
+
+#### 👥 **Visitor restrictions**
+
+Set the number of visitors customers in this plan can receive.
+
+| **Field**              | **Description**                                               | **Tips & Notes**                                        |
+| ---------------------- | ------------------------------------------------------------- | ------------------------------------------------------- |
+| **Visitors per month** | Limit the number of visitors per month customers can receive. | |
+| **Visitors per week**  | Limit the number of visitors per week customers can receive.  | |
+| **Visitors per day**   | Limit the number of visitors per day customers can receive.   | |
+
+#### 💰 **Deposits, fees and components**
+
+This section allows you to manage and charge customers for one-off sign-up fees, security deposits, and other components as part of their invoice for a specific plan.
+
+| **Field**                     | **Description**                                                              | **Tips & Notes**                                                   |
+| ----------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| **Deposits and sign-up fees** | Displays the number of sign-up fees and deposits associated with the tariff. | A badge shows the count if there are any deposits or sign-up fees. |
+| **Plan components**           | Displays the number of components included in the plan.                      | A badge shows the count if there are any components.               |
+
+<Note>Loading content message is displayed until data is fully loaded.</Note>
+
+#### 📜 **Legal terms**
+
+This section allows you to define the legal terms and conditions that customers must agree to when signing up for a plan. If these terms are updated, customers will need to agree to them again upon their next login.
+
+| **Field**                | **Description**                              | **Tips & Notes**                                 |
+| ------------------------ | -------------------------------------------- | ------------------------------------------------ |
+| **Terms and Conditions** | The legal terms and conditions for the plan. | Use Markdown to format the terms and conditions. |
 
 ---
-
-#### 🔗 **Purchase Links**
-
-_(Visible only after saving the product)_
-
-| **Field**                            | **Description**                                               | **Tips & Notes**                              |
-| ------------------------------------ | ------------------------------------------------------------- | --------------------------------------------- |
-| **Purchase link (new customers)**    | URL to purchase the product via the signup flow.              | Great for sharing via email or your website.  |
-| **Invite link (existing customers)** | URL for current members to buy the product directly.          | Can be added to newsletters or chat messages. |
-| **Always invoice purchaser**         | Bills the individual instead of their team’s paying customer. | Use when the buyer should always be charged.  |
-
----
-
-#### 🏷️ **Inventory & Custom Fields**
-
-| **Field**              | **Description**                                          | **Tips & Notes**                                |
-| ---------------------- | -------------------------------------------------------- | ----------------------------------------------- |
-| **Inventory settings** | Additional options related to billing or stock tracking. | Only shown if inventory tracking is enabled.    |
-| **Custom fields**      | Any extra fields you've configured for your business.    | Useful for collecting product-specific details. |
-
-#### 🎁 **Benefits**
-
-Products in Nexudus can include benefits such as time credits, printing credits, passes, or monetary credits. These benefits are automatically granted to customers who purchase the product.
-
-Use the table below to understand what each benefit does and when to use it.
-
-#### 🧾 **Product Benefit Types**
-
-| **Benefit Type**    | **Description**                                                                           | **When to Use**                                                        |
-| ------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| **Money credit**    | Allows customers to use a balance (e.g. £50) for bookings or purchases within your space. | Useful for prepaid plans where customers spend credit instead of cash. |
-| **Time credit**     | Grants customers a set number of hours they can use to book meeting rooms or resources.   | Ideal for memberships offering limited monthly hours.                  |
-| **Passes**          | Gives customers a set number of passes to check in or access the space.                   | Perfect for drop-in plans (e.g., 10-day pass).                         |
-| **Printing credit** | Allocates a certain amount of printing value to the customer.                             | Use when selling plans that include printing benefits.                 |
-
-📌 **Notes**
-
-- Each benefit type is configured separately within its own tab.
-- You can assign one or multiple types of benefits to the same product.
-- Totals for each benefit type are shown in badges next to each tab.
-- Changes are applied automatically to any customers who purchase the product.
-
----
-
-### 📦 Availability
-
-This section lets you control **who can purchase this product** and whether you want to **track its stock**. Use the table below to understand each option.
-
----
-
-#### 👥 **Purchase Settings**
-
-| **Field**                            | **Description**                                                                 | **Tips & Notes**                                                       |
-| ------------------------------------ | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| **This product can be purchased as** | Defines if the product is sold as a one-off or recurring product.               | Options include one-time purchase or subscription (recurrent).         |
-| **This product can be purchased by** | Specifies which customers can buy the product.                                  | You can restrict availability to members, contacts, or specific plans. |
-| **Plans**                            | Select specific plans customers must be in to be able to purchase this product. | Only appears when making this product only available to members.       |
-
----
-
-#### 📦 **Stock Management**
-
-| **Field**                            | **Description**                                      | **Tips & Notes**                                                  |
-| ------------------------------------ | ---------------------------------------------------- | ----------------------------------------------------------------- |
-| **Monitor stock levels**             | Enables stock tracking for this product.             | Useful for physical items or limited digital goods.               |
-| **Prevent stock to fall below zero** | Stops sales when no units are left.                  | Ideal for physical products or when syncing stock to POS systems. |
-| **Alert me when stock is below**     | Set a minimum stock threshold to trigger alerts.     | Only appears when stock tracking is enabled.                      |
-| **Stock Keeping Unit (SKU)**         | A unique identifier for your internal stock records. | Helpful when integrating with POS or inventory systems.           |
-
-<Warning>
-  If the product is synced with Square and stock tracking is enabled without
-  allowing negative stock, sync issues may occur if the stock levels in Square
-  and Nexudus don't match. To avoid these errors, consider disabling 'Prevent
-  stock to fall below zero'.
-</Warning>
