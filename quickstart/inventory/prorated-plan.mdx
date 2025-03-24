@@ -1,51 +1,44 @@
 ---
 title: Add prorated plan
-description: Create prorated plans with prices adjusted based on customer sign-up and cancellation dates.
+description: Create a prorated plan with a price that is adjusted based on sign-up and cancellation dates.
 ---
 
-This guide explains how to create a prorated plan in Nexudus, allowing you to adjust the price based on when a customer signs up or cancels their plan within a month. This feature is particularly useful for coworking spaces and flexible workspaces as it ensures fair billing for members who don't start or end their contracts on the first day of the month.
+In Nexudus, **prorating** allows you to adjust the price of a plan based on when a customer signs up or cancels within a month. This is particularly useful for coworking spaces as it ensures fair billing for members who join or leave mid-cycle. By prorating, you discount the initial and last invoices of a contract based on the number of days between the sign-up/cancellation dates and the billing day of the contract. Note that benefits are not prorated.
 
-Prorating discounts both the initial and last invoices of a contract based on the number of days between the sign-up/cancellation dates and the billing day of the contract. It's important to note that **benefits are not prorated**.
-
-The setting **Discount the first invoice for up to X days based on how many days are left in the first billing cycle** controls the maximum number of days between the start day and the next billing day for prorating to apply. For example, if you have a plan priced at $100 per month and set this option to 31 days, a customer signing up on the 15th of the month will receive a prorated discount on their first invoice.
-
-The **Discount the last invoice based on the day members leave contracts for this plan** option adjusts the last invoice based on the number of days between the billing day and the contract's end date. Prorating accounts for the actual number of days in each month, ensuring accurate billing regardless of the month's length.
+*   The setting **Discount the first invoice for up to X days based on how many days are left in the first billing cycle** controls the maximum number of days between the start day and the next billing day for prorating to apply. For example, if you have a plan that costs &dollar;100 per month and a customer signs up 15 days before the next billing cycle, they will only be charged $50 for the first month.
+*   The **Discount the last invoice based on the day members leave contracts for this plan** option adjusts the last invoice based on the number of days between the billing day and the cancellation date. Prorating accounts for the actual number of days in each month.
 
 <Steps>
  <Step title="Navigate to Plans">
-    1. From the dashboard, click on **Inventory** in the left-hand menu.
-    <img width="150" src="/images/guides/frames/billing/tariff/prorated-plan/step_0_0.gif"/>
-    2. In the Inventory section, select **Plans**.
-    <img width="150" src="/images/guides/frames/billing/tariff/prorated-plan/step_0_1.gif"/>
+    1. From the dashboard, navigate to **Inventory** on the left side menu.
+    2. On the Inventory page, click on the **Plans** option.
+    3. Click the **Add plan** button on the top right of the screen.
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/billing/tariff/prorated-plan/step_0.png"
+        data-gif="/images/guides/frames/billing/tariff/prorated-plan/step_0.gif"
+        src="/images/guides/frames/billing/tariff/prorated-plan/step_0.png"/>
  </Step>
- <Step title="Add a New Plan">
-    1. Click on the **+ Add plan** button located in the top right corner of the screen.
-    <img width="150" src="/images/guides/frames/billing/tariff/prorated-plan/step_1_0.gif"/>
-    2. Choose **Manual entry** to create a custom plan.
-    <img width="150" src="/images/guides/frames/billing/tariff/prorated-plan/step_1_1.gif"/>
+ <Step title="Create a Manual Entry Plan">
+    1. In the Add plan dialog, select **Manual entry** to create a new plan from scratch.
+    2. In the Plan name field, enter the name of the plan. In this case, type in &quot;Dedicated Desk&quot;.
+    3. In the Plan description field, enter a description for the plan. In this case, type in &quot;Dedicated Desk&quot;.
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/billing/tariff/prorated-plan/step_1.png"
+        data-gif="/images/guides/frames/billing/tariff/prorated-plan/step_1.gif"
+        src="/images/guides/frames/billing/tariff/prorated-plan/step_1.png"/>
  </Step>
- <Step title="Configure Plan Details">
-    1. In the **Plan name** field, enter a descriptive name for your plan. For example, type in **Dedicated Desk**.
-    <img width="150" src="/images/guides/frames/billing/tariff/prorated-plan/step_2_0.gif"/>
-    2. Optionally, add a **Plan description** to provide more information about the plan.
-    <img width="150" src="/images/guides/frames/billing/tariff/prorated-plan/step_2_1.gif"/>
+ <Step title="Configure Pricing and Discounts">
+    1. Click on the **Pricing** tab to configure the pricing details.
+    2. In the Price field, enter the price of the plan. In this case, type in &quot;550&quot;.
+    3. In the First invoice prorated discount section, select the **Discount the first invoice for up to 31 days based on how many days are left in the first billing cycle** option.
+    4. In the Prorate day of month section, select the **Apply prorate discount to first invoice based on billing day** option.
+    5. Click the **Save changes** button to save the plan.
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/billing/tariff/prorated-plan/step_2.png"
+        data-gif="/images/guides/frames/billing/tariff/prorated-plan/step_2.gif"
+        src="/images/guides/frames/billing/tariff/prorated-plan/step_2.png"/>
  </Step>
- <Step title="Set Pricing and Prorating Options">
-    1. Click on the **Pricing** tab to configure the plan&#x27;s pricing details.
-    <img width="150" src="/images/guides/frames/billing/tariff/prorated-plan/step_3_0.gif"/>
-    2. Enter the **Price** for the plan. For example, type in **550**.
-    <img width="150" src="/images/guides/frames/billing/tariff/prorated-plan/step_3_1.gif"/>
-    3. In the **First invoice prorated discount** section, select **Discount the first invoice for up to 31 days based on how many days are left in the first billing cycle**.
-    <img width="150" src="/images/guides/frames/billing/tariff/prorated-plan/step_3_2.gif"/>
-    4. In the **Prorate day of month** section, select **Apply prorate discount to first invoice based on billing day**.
-    <img width="150" src="/images/guides/frames/billing/tariff/prorated-plan/step_3_3.gif"/>
-    5. In the **Last invoice prorated discount** section, select **Discount the last invoice based on the day members leave contracts for this plan**.
-    <img width="150" src="/images/guides/frames/billing/tariff/prorated-plan/step_3_4.gif"/>
- </Step>
- <Step title="Save Changes">
-    1. Scroll down and click on the **Save changes** button to save the plan with the configured prorating options.
-    <img width="150" src="/images/guides/frames/billing/tariff/prorated-plan/step_4_0.gif"/>
- </Step>
+
 </Steps>
 <Card horizontal title="Learn more about plans" icon="book" href="/reference/billing/tariff">
     Access this section to learn in detail about plans and their settings.

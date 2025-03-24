@@ -11,7 +11,10 @@ description: {{description}}
     {{#each this.sub_steps}}
     {{inc @index}}. {{step_description_markdown}}
     {{/each}}
-    <img width="150" src="/images/guides/frames/{{@root.guideData.namespace}}/{{@root.guideData.name}}/step_{{@index}}.gif"/>
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/{{@root.guideData.namespace}}/{{@root.guideData.name}}/step_{{@index}}.png"
+        data-gif="/images/guides/frames/{{@root.guideData.namespace}}/{{@root.guideData.name}}/step_{{@index}}.gif"
+        src="/images/guides/frames/{{@root.guideData.namespace}}/{{@root.guideData.name}}/step_{{@index}}.png"/>
  </Step>
 {{/each}}
 </Steps>

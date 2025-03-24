@@ -1,7 +1,6 @@
-- First, briefly introduce the feature in a way that addresses the needs of a coworking space or flexible workspace.
+- First, briefly introduce the feature in a way that addresses a user's potential need or problem. What problem does this feature solve for the user? How will it make their life easier?
 - Produce detailed and complete step by step user instructions to be used as documentation for the Nexudus platform and based on the actions taken in the video and the audio prompts in it. 
-- Also, use the "Additional details about this video" section below as the basis for an introduction text paragraph. 
-- Also, use the sections, labels and steps found in the video to enhance the introduction and description of the feature.
+
 
 Feature description:
 
@@ -30,10 +29,15 @@ Some examples of basic products:
 - Lockers or personal storage rental (short term)
 
 
-Some notes to help you:
+Meet these rules when producing this content.
 - The audio of the video holds important details about a process in the Nexudus platform.
 - Make sure to include details based on the audio prompts in each step as needed.
-- Group the sequence of actions into related groups of actions (step) and list each action as a sub-step
+- Group the sequence of actions into related groups of actions (step) and list each action as a sub-step.
+- Use the "Additional details about this video" section below as the basis for an introduction text paragraph. 
+- Use the sections, labels and steps found in the video to enhance the introduction.
+- Group updating related fields into a single sub step and described it in a single paragraph.
+- Group navigating to a section and clicking any "add" buttons into a single step and never on its own step.
+- Include "save changes" steps as the last action of the previous step and never on its own step.
 
 Additional details about output variables:
 - title: three words at most: a short and descriptive name for this document / video. 

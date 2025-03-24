@@ -29,16 +29,20 @@ export async function extractFrames(guideData) {
       const cropCoordinates = step.video_crop_coordinates;
 
       // Construct the filename (you can customize this)
-      const frameFilename = `${outputDir}/step_${step_number}.gif`;
+      const frameFilename = `${outputDir}/step_${step_number}.png`;
+      const gifFileName = `${outputDir}/step_${step_number}.gif`;
       if (fs.existsSync(frameFilename)) {
         fs.unlinkSync(frameFilename);
+      }
+      if (fs.existsSync(gifFileName)) {
+        fs.unlinkSync(gifFileName);
       }
       // Convert timestamp to seconds
       //const timestampSec = timestampMs / 1000;
 
       const duration = step.step_duration >= 3 ? step.step_duration : 3;
       // Construct the ffmpeg command
-      //let ffmpegCommand = `"./.gen/bin/ffmpeg.exe" -ss ${step.step_time} -i "${videoFilePath}" -frames:v 1`;
+      let ffmpegCommandShot = `"./.gen/bin/ffmpeg.exe" -ss ${step.step_start_time} -i "${videoFilePath}" -frames:v 1`;
       let ffmpegCommand = `"./.gen/bin/ffmpeg.exe" -ss ${step.step_start_time} -t ${duration} -i "${videoFilePath}" -vf "fps=10,scale=-2:768:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0`;
 
       // Add cropping if coordinates are provided
@@ -47,11 +51,13 @@ export async function extractFrames(guideData) {
       //   ffmpegCommand += ` -vf "crop=${width}:${height}:${x}:${y}"`;
       // }
 
-      ffmpegCommand += ` "${frameFilename}"`;
+      ffmpegCommand += ` "${gifFileName}"`;
+      ffmpegCommandShot += ` "${frameFilename}"`;
 
       // 4. Execute the ffmpeg command
       //console.log(`Executing: ${ffmpegCommand}`);
       await executeCommand(ffmpegCommand);
+      await executeCommand(ffmpegCommandShot);
       console.log(
         `Frame extracted for step ${step_number + 1}.${substep_number + 1}`
       );

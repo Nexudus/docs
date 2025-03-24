@@ -1,8 +1,8 @@
+- First, briefly introduce the feature in a way that addresses a user's potential need and how it is relevant to a coworking space.
 - Produce detailed and complete step by step user instructions to be used as documentation for the Nexudus platform and based on the actions taken in the video and the audio prompts in it. 
-- Also, use the "Additional details about this video" section below as the basis for an introduction text paragraph. 
-- Also, use the sections, labels and steps found in the video to enhance the introduction.
 
-These are my notes about the video. Use them to help you build the introduction:
+
+Feature description:
 
 - Products can have any combination of passes, money credit and time credit.
 - Passes can be used to check customers in and control access to your IT network. When a customer is checked in, the pass is used.
@@ -12,14 +12,19 @@ These are my notes about the video. Use them to help you build the introduction:
 - Changes made to benefits of existing products only take affect when the products are purchased again.
 
 
-Some notes to help you:
+Meet these rules when producing this content.
 - The audio of the video holds important details about a process in the Nexudus platform.
 - Make sure to include details based on the audio prompts in each step as needed.
-- Group the sequence of actions into related groups of actions (step) and list each action as a sub-step
+- Group the sequence of actions into related groups of actions (step) and list each action as a sub-step.
+- Use the "Additional details about this video" section below as the basis for an introduction text paragraph. 
+- Use the sections, labels and steps found in the video to enhance the introduction.
+- Group updating related fields into a single sub step and described it in a single paragraph.
+- Group navigating to a section and clicking any "add" buttons into a single step and never on its own step.
+- Include "save changes" steps as the last action of the previous step and never on its own step.
 
 Additional details about output variables:
-- title: a short and descriptive name for this document / video.
-- description: a brief description of what the document and video.
-- introduction_markdown: a clear explanation of what this document is about. Use different paragraphs, markdown formatting and word bolding for easier reading.
+- title: three words at most: a short and descriptive name for this document / video. 
+- description: 15 works at most: a brief description of what the document and video.
+- introduction_markdown: a detailed and clear explanation of the feature. Use different paragraphs, markdown formatting and word bolding for easier reading.
 - step_start_time: the time the sub step starts.
-- step_end_time:  the time the sub step end. Add an extra second and never make it less than 2 seconds.
+- step_duration: How long this step takes in the video.

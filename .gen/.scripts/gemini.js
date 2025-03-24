@@ -1,7 +1,7 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { GoogleAIFileManager } from '@google/generative-ai/server';
-import fs from 'fs';
-import dotenv from 'dotenv';
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleAIFileManager } from "@google/generative-ai/server";
+import fs from "fs";
+import dotenv from "dotenv";
 dotenv.config();
 
 const apiKey = process.env.GEMINI_API_KEY;
@@ -27,24 +27,24 @@ async function uploadToGemini(path, mimeType) {
  * Waits for the given files to be active.
  */
 async function waitForFilesActive(files) {
-  console.log('Waiting for file processing...');
+  console.log("Waiting for file processing...");
   for (const name of files.map((file) => file.name)) {
     let file = await fileManager.getFile(name);
-    while (file.state === 'PROCESSING') {
-      process.stdout.write('.');
+    while (file.state === "PROCESSING") {
+      process.stdout.write(".");
       await new Promise((resolve) => setTimeout(resolve, 10_000));
       file = await fileManager.getFile(name);
     }
-    if (file.state !== 'ACTIVE') {
+    if (file.state !== "ACTIVE") {
       throw Error(`File ${file.name} failed to process`);
     }
   }
-  console.log('...all files ready\n');
+  console.log("...all files ready\n");
 }
-const sharedInstructions = fs.readFileSync('./.gen/in/guides_instructions.txt');
+const sharedInstructions = fs.readFileSync("./.gen/in/guides_instructions.txt");
 
 const model = genAI.getGenerativeModel({
-  model: 'gemini-2.0-flash',
+  model: "gemini-2.0-flash",
   systemInstruction: sharedInstructions,
 });
 
@@ -53,60 +53,71 @@ const generationConfig = {
   topP: 0.95,
   topK: 40,
   maxOutputTokens: 8192,
-  responseMimeType: 'application/json',
+  responseMimeType: "application/json",
   responseSchema: {
-    type: 'object',
+    type: "object",
     properties: {
       steps: {
-        type: 'array',
+        type: "array",
         items: {
-          type: 'object',
+          type: "object",
           properties: {
             step_title: {
-              type: 'string',
+              type: "string",
+            },
+            step_start_time: {
+              type: "string",
+            },
+            step_duration: {
+              type: "number",
             },
             sub_steps: {
-              type: 'array',
+              type: "array",
               items: {
-                type: 'object',
+                type: "object",
                 properties: {
                   step_description_markdown: {
-                    type: 'string',
+                    type: "string",
                   },
-                  step_start_time: {
-                    type: 'string',
+                  sub_step_start_time: {
+                    type: "string",
                   },
-                  step_duration: {
-                    type: 'number',
+                  sub_step_duration: {
+                    type: "number",
                   },
                 },
                 required: [
-                  'step_description_markdown',
-                  'step_start_time',
-                  'step_duration',
+                  "step_description_markdown",
+                  "sub_step_start_time",
+                  "sub_step_duration",
                 ],
               },
             },
           },
-          required: ['step_title', 'sub_steps'],
+          required: [
+            "step_title",
+            "step_start_time",
+            "step_duration",
+            "sub_steps",
+          ],
         },
       },
       introduction_markdown: {
-        type: 'string',
+        type: "string",
       },
       title: {
-        type: 'string',
+        type: "string",
       },
       description: {
-        type: 'string',
+        type: "string",
       },
     },
-    required: ['steps', 'introduction_markdown', 'title', 'description'],
+    required: ["steps", "introduction_markdown", "title", "description"],
   },
 };
 
 export async function complete({ input, videoPath }) {
-  const files = [await uploadToGemini(videoPath, 'video/mp4')];
+  const files = [await uploadToGemini(videoPath, "video/mp4")];
 
   // Some files have a processing delay. Wait for them to be ready.
   await waitForFilesActive(files);
@@ -115,7 +126,7 @@ export async function complete({ input, videoPath }) {
     generationConfig,
     history: [
       {
-        role: 'user',
+        role: "user",
         parts: [
           {
             fileData: {

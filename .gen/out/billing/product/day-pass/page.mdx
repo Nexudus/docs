@@ -1,73 +1,83 @@
 ---
-title: How to Create a Day Pass Product
-description: Learn how to create a day pass product in Nexudus, including registering a pass and connecting it to your network controller.
+title: Create Day Pass
+description: Learn how to create a day pass product that includes one or more passes as part of its benefits.
 ---
 
-This document guides you through the process of creating a **Day Pass product** in Nexudus. A Day Pass product includes one or more passes as part of its benefits. This feature solves the problem of managing temporary access to your coworking space and network for non-members. By following these steps, you can easily set up a Day Pass product that allows customers to check in, use the space, and access your network for a specified period. This makes it easier for you to offer flexible access options and manage your resources effectively.
+A day pass product includes one or more passes as part of its benefits. A pass can be used to check customers in. When a customer is checked in, the pass is used. Passes can be set to be valid by calendar day or for a number of hours across days. You can connect a pass to your network controller to grant access to the network to those purchasing the day pass product. If the buyer is a contact (i.e they are not a member - they don't have an active contract). The passes added to the product are only released when the product is paid. You can make passes expire a set amount of time after the purchase.
 
-With Nexudus, a pass can be used to check customers in. When a customer is checked in, the pass is used. Passes can be set to be valid by calendar day or for a number of hours across days. You can connect a pass to your network controller to grant access to the network to those purchasing the day pass product. If the buyer is a contact (i.e they are not a member - they don't have an active contract). The passes added to the product are only released when the product is paid. You can make passes expire a set amount of time after the purchase.
+This feature solves the problem of managing temporary access to your coworking space. It simplifies the process of selling day passes and ensuring that customers can easily check in and access the resources they need. By connecting passes to your network controller, you can also automate network access for day pass holders, making their experience seamless and convenient.
 
 <Steps>
+ <Step title="Navigate to Inventory">
+    1. From the dashboard, in the left side menu, click on **Inventory**.
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/billing/product/day-pass/step_0.png"
+        data-gif="/images/guides/frames/billing/product/day-pass/step_0.gif"
+        src="/images/guides/frames/billing/product/day-pass/step_0.png"/>
+ </Step>
  <Step title="Register a Pass">
-    1. Navigate to the **Inventory** section in the left-hand menu.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_0_0.gif"/>
-    2. Click on **Passes** under the Sales section.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_0_1.gif"/>
-    3. Click the **Add pass** button on the top right of the screen.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_0_2.gif"/>
-    4. Select **Manual entry**.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_0_3.gif"/>
-    5. In the **Pass name** field, enter &#x60;Day Pass&#x60;.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_0_4.gif"/>
-    6. Ensure the **This pass can be used during a single calendar day** option is selected.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_0_5.gif"/>
-    7. Enable the **Allow customers holding this pass to connect to your IT network** option if you want to grant network access to day pass holders. This allows you to check them in and out of your network.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_0_6.gif"/>
-    8. Click **Save changes**.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_0_7.gif"/>
+    1. Click on **Passes** under the **Sales** section, then click on **Add pass** button on the top right of the screen.
+    2. Select **Manual entry**.
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/billing/product/day-pass/step_1.png"
+        data-gif="/images/guides/frames/billing/product/day-pass/step_1.gif"
+        src="/images/guides/frames/billing/product/day-pass/step_1.png"/>
  </Step>
- <Step title="Create a Day Pass Product">
-    1. Navigate to the **Inventory** section in the left-hand menu.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_0.gif"/>
-    2. Click on **Products** under the Sales section.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_1.gif"/>
-    3. Click the **Add product** button on the top right of the screen.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_2.gif"/>
-    4. Select **Day pass**.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_3.gif"/>
-    5. In the **Product name** field, enter &#x60;Day Pass&#x60;.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_4.gif"/>
-    6. In the **Product description** field, enter &#x60;Day Pass&#x60;.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_5.gif"/>
-    7. Set the **Unit price** to &#x60;$75&#x60;.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_6.gif"/>
-    8. Enable the **Display this product on the website and the App** option if you want customers to be able to purchase the day pass online.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_7.gif"/>
-    9. Set the **The position to display this product at** to &#x60;1&#x60;.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_8.gif"/>
-    10. Click **Save changes**.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_9.gif"/>
+ <Step title="Add Pass Details">
+    1. In the **Pass details** tab, update the following fields:
+
+- In the **Pass name** field, enter &#x60;Day Pass&#x60;.
+- Ensure the **This pass can be used during a single calendar day** option is selected.
+- In the **Network** section, enable the **Allow customers holding this pass to connect to your IT network** option.
+    2. Click **Save changes**.
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/billing/product/day-pass/step_2.png"
+        data-gif="/images/guides/frames/billing/product/day-pass/step_2.gif"
+        src="/images/guides/frames/billing/product/day-pass/step_2.png"/>
  </Step>
- <Step title="Connect the Pass to the Product">
-    1. Click on the **Day Pass** product you just created.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_2_0.gif"/>
-    2. Navigate to the **Benefits** tab.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_2_1.gif"/>
-    3. Click the **Passes** tab.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_2_2.gif"/>
-    4. Click the **Add pass** button.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_2_3.gif"/>
-    5. Select the **Day Pass** from the dropdown menu.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_2_4.gif"/>
-    6. In the **Amount** field, enter &#x60;10&#x60; if you want to offer a bundle of 10 day passes. Otherwise, enter &#x60;1&#x60;.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_2_5.gif"/>
-    7. Set the **Expiration** to &#x60;every 1 month&#x60; if you want the passes to expire within a month.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_2_6.gif"/>
-    8. Click **Save changes**.
-    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_2_7.gif"/>
+ <Step title="Create a Product">
+    1. Click on **Products** under the **Sales** section, then click on **Add product** button on the top right of the screen.
+    2. Select **Day pass**.
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/billing/product/day-pass/step_3.png"
+        data-gif="/images/guides/frames/billing/product/day-pass/step_3.gif"
+        src="/images/guides/frames/billing/product/day-pass/step_3.png"/>
+ </Step>
+ <Step title="Add Product Details">
+    1. In the **Product details** tab, update the following fields:
+
+- In the **Product name** field, enter &#x60;Day Pass&#x60;.
+- In the **Product description** field, enter &#x60;Day Pass&#x60;.
+- In the **Unit price** field, enter &#x60;$75&#x60;.
+- Enable the **Display this product on the website and the App** option.
+- In the **The position to display this product at** field, enter &#x60;1&#x60;.
+    2. Click **Save changes**.
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/billing/product/day-pass/step_4.png"
+        data-gif="/images/guides/frames/billing/product/day-pass/step_4.gif"
+        src="/images/guides/frames/billing/product/day-pass/step_4.png"/>
+ </Step>
+ <Step title="Connect Pass to Product">
+    1. Click on the **Benefits** tab, then click on **Add pass** button.
+    2. In the **Pass** field, select &#x60;Day Pass&#x60;.
+
+- In the **Amount** field, enter &#x60;10&#x60; if you want to create a bundle of 10 day passes.
+- In the **Expiration** section, select **every 1 month** if you want customers to buy and use this within a month.
+    3. Click **Save changes**.
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/billing/product/day-pass/step_5.png"
+        data-gif="/images/guides/frames/billing/product/day-pass/step_5.gif"
+        src="/images/guides/frames/billing/product/day-pass/step_5.png"/>
+ </Step>
+ <Step title="Product Created">
+    1. The day pass product has been created and is now available for customers to purchase.
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/billing/product/day-pass/step_6.png"
+        data-gif="/images/guides/frames/billing/product/day-pass/step_6.gif"
+        src="/images/guides/frames/billing/product/day-pass/step_6.png"/>
  </Step>
 </Steps>
-<Card horizontal title="Learn more about products" icon="book" href="/reference/billing/products">
+<Card horizontal title="Learn more about products" icon="book" href="/reference/billing/product">
     Access this section to learn in detail about products and their settings.
 </Card>
 

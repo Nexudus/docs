@@ -1,112 +1,90 @@
 ---
 title: Add virtual office plan
-description: Create and configure virtual office plans in Nexudus to manage customer onboarding and delivery handling.
+description: Create a virtual office plan, configure onboarding options, delivery handling, and associated charges.
 ---
 
-A **virtual office plan** in Nexudus is similar to a regular plan in terms of billing but provides additional options for onboarding customers and managing deliveries. This feature is particularly useful for coworking spaces and flexible workspaces that offer virtual office services, allowing them to streamline the process of setting up and managing virtual office memberships.
+Virtual office plans in Nexudus offer a way to manage customers who require services like mail handling and forwarding without needing a physical office space. This feature allows you to set up specific onboarding procedures, manage delivery options, and apply associated charges, making it ideal for coworking spaces looking to offer comprehensive virtual office solutions.
 
-With virtual office plans, you can configure **identity and address checks**, specify delivery handling options, and define limits for company aliases and forwarding addresses. This ensures that you can tailor the virtual office experience to meet the specific needs of your customers while maintaining control over your resources.
+**Key features of virtual office plans include:**
 
-Key aspects of virtual office plans include:
-
-*   **Customer Onboarding**: Set requirements for identity and address verification, choosing between manual checks or using Stripe Identity (if supported in your country).
-*   **Delivery Handling**: Configure handling options for various delivery types such as Mail, Parcels, Checks, and Publicity. Each delivery type can be associated with different handling options like Store for collection, Forward, Open, scan & forward, and more.
-*   **Charge Association**: Link different charges (based on products) to each handling option, allowing you to bill customers for specific delivery services.
-*   **Alias and Address Limits**: Define the number of company aliases, additional recipients, and forwarding addresses per recipient that customers can add to their virtual office plan.
+*   **Customizable Onboarding:** Define identity and address verification processes, either manually or via Stripe Identity (if supported in your region).
+*   **Delivery Handling:** Manage various delivery types such as mail, parcels, and checks, with options for storing, forwarding, scanning, and more.
+*   **Charge Association:** Link specific products and charges to each delivery handling option.
+*   **Alias and Recipient Limits:** Set limits for company aliases, additional recipients, and forwarding addresses.
 
 <Steps>
- <Step title="Create Product">
-   We will first create two products representing the charges to handle and forward deliveries. 
-   You can create as many products as needed to charge for the different actions you take when handing deliveries.
-    1. Navigate to **Inventory** and select **Products**.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_0_0.gif"/>
-    2. Click on **Add product**.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_0_1.gif"/>
-    3. Select **Manual entry** to create a new product.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_0_2.gif"/>
-    4. Enter the **Product name** as &quot;Forwarding Charges&quot;.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_0_3.gif"/>
-    5. Add the **Product description** as &quot;Forwarding Charges&quot;.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_0_4.gif"/>
-    6. Set the **Unit price** to 1.50 USD.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_0_5.gif"/>
-    7. Click on **Save changes**.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_0_6.gif"/>
-    8. Click on **Add product**.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_0_7.gif"/>
-    9. Select **Manual entry** to create a new product.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_0_8.gif"/>
-    10. Enter the **Product name** as &quot;Delivery Processing Charge&quot;.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_0_9.gif"/>
-    11. Add the **Product description** as &quot;Delivery Processing Charge&quot;.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_0_10.gif"/>
-    12. Set the **Unit price** to 0.70 USD.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_0_11.gif"/>
-    13. Click on **Save changes**.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_0_12.gif"/>
+ <Step title="Navigate and Add Plan">
+    1. Navigate to the **Inventory** section in the side menu.
+    2. Click on **Plans**.
+    3. Click the **Add plan** button.
+    4. Select **Manual entry** to create a new plan from scratch.
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/billing/tariff/virtual-office/step_0.png"
+        data-gif="/images/guides/frames/billing/tariff/virtual-office/step_0.gif"
+        src="/images/guides/frames/billing/tariff/virtual-office/step_0.png"/>
  </Step>
- <Step title="Create Plan">
-   Once you have added the required produces, we can continue to create the actual virtual office plan.
-    1. Navigate to **Inventory** and select **Plans**.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_0.gif"/>
-    2. Click on **Add plan**.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_1.gif"/>
-    3. Select **Manual entry** to create a new plan.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_2.gif"/>
-    4. Enter the **Plan name** as &quot;Virtual Office Basic&quot;.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_3.gif"/>
-    5. Add the **Plan description** as &quot;Virtual Office Basic&quot;.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_4.gif"/>
-    6. Enable the **This plan is a virtual office plan** toggle.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_5.gif"/>
-    7. Go to the **Virtual Office** tab.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_6.gif"/>
-    8. Enable the **Customers in this plan are required to provide proof of address** toggle.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_7.gif"/>
-    9. Select **Manual** for how you would like to check proof of address.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_8.gif"/>
-    10. Click on **Reuse previous list** to add valid documents.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_9.gif"/>
-    11. Enable the **Customers in this plan are required to provide proof of ID** toggle.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_10.gif"/>
-    12. Select **Manual** for how you would like to check proof of ID.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_11.gif"/>
-    13. Click on **Reuse previous list** to add valid documents.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_12.gif"/>
-    14. Click on **Add delivery type(s)**.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_13.gif"/>
-    15. Select **Parcel** and **Checks**.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_14.gif"/>
-    16. For **Parcel**, select **Return to sender** as the delivery handling option.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_15.gif"/>
-    17. Set the **Maximum number of free storage days** for collect to 2 days.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_16.gif"/>
-    18. Link the **Delivery Processing Charge** to the collect handling option.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_17.gif"/>
-    19. Link the **Forwarding Charges** to the forward handling option.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_18.gif"/>
-    20. Link the **Delivery Processing Charge** to the store handling option.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_19.gif"/>
-    21. Set the **Maximum additional company aliases** to 2.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_20.gif"/>
-    22. Set the **Maximum additional recipients** to 2.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_21.gif"/>
-    23. Set the **Maximum forwarding addresses per recipient** to 2.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_22.gif"/>
-    24. Click on **Save changes**.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_23.gif"/>
-    25. Go to the **Pricing** tab.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_24.gif"/>
-    26. Set the **Price** to 175 USD every 1 month.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_25.gif"/>
-    27. Click on **Save changes**.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_26.gif"/>
-    28. Click on **OK**.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_27.gif"/>
-    29. Change the **Plan name** to &quot;Virtual Office Standard&quot;.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_28.gif"/>
-    30. Click on **Save changes**.
-    <img width="150" src="/images/guides/frames/billing/tariff/virtual-office/step_1_29.gif"/>
+ <Step title="Fill in Plan Details">
+    1. Enter **Virtual Office Basic** as the plan name.
+    2. Enter **Virtual Office Basic** as the plan description.
+    3. Enable the **This plan is a virtual office plan** toggle.
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/billing/tariff/virtual-office/step_1.png"
+        data-gif="/images/guides/frames/billing/tariff/virtual-office/step_1.gif"
+        src="/images/guides/frames/billing/tariff/virtual-office/step_1.png"/>
+ </Step>
+ <Step title="Configure Virtual Office Settings">
+    1. Navigate to the **Virtual Office** tab.
+    2. Enable the **Customers in this plan are required to provide proof of address** toggle.
+    3. Select **Manual** for how you would like to check proof of address.
+    4. Click on **Reuse previous list** to use a previously saved list of valid documents.
+    5. Enable the **Customers in this plan are required to provide proof of ID** toggle.
+    6. Select **Manual** for how you would like to check proof of ID.
+    7. Click on **Reuse previous list** to use a previously saved list of valid documents.
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/billing/tariff/virtual-office/step_2.png"
+        data-gif="/images/guides/frames/billing/tariff/virtual-office/step_2.gif"
+        src="/images/guides/frames/billing/tariff/virtual-office/step_2.png"/>
+ </Step>
+ <Step title="Set Up Delivery Handling">
+    1. Click on **Add delivery type(s)**.
+    2. Select **Parcel** and **Checks** as delivery categories.
+    3. Click on **Add handling option(s)**.
+    4. For **Parcel**, change the delivery handling option to **Return to sender**.
+    5. Set the maximum number of free storage days for **Collect** to **2**.
+    6. Link the **Delivery Processing Charge** to the **Collect** handling option.
+    7. Link the **Forwarding Charges** to the **Forward** handling option.
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/billing/tariff/virtual-office/step_3.png"
+        data-gif="/images/guides/frames/billing/tariff/virtual-office/step_3.gif"
+        src="/images/guides/frames/billing/tariff/virtual-office/step_3.png"/>
+ </Step>
+ <Step title="Define Company Limits">
+    1. Set the maximum additional company aliases to **2**.
+    2. Set the maximum additional recipients to **2**.
+    3. Set the maximum forwarding addresses per recipient to **2**.
+    4. Click **Save changes**.
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/billing/tariff/virtual-office/step_4.png"
+        data-gif="/images/guides/frames/billing/tariff/virtual-office/step_4.gif"
+        src="/images/guides/frames/billing/tariff/virtual-office/step_4.png"/>
+ </Step>
+ <Step title="Set Pricing and Save">
+    1. Navigate to the **Pricing** tab.
+    2. Set the price to **175** USD per month.
+    3. Click **Save changes**.
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/billing/tariff/virtual-office/step_5.png"
+        data-gif="/images/guides/frames/billing/tariff/virtual-office/step_5.gif"
+        src="/images/guides/frames/billing/tariff/virtual-office/step_5.png"/>
+ </Step>
+ <Step title="Change Plan Name">
+    1. Navigate to the **Plan details** tab.
+    2. Change the plan name to **Virtual Office Standard**.
+    3. Click **Save changes**.
+    <img width="150" class="step_frame"
+        data-png="/images/guides/frames/billing/tariff/virtual-office/step_6.png"
+        data-gif="/images/guides/frames/billing/tariff/virtual-office/step_6.gif"
+        src="/images/guides/frames/billing/tariff/virtual-office/step_6.png"/>
  </Step>
 </Steps>
 <Card horizontal title="Learn more about plans" icon="book" href="/reference/billing/tariff">

@@ -11,14 +11,15 @@ footer .sm\:flex {
   display: none !important;
 }
 
-[role='list'] img {
+[role="list"] img {
   margin: 0 !important;
+  margin-top: 10px !important;
   filter: grayscale(1);
   opacity: 0.8;
   transition: all 0.5s ease;
 }
 
-[role='list'] img:hover {
+[role="list"] img:hover {
   opacity: 1;
   filter: none;
 }

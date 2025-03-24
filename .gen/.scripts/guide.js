@@ -1,10 +1,10 @@
-import fs from 'fs';
-import Handlebars from 'handlebars';
-import kb from '../in/kb/kb.json' assert { type: 'json' };
-import { complete } from './gemini.js';
-import { extractFrames } from './ffmpeg.js';
+import fs from "fs";
+import Handlebars from "handlebars";
+import kb from "../in/kb/kb.json" assert { type: "json" };
+import { complete } from "./gemini.js";
+import { extractFrames } from "./ffmpeg.js";
 
-Handlebars.registerHelper('inc', function (value, options) {
+Handlebars.registerHelper("inc", function (value, options) {
   return parseInt(value) + 1;
 });
 
@@ -12,7 +12,7 @@ async function getCompletion(templatePath, guideData, templateData) {
   // Read prompt template
   const source = fs.readFileSync(
     `./.gen/in/templates/${templatePath}`,
-    'utf-8'
+    "utf-8"
   );
 
   // Run prompt template
@@ -76,7 +76,7 @@ async function writeFile(entity) {
 
   // Introduction
   const introData = await getCompletion(
-    'guide_prompt.hbs',
+    "guide_prompt.hbs",
     guideData,
     templateData
   );
@@ -86,8 +86,8 @@ async function writeFile(entity) {
 
   // Render the final MDX file
   const guideTemplateSource = fs.readFileSync(
-    './.gen/in/templates/guide_mdx.hbs',
-    'utf-8'
+    "./.gen/in/templates/guide_mdx.hbs",
+    "utf-8"
   );
 
   const referenceTemplate = Handlebars.compile(guideTemplateSource);
