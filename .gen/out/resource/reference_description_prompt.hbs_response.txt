@@ -1,0 +1,18 @@
+{
+    "short_description": "Understanding Resources in the Nexudus Platform",
+    "description": "In the Nexudus Platform, **Resources** refer to bookable or rentable items and spaces within your venue that members can reserve or use. These can include meeting rooms, phone booths, event spaces, and specialized equipment like 3D printers. Resources are distinct from permanent allocations like dedicated desks or private offices, which are not typically booked for short-term use.",
+    "when": "Use 'Resources' when you need to manage and facilitate the booking of spaces or items that are shared among members. Avoid using 'Resources' for permanent allocations such as dedicated desks or private offices, which are not intended for short-term booking.",
+    "examples": [
+        "Meeting rooms, Boardrooms and Conference rooms",
+        "Phone booths or private call pods",
+        "Photo/video studios",
+        "Event spaces",
+        "Materials or tools in a Makerspace",
+        "Music rooms or soundproof booths",
+        "Lockers",
+        "Parking spaces",
+        "Mailboxes",
+        "Storage units",
+        "3D printers"
+    ]
+}

@@ -1,0 +1,22 @@
+---
+title: {{title}}
+description: {{description}}
+---
+
+{{{introduction_markdown}}}
+
+<Steps>
+{{#each this.steps}}
+ <Step title="{{this.step_title}}">
+    {{#each this.sub_steps}}
+    {{inc @index}}. {{step_description_markdown}}
+    <img width="150" src="/images/guides/frames/{{@root.guideData.namespace}}/{{@root.guideData.name}}/step_{{@../index}}_{{@index}}.gif"/>
+    {{/each}}
+ </Step>
+{{/each}}
+</Steps>
+<Card horizontal title="Learn more about {{guideData.entity_name_plural}}" icon="book" href="/reference/{{guideData.namespace}}">
+    Access this section to learn in detail about {{guideData.entity_name_plural}} and their settings.
+</Card>
+
+

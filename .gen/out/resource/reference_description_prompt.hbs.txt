@@ -1,0 +1,29 @@
+Describe what "Resources" are in this context.
+
+Good Examples of "Resources" can be
+- Meeting rooms, Boardrooms and Conference rooms
+- Phone booths or private call pods
+- Photo/video studios
+- Event spaces
+- Materials or tools in a Makerspace
+- Music rooms or soundproof booths
+- Lockers
+- Parking spaces
+- Mailboxes
+- Storage units
+- 3D printers
+
+Bad Examples of "Resources" can be
+- Dedicated desks
+- Private offices
+- Team suites
+
+
+
+RESPONSE JSON FORMAT:
+{
+    "short_description": "A short description to use in the title of this page.",
+    "description": "(~100 words) Describe in a clear way what "Resources" are in the Nexudus Platform. Use markdown to format the text for best legibility."
+    "when": "(~50 words) Describe in a clear way when to use or not to use "Resources",
+    "examples": "A list of typical use of Resources"
+}

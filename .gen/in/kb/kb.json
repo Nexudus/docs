@@ -5,19 +5,36 @@
   },
   "entities": [
     {
+      "namespace": "billing/product",
       "name": "Product",
       "name_plural": "Products",
       "examples": [
-        "Day passes or bundles of day passes",
-        "Coffee and other drinks",
-        "Benefit bundles: printing credit, money or time credit",
-        "Meeting rooms additional services",
-        "Other services"
+        "Bottled water or soft drinks",
+        "Snacks (protein bars, chips, fruit)",
+        "Pastries or baked goods",
+        "Notebooks or planners",
+        "Pens, markers, or highlighters",
+        "USB drives or chargers",
+        "Sticky notes",
+        "Projector or screen rental",
+        "Whiteboard or flip-chart rental",
+        "One-time printing or photocopying jobs",
+        "Postage or mailing services",
+        "Envelopes or packaging materials",
+        "Day pass or hourly access",
+        "Guest pass for visitors",
+        "Branded mugs, t-shirts, or tote bags",
+        "Laptop stickers or water bottles",
+        "Co-working space gift cards",
+        "Lockers or personal storage rental (short term)"
       ],
       "bad_examples": [
         "Meeting rooms",
         "Event tickets",
-        "Memberships or subscriptions"
+        "Memberships or subscriptions",
+        "Meeting room booking",
+        "Yoga or fitness class drop-ins",
+        "Massage or wellness session"
       ],
       "frontEndFiles": [
         {
@@ -45,6 +62,7 @@
     {
       "name": "Plan",
       "name_plural": "Plans",
+      "namespace": "billing/tariff",
       "examples": [
         "Hot-desk monthly membership",
         "Private office",
@@ -109,6 +127,103 @@
           "path": "\\components\\pages\\billing\\plans\\legal.tsx"
         }
       ]
+    },
+    {
+      "name": "Resource",
+      "name_plural": "Resources",
+      "namespace": "spaces/resources",
+      "examples": [
+        "Meeting rooms, Boardrooms and Conference rooms",
+        "Phone booths or private call pods",
+        "Photo/video studios",
+        "Event spaces",
+        "Materials or tools in a Makerspace",
+        "Music rooms or soundproof booths",
+        "Lockers",
+        "Parking spaces",
+        "Mailboxes",
+        "Storage units",
+        "3D printers"
+      ],
+      "bad_examples": ["Dedicated desks", "Private offices", "Team suites"],
+      "notes": [],
+      "frontEndFiles": [
+        {
+          "name": "General",
+          "type": "Tab",
+          "path": "components/pages/billing/resources/general.tsx"
+        },
+        {
+          "name": "Features",
+          "type": "Tab",
+          "path": "components/pages/billing/resources/features.tsx"
+        },
+        {
+          "name": "Rates",
+          "type": "Tab",
+          "path": "components/pages/billing/resources/prices.tsx"
+        },
+        {
+          "name": "Limits",
+          "type": "Tab",
+          "path": "components/pages/billing/resources/limits.tsx"
+        },
+        {
+          "name": "Integrations",
+          "type": "Tab",
+          "path": "components/pages/billing/resources/integrations.tsx"
+        }
+      ]
+    }
+  ],
+  "guides": [
+    {
+      "namespace": "billing/product",
+      "name": "simple-product",
+      "entity_name": "product",
+      "entity_name_plural": "products"
+    },
+    {
+      "namespace": "billing/product",
+      "name": "credit-bundle",
+      "entity_name": "product",
+      "entity_name_plural": "products"
+    },
+    {
+      "namespace": "billing/product",
+      "name": "day-pass",
+      "entity_name": "product",
+      "entity_name_plural": "products"
+    },
+    {
+      "namespace": "billing/tariff",
+      "name": "simple-plan",
+      "entity_name": "plan",
+      "entity_name_plural": "plans"
+    },
+    {
+      "namespace": "billing/tariff",
+      "name": "virtual-office",
+      "entity_name": "plan",
+      "entity_name_plural": "plans"
+    },
+    {
+      "namespace": "billing/tariff",
+      "name": "prorated-plan",
+      "entity_name": "plan",
+      "entity_name_plural": "plans"
+    },
+    {
+      "namespace": "billing/tariff",
+      "name": "plan-benefits",
+      "entity_name": "plan",
+      "entity_name_plural": "plans"
+    },
+    {
+      "namespace": "spaces/resource",
+      "name": "meeting-room",
+      "entity_name": "resource",
+      "entity_name_plural": "resources"
     }
   ]
 }

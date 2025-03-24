@@ -1,0 +1,152 @@
+{
+  "description": "Learn how to create a day pass product in Nexudus, including registering a pass and connecting it to your network controller.",
+  "introduction_markdown": "This document guides you through the process of creating a **Day Pass product** in Nexudus. A Day Pass product includes one or more passes as part of its benefits. This feature solves the problem of managing temporary access to your coworking space and network for non-members. By following these steps, you can easily set up a Day Pass product that allows customers to check in, use the space, and access your network for a specified period. This makes it easier for you to offer flexible access options and manage your resources effectively.\n\nWith Nexudus, a pass can be used to check customers in. When a customer is checked in, the pass is used. Passes can be set to be valid by calendar day or for a number of hours across days. You can connect a pass to your network controller to grant access to the network to those purchasing the day pass product. If the buyer is a contact (i.e they are not a member - they don't have an active contract). The passes added to the product are only released when the product is paid. You can make passes expire a set amount of time after the purchase.",
+  "steps": [
+    {
+      "step_title": "Register a Pass",
+      "sub_steps": [
+        {
+          "step_description_markdown": "Navigate to the **Inventory** section in the left-hand menu.",
+          "step_duration": 2,
+          "step_start_time": "0:03"
+        },
+        {
+          "step_description_markdown": "Click on **Passes** under the Sales section.",
+          "step_duration": 1,
+          "step_start_time": "0:07"
+        },
+        {
+          "step_description_markdown": "Click the **Add pass** button on the top right of the screen.",
+          "step_duration": 1,
+          "step_start_time": "0:09"
+        },
+        {
+          "step_description_markdown": "Select **Manual entry**.",
+          "step_duration": 1,
+          "step_start_time": "0:10"
+        },
+        {
+          "step_description_markdown": "In the **Pass name** field, enter `Day Pass`.",
+          "step_duration": 3,
+          "step_start_time": "0:11"
+        },
+        {
+          "step_description_markdown": "Ensure the **This pass can be used during a single calendar day** option is selected.",
+          "step_duration": 1,
+          "step_start_time": "0:15"
+        },
+        {
+          "step_description_markdown": "Enable the **Allow customers holding this pass to connect to your IT network** option if you want to grant network access to day pass holders. This allows you to check them in and out of your network.",
+          "step_duration": 9,
+          "step_start_time": "0:16"
+        },
+        {
+          "step_description_markdown": "Click **Save changes**.",
+          "step_duration": 1,
+          "step_start_time": "0:26"
+        }
+      ]
+    },
+    {
+      "step_title": "Create a Day Pass Product",
+      "sub_steps": [
+        {
+          "step_description_markdown": "Navigate to the **Inventory** section in the left-hand menu.",
+          "step_duration": 1,
+          "step_start_time": "0:28"
+        },
+        {
+          "step_description_markdown": "Click on **Products** under the Sales section.",
+          "step_duration": 1,
+          "step_start_time": "0:28"
+        },
+        {
+          "step_description_markdown": "Click the **Add product** button on the top right of the screen.",
+          "step_duration": 1,
+          "step_start_time": "0:29"
+        },
+        {
+          "step_description_markdown": "Select **Day pass**.",
+          "step_duration": 1,
+          "step_start_time": "0:30"
+        },
+        {
+          "step_description_markdown": "In the **Product name** field, enter `Day Pass`.",
+          "step_duration": 2,
+          "step_start_time": "0:32"
+        },
+        {
+          "step_description_markdown": "In the **Product description** field, enter `Day Pass`.",
+          "step_duration": 2,
+          "step_start_time": "0:33"
+        },
+        {
+          "step_description_markdown": "Set the **Unit price** to `$75`.",
+          "step_duration": 4,
+          "step_start_time": "0:34"
+        },
+        {
+          "step_description_markdown": "Enable the **Display this product on the website and the App** option if you want customers to be able to purchase the day pass online.",
+          "step_duration": 5,
+          "step_start_time": "0:38"
+        },
+        {
+          "step_description_markdown": "Set the **The position to display this product at** to `1`.",
+          "step_duration": 3,
+          "step_start_time": "0:44"
+        },
+        {
+          "step_description_markdown": "Click **Save changes**.",
+          "step_duration": 1,
+          "step_start_time": "0:46"
+        }
+      ]
+    },
+    {
+      "step_title": "Connect the Pass to the Product",
+      "sub_steps": [
+        {
+          "step_description_markdown": "Click on the **Day Pass** product you just created.",
+          "step_duration": 2,
+          "step_start_time": "0:48"
+        },
+        {
+          "step_description_markdown": "Navigate to the **Benefits** tab.",
+          "step_duration": 1,
+          "step_start_time": "0:49"
+        },
+        {
+          "step_description_markdown": "Click the **Passes** tab.",
+          "step_duration": 1,
+          "step_start_time": "0:50"
+        },
+        {
+          "step_description_markdown": "Click the **Add pass** button.",
+          "step_duration": 1,
+          "step_start_time": "0:52"
+        },
+        {
+          "step_description_markdown": "Select the **Day Pass** from the dropdown menu.",
+          "step_duration": 4,
+          "step_start_time": "0:53"
+        },
+        {
+          "step_description_markdown": "In the **Amount** field, enter `10` if you want to offer a bundle of 10 day passes. Otherwise, enter `1`.",
+          "step_duration": 10,
+          "step_start_time": "0:56"
+        },
+        {
+          "step_description_markdown": "Set the **Expiration** to `every 1 month` if you want the passes to expire within a month.",
+          "step_duration": 6,
+          "step_start_time": "1:06"
+        },
+        {
+          "step_description_markdown": "Click **Save changes**.",
+          "step_duration": 1,
+          "step_start_time": "1:12"
+        }
+      ]
+    }
+  ],
+  "title": "How to Create a Day Pass Product"
+}

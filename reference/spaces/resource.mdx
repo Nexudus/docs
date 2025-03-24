@@ -1,0 +1,225 @@
+---
+title: Resources
+description: Understanding Resources in the Nexudus Platform
+---
+
+### What is a Resource?
+
+In the Nexudus Platform, **Resources** refer to bookable or rentable items and spaces within your venue that members can reserve or use. These can include meeting rooms, phone booths, event spaces, and specialized equipment like 3D printers. Resources are distinct from permanent allocations like dedicated desks or private offices, which are not typically booked for short-term use.
+
+### When to use Resources?
+
+Use &#x27;Resources&#x27; when you need to manage and facilitate the booking of spaces or items that are shared among members. Avoid using &#x27;Resources&#x27; for permanent allocations such as dedicated desks or private offices, which are not intended for short-term booking.
+
+### Some examples
+
+- Meeting rooms, Boardrooms and Conference rooms
+- Phone booths or private call pods
+- Photo/video studios
+- Event spaces
+- Materials or tools in a Makerspace
+- Music rooms or soundproof booths
+- Lockers
+- Parking spaces
+- Mailboxes
+- Storage units
+- 3D printers
+
+### Field reference
+
+#### 📋 **Resource details**
+
+This section allows you to define the basic details of a resource, such as its name, type, and category. Resources can be spaces or items available for booking, like meeting rooms or equipment.
+
+| **Field**         | **Description**                                | **Tips & Notes**                                                                              |
+| ----------------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| **Resource name** | The name of the resource.                      | This field supports localized text.                                                           |
+| **Available at**  | The location where this resource is available. | Selecting a &#x27;network&#x27; location makes it available at all locations in that network. |
+| **Resource type** | The type of resource.                          | Resources of the same type share the same set of prices.                                      |
+| **Category**      | The category of the resource.                  | Suggestions are available based on existing group names.                                      |
+
+#### 🌐 **Web portal and members app**
+
+This section manages the visibility of the resource on the web portal and members app, including details for email confirmations.
+
+| **Field**                                                        | **Description**                                  | **Tips & Notes**                                                  |
+| ---------------------------------------------------------------- | ------------------------------------------------ | ----------------------------------------------------------------- |
+| **Display this resource on the web portal and the members App.** | Visibility toggle for the resource.              |                                                                   |
+| **Display this resource in the administration panel calendar.**  | Visibility toggle for the admin panel calendar.  |                                                                   |
+| **Resource details**                                             | Detailed description of the resource.            | Supports localized text.                                          |
+| **Email confirmation details**                                   | Text included in the booking confirmation email. | Use the &#x27;confirmationContent&#x27; token in email templates. |
+| **Photo**                                                        | Upload a photo of the resource.                  | Preview available for uploaded images.                            |
+| **Direct link**                                                  | A direct link to book this resource.             | Visible if the resource is not archived and is visible.           |
+
+#### 📍 **Location**
+
+This section allows you to set the geographical location of the resource using a map component.
+
+| **Field** | **Description**                                 | **Tips & Notes**                                                          |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------- |
+| **Map**   | Set the latitude and longitude of the resource. | Allows for precise location setting with a maximum distance of 10 meters. |
+
+#### 🛠️ **Features**
+
+This section allows you to specify the unique features available with the resource. These features enhance the usability and comfort of the space.
+
+| **Field**          | **Description**                                  | **Tips & Notes**                                            |
+| ------------------ | ------------------------------------------------ | ----------------------------------------------------------- |
+| **Standing Desk**  | This resource provides a standing desk.          | Ideal for users who prefer or require a standing workspace. |
+| **Quiet Zone**     | This resource is in a quiet zone.                | Suitable for activities requiring minimal noise.            |
+| **Privacy Screen** | This resource is surrounded by a privacy screen. | Ensures privacy for sensitive work.                         |
+| **Soundproof**     | This resource is in a soundproof room.           | Perfect for confidential meetings or recordings.            |
+| **Catering**       | This resource offers catering.                   | Food and beverage services are available.                   |
+| **Tea and Coffee** | This resource offers tea and coffee.             | Refreshments are provided.                                  |
+| **Drinks**         | This resource offers drinks.                     | Beverages are available for users.                          |
+
+#### 🏢 **Amenities**
+
+This section lists the amenities available with the resource, enhancing the functionality and convenience of the space.
+
+| **Field**                 | **Description**                                | **Tips & Notes**                                 |
+| ------------------------- | ---------------------------------------------- | ------------------------------------------------ |
+| **Projector**             | This resource includes a projector.            | Useful for presentations and meetings.           |
+| **Internet**              | This resource provides access to the internet. | Ensure connectivity for all users.               |
+| **Wireless Charger**      | This resource includes a wireless charger.     | Convenient for charging compatible devices.      |
+| **Conference Phone**      | This resource provides a conference phone.     | Facilitates group calls and meetings.            |
+| **Standard Phone**        | This resource provides a standard phone.       | Basic telephony services available.              |
+| **Whiteboard**            | This resource has a whiteboard.                | Ideal for brainstorming and planning.            |
+| **Flip Chart**            | This resource has a flip-chart.                | Useful for presentations and workshops.          |
+| **Desktop Monitor**       | This resource has a desktop monitor.           | Enhances visual display for users.               |
+| **Large Display**         | This resource has a large display.             | Suitable for large group presentations.          |
+| **Dual Display Screen**   | This resource has dual displays.               | Increases screen real estate for multitasking.   |
+| **Display Screen**        | This resource has a single display.            | Basic display functionality.                     |
+| **Video Conferencing**    | This resource has video conferencing.          | Supports virtual meetings and collaborations.    |
+| **Wireless Presentation** | This resource has a wireless presentation.     | Allows for cable-free presentations.             |
+| **PA System**             | This resource has a PA system.                 | Suitable for announcements and large gatherings. |
+| **Secure Storage**        | This resource has secure storage.              | Ensures safety of personal belongings.           |
+
+#### 🔒 **Security**
+
+This section outlines the security features available with the resource, ensuring safety and protection.
+
+| **Field**          | **Description**                          | **Tips & Notes**                               |
+| ------------------ | ---------------------------------------- | ---------------------------------------------- |
+| **Security Lock**  | This resource can be locked securely.    | Provides peace of mind for users.              |
+| **CCTV**           | This resource is recorded using CCTV.    | Monitors and records activities for security.  |
+| **Voice Recorder** | This resource provides a voice recorder. | Useful for recording meetings and discussions. |
+
+#### 🌿 **Environment**
+
+This section describes the environmental features of the resource, contributing to comfort and ambiance.
+
+| **Field**            | **Description**                     | **Tips & Notes**                            |
+| -------------------- | ----------------------------------- | ------------------------------------------- |
+| **Air Conditioning** | This resource has air conditioning. | Ensures a comfortable temperature.          |
+| **Heating**          | This resource has heating.          | Provides warmth during colder months.       |
+| **Natural Light**    | This resource has natural light.    | Creates a pleasant and inviting atmosphere. |
+
+#### 💰 **Resource rates**
+
+This section allows you to define various rates for resources based on user type, time of day, day of the week, or booking duration. It helps in managing pricing strategies effectively.
+
+| **Field**          | **Description**                                       | **Tips & Notes**                                                              |
+| ------------------ | ----------------------------------------------------- | ----------------------------------------------------------------------------- |
+| **Resource types** | The type of resource for which the rate is being set. | Ensure the resource type is correctly selected to apply the appropriate rate. |
+
+#### 📅 **Available times and days**
+
+Set the times of the day and days of the week when this resource is available.
+
+| **Field**      | **Description**                              | **Tips & Notes**                                            |
+| -------------- | -------------------------------------------- | ----------------------------------------------------------- |
+| **Time slots** | Define the available times for the resource. | If no time slots are set, the resource is always available. |
+
+#### 👥 **Capacity**
+
+Set how many people can be accommodated in this resource.
+
+| **Field**                                                             | **Description**                                 | **Tips & Notes**                                   |
+| --------------------------------------------------------------------- | ----------------------------------------------- | -------------------------------------------------- |
+| **Simultaneous bookings**                                             | Enable simultaneous bookings for this resource. | Useful for resources like hot-desks.               |
+| **Capacity**                                                          | Define the capacity of the resource.            | Specify the number of bookings or persons allowed. |
+| **Limit the number of guests in each booking based on the capacity.** | Limit the number of guests based on capacity.   | Ensures guest numbers do not exceed capacity.      |
+
+#### ❌ **Requests and cancellations**
+
+Control when bookings can be made, changed, or cancelled by customers.
+
+| **Field**                                                                    | **Description**                                         | **Tips & Notes**                   |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------- | ---------------------------------- |
+| **Advanced bookings**                                                        | Set the maximum hours in advance a booking can be made. | Default is 24 hours.               |
+| **Late bookings**                                                            | Set the minimum hours before a booking starts.          | Default is 1 hour.                 |
+| **Late cancellations**                                                       | Options for handling late cancellations.                | May include a cancellation fee.    |
+| **Bookings for this resource must be always confirmed by an administrator.** | Require administrator confirmation for bookings.        | Ensures all bookings are reviewed. |
+
+#### ⏰ **Duration**
+
+Control how long or short bookings can be and the times they can start and end.
+
+| **Field**                                                  | **Description**                         | **Tips & Notes**                                    |
+| ---------------------------------------------------------- | --------------------------------------- | --------------------------------------------------- |
+| **Maximum duration**                                       | Set the maximum duration for a booking. |                                                     |
+| **Minimum duration**                                       | Set the minimum duration for a booking. |                                                     |
+| **Fixed interval**                                         | Set fixed intervals for bookings.       | Only accepts 15-minute intervals.                   |
+| **Limit the start/end times when booking this resources.** | Define start/end times for bookings.    | Useful for resources with specific operating hours. |
+
+#### 👤 **Customer and teams**
+
+Set which types of members and teams can make bookings for this resource.
+
+| **Field**                                                                 | **Description**                                               | **Tips & Notes**                                       |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------ |
+| **This resource can be booked by:**                                       | Define who can book the resource.                             | Options include members, contacts, and specific teams. |
+| **Restrict the teams which can book this resource to:**                   | Define which teams can book this resource                     | If empty, all teams can book this resource.            |
+| **This resource can only be booked by customers with a home location of** | Restrict bookings to customers with a specific home location. | Useful for businesses with multiple locations.         |
+
+#### 🔗 **Combined resources**
+
+Combine resources to create a single bookable unit.
+
+| **Field**                                           | **Description**                                                | **Tips & Notes**                                |
+| --------------------------------------------------- | -------------------------------------------------------------- | ----------------------------------------------- |
+| **This resource locks other resources when booked** | Select resources that are locked when this resource is booked. | Ensures combined resources are booked together. |
+
+#### 🔄 **No-return policies**
+
+Control how close to each other bookings can be made to allow for preparation time.
+
+| **Field**              | **Description**                      | **Tips & Notes**                     |
+| ---------------------- | ------------------------------------ | ------------------------------------ |
+| **No-return policies** | Set rules for gaps between bookings. | Useful for cleaning and preparation. |
+
+#### 📹 **Zoom Integration**
+
+Connect this resource to a licensed Zoom account to include a Zoom Meeting link when it is booked. Each resource must be connected to a separate Zoom user account to avoid conflicts.
+
+| **Field**                       | **Description**                                                               | **Tips & Notes**                                      |
+| ------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------- |
+| **Include a Zoom Meeting link** | Option to include a Zoom Meeting link in all bookings made for this resource. | This option is disabled if no Zoom user is connected. |
+
+<Note>
+  If no Zoom user is connected, a button to connect is shown. If a Zoom user is
+  connected, a button to disconnect is shown.
+</Note>
+
+#### 📋 **NexBoard by Nexudus**
+
+Use NexBoard to display availability outside each meeting room and let customers book rooms quickly. Use the iBeacon numbers to link them to this resource.
+
+| **Field**         | **Description**                        | **Tips & Notes**                            |
+| ----------------- | -------------------------------------- | ------------------------------------------- |
+| **iBeacon major** | Displays the major number for iBeacon. | This number can be copied to the clipboard. |
+| **iBeacon minor** | Displays the minor number for iBeacon. | This number can be copied to the clipboard. |
+
+#### 📅 **Calendar iCal Feeds**
+
+Use these links to show bookings in any iCal compatible calendar software like Outlook or Google Calendar.
+
+| **Field**                                | **Description**                                             | **Tips & Notes**                          |
+| ---------------------------------------- | ----------------------------------------------------------- | ----------------------------------------- |
+| **All resources without member details** | Link to show all resources without member details.          | This link can be copied to the clipboard. |
+| **All resources with member details**    | Link to show all resources with member details.             | This link can be copied to the clipboard. |
+| **This resource without member details** | Link to show this specific resource without member details. | This link can be copied to the clipboard. |
+| **This resource with member details**    | Link to show this specific resource with member details.    | This link can be copied to the clipboard. |
+
+---

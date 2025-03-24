@@ -40,8 +40,7 @@
                           "quickstart/inventory/basic-monthly-plan",
                           "quickstart/inventory/prorated-plan",
                           "quickstart/inventory/plan-benefits",
-                          "quickstart/inventory/virtual-office",
-                          "quickstart/inventory/plans-advanced"
+                          "quickstart/inventory/virtual-office"
                         ]
                       },
                       {
@@ -115,8 +114,9 @@
               {
                 "group": "Inventory",
                 "pages": [
-                  "reference/billing/products",
-                  "reference/billing/tariffs"
+                  "reference/billing/product",
+                  "reference/billing/tariff",
+                  "reference/spaces/resource"
                 ]
               }
             ]

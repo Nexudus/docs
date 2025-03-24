@@ -1,0 +1,63 @@
+
+{
+    "reference": [
+        {
+            "name": "Zoom Integration",
+            "icon": "📹",
+            "description": "Connect this resource to a licensed Zoom account to include a Zoom Meeting link when it is booked. Each resource must be connected to a separate Zoom user account to avoid conflicts.",
+            "messages": "If no Zoom user is connected, a button to connect is shown. If a Zoom user is connected, a button to disconnect is shown.",
+            "fields": [
+                {
+                    "name": "Include a Zoom Meeting link",
+                    "description": "Option to include a Zoom Meeting link in all bookings made for this resource.",
+                    "notes": "This option is disabled if no Zoom user is connected."
+                }
+            ]
+        },
+        {
+            "name": "NexBoard by Nexudus",
+            "icon": "📋",
+            "description": "Use NexBoard to display availability outside each meeting room and let customers book rooms quickly. Use the iBeacon numbers to link them to this resource.",
+            "fields": [
+                {
+                    "name": "iBeacon major",
+                    "description": "Displays the major number for iBeacon.",
+                    "notes": "This number can be copied to the clipboard."
+                },
+                {
+                    "name": "iBeacon minor",
+                    "description": "Displays the minor number for iBeacon.",
+                    "notes": "This number can be copied to the clipboard."
+                }
+            ]
+        },
+        {
+            "name": "Calendar iCal Feeds",
+            "icon": "📅",
+            "description": "Use these links to show bookings in any iCal compatible calendar software like Outlook or Google Calendar.",
+            "fields": [
+                {
+                    "name": "All resources without member details",
+                    "description": "Link to show all resources without member details.",
+                    "notes": "This link can be copied to the clipboard."
+                },
+                {
+                    "name": "All resources with member details",
+                    "description": "Link to show all resources with member details.",
+                    "notes": "This link can be copied to the clipboard."
+                },
+                {
+                    "name": "This resource without member details",
+                    "description": "Link to show this specific resource without member details.",
+                    "notes": "This link can be copied to the clipboard."
+                },
+                {
+                    "name": "This resource with member details",
+                    "description": "Link to show this specific resource with member details.",
+                    "notes": "This link can be copied to the clipboard."
+                }
+            ]
+        }
+    ],
+    "notes": "The UI checks if a Zoom user is connected to show the appropriate connect or disconnect button."
+}

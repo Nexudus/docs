@@ -1,0 +1,26 @@
+- First, briefly introduce the feature in a way that addresses the needs of a coworking space or flexible workspace.
+- Produce detailed and complete step by step user instructions to be used as documentation for the Nexudus platform and based on the actions taken in the video and the audio prompts in it. 
+- Also, use the "Additional details about this video" section below as the basis for an introduction text paragraph. 
+- Also, use the sections, labels and steps found in the video to enhance the introduction and description of the feature.
+
+Feature description:
+
+- A virtual office plan is like a regular plan when it comes to billing but offers additional options to on-board customers (like what identity and address check they should do) and how to handle deliveries
+- Identity and address checks can be done either manually or using Stripe Identity if supported in your country.
+- Each virtual office plan can be set to offer handling of different delivery types: Mail, Parcels, Checks and Publicity.
+- Each delivery type can then be associated with different handling options: Store for collection, Forward, Open, scan &amp; forward, Open, scan &amp; recycle, Open, scan &amp; shred, Open, scan &amp; store for collection, Recycle, Return to sender, Shred
+- Each handling option can have different charges (based on products) associated to them
+- You can define how many company aliases, additional recipient and forwarding addresses per recipient customers can add.
+
+
+Some notes to help you:
+- The audio of the video holds important details about a process in the Nexudus platform.
+- Make sure to include details based on the audio prompts in each step as needed.
+- Group the sequence of actions into related groups of actions (step) and list each action as a sub-step
+
+Additional details about output variables:
+- title: three words at most: a short and descriptive name for this document / video. 
+- description: 15 works at most: a brief description of what the document and video.
+- introduction_markdown: a detailed and clear explanation of the feature. Use different paragraphs, markdown formatting and word bolding for easier reading.
+- step_start_time: the time the sub step starts.
+- step_duration: How long this step takes in the video.

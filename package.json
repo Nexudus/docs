@@ -1,11 +1,13 @@
 {
   "type": "module",
   "dependencies": {
+    "@google/generative-ai": "^0.24.0",
     "dotenv": "^16.4.7",
     "handlebars": "^4.7.8",
     "openai": "^4.89.0"
   },
   "scripts": {
-    "reference": "node .\\.gen\\.scripts\\reference.js"
+    "guide": "node ./.gen/.scripts/guide.js",
+    "reference": "node ./.gen/.scripts/reference.js"
   }
 }

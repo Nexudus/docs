@@ -1,0 +1,6 @@
+- Products can have any combination of passes, money credit and time credit.
+- Passes can be used to check customers in and control access to your IT network. When a customer is checked in, the pass is used.
+- Money credit can be set to be valid to pay for bookings, events, products or any other purchases, even plans.
+- If the buyer is a contact (i.e they are not a member - they don't have an active contract). The benefits added to the product are only released when the product is paid
+- You can make any of the benefits expire after an amount of time.
+- Changes made to benefits of existing products only take affect when the products are purchased again.

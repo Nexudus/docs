@@ -1,0 +1,215 @@
+Extract all fields from each of the files below representing each of the tabs in the front-end code to help the users understand what they are and how to use them.
+
+TAB NAME: Integrations
+CONTENTS START
+import {
+  EuiButton,
+  EuiFlexGroup,
+  EuiFlexItem,
+  EuiForm,
+  EuiFormRow,
+  EuiSpacer,
+} from &#x27;@elastic/eui&#x27;;
+import React, { ReactElement } from &#x27;react&#x27;;
+import BusinessDropdownControl from &#x27;~/src/components/forms/controls/entities/businessDropdownControl&#x27;;
+import TextFormControl from &#x27;~/src/components/forms/controls/textFormControl/textFormControl&#x27;;
+import { formMethods } from &#x27;~/src/components/forms/useFormMethods&#x27;;
+import { Trans, useTranslation } from &#x27;react-i18next&#x27;;
+
+import FormSectionHeader from &#x27;~/src/components/forms/formSectionHeader&#x27;;
+import { Resource } from &#x27;~/src/types/spaces/resource&#x27;;
+import CheckboxFormControl from &#x27;~/src/components/forms/controls/checkboxFormControl/checkboxFormControl&#x27;;
+import { useStores } from &#x27;~/src/stores/useStores&#x27;;
+import ClipboardTextFieldFormControl from &#x27;~/src/components/forms/controls/clipboardTextFieldFormControl/clipboardTextFieldFormControl&#x27;;
+import styles from &#x27;./integrations.module.scss&#x27;;
+import zoomImage from &#x27;~/src/assets/images/zoom.png&#x27;;
+import nexBoardLogo from &#x27;~/src/assets/images/nexboard.png&#x27;;
+import iCalLogo from &#x27;~/src/assets/images/ical.png&#x27;;
+import AuthenticatedButton from &#x27;~/src/components/buttons/authenticatedButton&#x27;;
+import { baseUrl } from &#x27;~/src/services/configuration&#x27;;
+
+const ResourceIntegrationsForm &#x3D; ({
+  methods,
+}: {
+  methods: formMethods&lt;Resource&gt;;
+}): ReactElement &#x3D;&gt; {
+  const { t } &#x3D; useTranslation();
+  const { nxApiStore, appStore } &#x3D; useStores();
+
+  const business &#x3D; nxApiStore.getBusiness(methods.record?.BusinessId);
+
+  return (
+    &lt;EuiForm&gt;
+      &lt;EuiFlexGroup&gt;
+        &lt;EuiFlexItem grow&#x3D;{false}&gt;
+          &lt;img
+            className&#x3D;{styles.integration_logo}
+            alt&#x3D;{t(&#x27;Zoom logo&#x27;)}
+            src&#x3D;{zoomImage}
+          /&gt;
+        &lt;/EuiFlexItem&gt;
+        &lt;EuiFlexItem&gt;
+          &lt;FormSectionHeader
+            title&#x3D;{t(&#x27;Zoom&#x27;)}
+            subtitle&#x3D;{t(
+              &#x27;Connect this resource to a licensed Zoom account to include a Zoom Meeting link when it is booked. You must connect each resource to a separate Zoom user account to avoid conflicts when different resources are booked at the same time.&#x27;
+            )}
+          &gt;
+            &lt;EuiFormRow fullWidth&gt;
+              &lt;CheckboxFormControl
+                methods&#x3D;{methods}
+                disabled&#x3D;{!methods.record.ZoomUserId}
+                propertyName&#x3D;{&#x27;UseSharedZoomAccount&#x27;}
+                label&#x3D;{t(
+                  &#x27;Include a Zoom Meeting link in all bookings made for this resource.&#x27;
+                )}
+              /&gt;
+            &lt;/EuiFormRow&gt;
+            {!methods.record.ZoomUserId &amp;&amp; (
+              &lt;EuiFormRow&gt;
+                &lt;AuthenticatedButton
+                  href&#x3D;&quot;#&quot;
+                  size&#x3D;&quot;s&quot;
+                  iconType&#x3D;&quot;link&quot;
+                  onAuthenticated&#x3D;{(token) &#x3D;&gt;
+                    (window.location.href &#x3D; &#x60;${baseUrl}integrations/zoom/${methods.record.BusinessId}/resources/${methods.record.Id}/connect?token&#x3D;${token}&#x60;)
+                  }
+                &gt;
+                  {t(&#x27;Connect this resource to Zoom&#x27;)}
+                &lt;/AuthenticatedButton&gt;
+              &lt;/EuiFormRow&gt;
+            )}
+            {methods.record.ZoomUserId &amp;&amp; (
+              &lt;EuiFormRow&gt;
+                &lt;EuiButton
+                  size&#x3D;&quot;s&quot;
+                  onClick&#x3D;{() &#x3D;&gt; methods.updateRecord(&#x27;ZoomUserId&#x27;, null)}
+                &gt;
+                  {t(&#x27;Disconnect this resource from Zoom&#x27;)}
+                &lt;/EuiButton&gt;
+              &lt;/EuiFormRow&gt;
+            )}
+          &lt;/FormSectionHeader&gt;
+        &lt;/EuiFlexItem&gt;
+      &lt;/EuiFlexGroup&gt;
+      &lt;EuiSpacer /&gt;
+      &lt;EuiFlexGroup&gt;
+        &lt;EuiFlexItem grow&#x3D;{false}&gt;
+          &lt;img
+            className&#x3D;{styles.integration_logo}
+            alt&#x3D;{t(&#x27;NexBoard logo&#x27;)}
+            src&#x3D;{nexBoardLogo}
+          /&gt;
+        &lt;/EuiFlexItem&gt;
+        &lt;EuiFlexItem&gt;
+          &lt;FormSectionHeader
+            title&#x3D;{t(&#x27;NexBoard by Nexudus&#x27;)}
+            subtitle&#x3D;{
+              &lt;Trans&gt;
+                &lt;p&gt;
+                  You can use NexBoard to display availability outside each
+                  meeting room and let customers quickly and easily book your
+                  rooms. If you use your own iBeacon tiles, use the numbers
+                  below to link them to this resource.
+                &lt;/p&gt;
+              &lt;/Trans&gt;
+            }
+          &gt;
+            &lt;EuiFormRow fullWidth&gt;
+              &lt;EuiFlexGroup&gt;
+                &lt;EuiFlexItem grow&#x3D;{false}&gt;
+                  &lt;EuiFormRow label&#x3D;{t(&#x27;iBeacon major&#x27;)}&gt;
+                    &lt;ClipboardTextFieldFormControl
+                      value&#x3D;{&#x60;${methods.record.LowBits}&#x60;}
+                    /&gt;
+                  &lt;/EuiFormRow&gt;
+                &lt;/EuiFlexItem&gt;
+                &lt;EuiFlexItem grow&#x3D;{false}&gt;
+                  &lt;EuiFormRow label&#x3D;{t(&#x27;iBeacon minor&#x27;)}&gt;
+                    &lt;ClipboardTextFieldFormControl
+                      value&#x3D;{&#x60;${methods.record.HighBits}&#x60;}
+                    /&gt;
+                  &lt;/EuiFormRow&gt;
+                &lt;/EuiFlexItem&gt;
+              &lt;/EuiFlexGroup&gt;
+            &lt;/EuiFormRow&gt;
+          &lt;/FormSectionHeader&gt;
+        &lt;/EuiFlexItem&gt;
+      &lt;/EuiFlexGroup&gt;
+      &lt;EuiSpacer /&gt;
+      &lt;EuiFlexGroup&gt;
+        &lt;EuiFlexItem grow&#x3D;{false}&gt;
+          &lt;img
+            className&#x3D;{styles.integration_logo}
+            alt&#x3D;{t(&#x27;iCal logo&#x27;)}
+            src&#x3D;{iCalLogo}
+          /&gt;
+        &lt;/EuiFlexItem&gt;
+        &lt;EuiFlexItem&gt;
+          &lt;FormSectionHeader
+            title&#x3D;{t(&#x27;Calendar iCal Feeds&#x27;)}
+            subtitle&#x3D;{t(
+              &#x27;You can use these links to show bookings in any iCal compatible calendar software like Outlook or Google Calendar.&#x27;
+            )}
+          &gt;
+            &lt;EuiFormRow
+              fullWidth
+              label&#x3D;{t(&#x27;All resources without member details&#x27;)}
+            &gt;
+              &lt;ClipboardTextFieldFormControl
+                value&#x3D;{&#x60;${business?.HomeUrl}en/feeds/bookings?bid&#x3D;${business?.UniqueId}&#x60;}
+              /&gt;
+            &lt;/EuiFormRow&gt;
+            &lt;EuiFormRow
+              fullWidth
+              label&#x3D;{t(&#x27;All resources with member details&#x27;)}
+            &gt;
+              &lt;ClipboardTextFieldFormControl
+                value&#x3D;{&#x60;${business?.HomeUrl}en/feeds/bookings?bid&#x3D;${business?.UniqueId}&amp;guid&#x3D;${methods.record?.UniqueId}&amp;uid&#x3D;${appStore.userInfo.UniqueId}&#x60;}
+              /&gt;
+            &lt;/EuiFormRow&gt;
+            &lt;EuiFormRow
+              fullWidth
+              label&#x3D;{t(&#x27;This resource without member details&#x27;)}
+            &gt;
+              &lt;ClipboardTextFieldFormControl
+                value&#x3D;{&#x60;${business?.HomeUrl}en/feeds/resource?bid&#x3D;${business?.UniqueId}&amp;rid&#x3D;${methods.record?.UniqueId}&#x60;}
+              /&gt;
+            &lt;/EuiFormRow&gt;
+            &lt;EuiFormRow
+              fullWidth
+              label&#x3D;{t(&#x27;This resource with member details&#x27;)}
+            &gt;
+              &lt;ClipboardTextFieldFormControl
+                value&#x3D;{&#x60;${business?.HomeUrl}en/feeds/resource?bid&#x3D;${business?.UniqueId}&amp;rid&#x3D;${methods.record?.UniqueId}&amp;uid&#x3D;${appStore.userInfo.UniqueId}&#x60;}
+              /&gt;
+            &lt;/EuiFormRow&gt;
+          &lt;/FormSectionHeader&gt;
+        &lt;/EuiFlexItem&gt;
+      &lt;/EuiFlexGroup&gt;
+    &lt;/EuiForm&gt;
+  );
+};
+
+export default ResourceIntegrationsForm;
+
+CONTENTS END
+
+
+RESPONSE JSON FORMAT:
+{
+    "reference": [
+        {
+            "name": "the name of form section",
+            "icon": "select an emoji icon relevant for this section.",
+            "description": "(~ 50 words) a description of this section"
+            "messages": "optional: any messages based on conditional rendering or other messages found in the code."
+            "fields": [
+                "name": "the label of the field",
+                "description": "the description of the field.",
+                "notes": "any notes or hints about this field."
+            ]
+        }
+    ]
+    "notes": "optional: include any notes IF the UI has any specific logic or warnings."
+}

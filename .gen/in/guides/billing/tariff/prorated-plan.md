@@ -1,0 +1,6 @@
+- This video describes how to create a prorated plan with a price that is adjusted based on when within a month a customer signs up to and cancels the plan.
+- Prorating discounts the initial and last invoices of a contract based on the number of day between the sign-up / cancellation dates and the billing day of the contract.
+- Benefits are not prorated.
+- The setting "Discount the first invoice for up to X days based on how many days are left in the first billing cycle" controls the max number of days between the start day and the next billing day for prorating to apply. (write an example for the user with an actual plan price)
+- The "Discount the last invoice based on the day members leave contracts for this plan" option adjusts the last invoice based on the number of days between the billing day and then
+- Prorating accounts for the actual number of days in each month.

@@ -1,0 +1,26 @@
+- First, briefly introduce the feature in a way that addresses a user's potential need or problem. What problem does this feature solve for the user? How will it make their life easier?
+- Produce detailed and complete step by step user instructions to be used as documentation for the Nexudus platform and based on the actions taken in the video and the audio prompts in it. 
+- Also, use the "Additional details about this video" section below as the basis for an introduction text paragraph. 
+- Also, use the sections, labels and steps found in the video to enhance the introduction.
+
+Feature description:
+
+- A day pass product includes one or more passes as part of its benefits.
+- A pass can be used to check customers in. When a customer is checked in, the pass is used.
+- Passes can be set to be valid by calendar day or for a number of hours across days.
+- You can connect a pass to your network controller to grant access to the network to those purchasing the day pass product.
+- If the buyer is a contact (i.e they are not a member - they don&#x27;t have an active contract). The passes added to the product are only released when the product is paid
+- You can make passes expire a set amount of time after the purchase.
+
+
+Some notes to help you:
+- The audio of the video holds important details about a process in the Nexudus platform.
+- Make sure to include details based on the audio prompts in each step as needed.
+- Group the sequence of actions into related groups of actions (step) and list each action as a sub-step
+
+Additional details about output variables:
+- title: a short and descriptive name for this document / video.
+- description: a brief description of what the document and video.
+- introduction_markdown: a clear explanation of what this document is about. Use different paragraphs, markdown formatting and word bolding for easier reading.
+- step_start_time: the time the sub step starts.
+- step_duration: How long this step takes in the video. Should  never be less than 2 seconds.

@@ -1,82 +1,77 @@
 ---
-title: Adding a day pass product
-description: This guide provides a step-by-step walkthrough on how to create a day pass product in Nexudus, including registering a pass and connecting it to a product.
+title: Day pass product
+description: Learn how to create a day pass product in Nexudus, including registering a pass and connecting it to your network controller.
 ---
-### Understanding Day Pass Products
 
-Think of a **Day Pass Product** as a flexible way to offer access to your space for a limited time. It's perfect for attracting new customers, accommodating occasional users, or offering trials.
+This document guides you through the process of creating a **Day Pass product** in Nexudus. A Day Pass product includes one or more passes as part of its benefits. This feature solves the problem of managing temporary access to your coworking space and network for non-members. By following these steps, you can easily set up a Day Pass product that allows customers to check in, use the space, and access your network for a specified period. This makes it easier for you to offer flexible access options and manage your resources effectively.
 
-Here's the core idea:
-
-*   **It's a Package of Passes:** When you create a Day Pass Product, you're essentially bundling one or more "passes" together.
-
-*   **Passes = Entry & Usage:** Each pass included in the product allows a customer to check in to your space. When they check in, one of their passes is used up. So, if you sell a Day Pass Product with 5 passes, the customer can visit your space 5 times.
-
-*   **Flexible Validity:** You decide how long each pass is valid:
-
-    *   **Calendar Day:** Valid for a single calendar day (e.g., they can come anytime on a specific day).
-    *   **Number of Hours:** Valid for a certain number of hours (e.g., a 4-hour pass that can be used across multiple days).
-
-*   **Network Access (Optional):** Want to give day pass holders Wi-Fi access?  You can connect a pass to your network controller. When a customer uses a pass to check in, they'll automatically be granted network access for the duration of their pass. This simplifies the process and keeps your network secure.
-
-*   **Payment First (For Non-Members):** If someone buying a Day Pass Product *isn't* already a member with an active contract (we call them "Contacts" in Nexudus), the passes are only released to them once they've paid for the product. This ensures you get paid before they start using your space.
-
-*   **Expiry Dates:** You can set an expiry date for the passes from when they are purchased.
-
-In short, Day Pass Products give you a powerful and flexible way to:
-
-*   Monetize occasional use of your space.
-*   Attract new customers.
-*   Streamline the access process.
-
-### Adding a day pass product
+With Nexudus, a pass can be used to check customers in. When a customer is checked in, the pass is used. Passes can be set to be valid by calendar day or for a number of hours across days. You can connect a pass to your network controller to grant access to the network to those purchasing the day pass product. If the buyer is a contact (i.e they are not a member - they don't have an active contract). The passes added to the product are only released when the product is paid. You can make passes expire a set amount of time after the purchase.
 
 <Steps>
-  <Step title="Register a Pass">
-
-  <Info>
-    You only need to do this step if you have not yet registered a pass before.
-  </Info>
-
-   1. Navigate to the **Inventory** section in the left sidebar.
-   2. Click on **Passes** to open the passes list.
-   3. Click the **+ Add Pass** button in the top right corner.
-   4. Select **Manual entry** to create a Day pass.
-   5. In the **Pass name** field, enter "Day Pass".
-   6. Ensure it is available at the correct location (e.g., Coworking Central Street).
-   7. Confirm that it is used for a single calendar day by selecting “This pass can be used during a single calendar day.”
-   8. Set the **Use priority** field to “Normal”.
-   9. Enable the option **Allow customers holding this pass to connect to your IT network**, if you want to add customers buying this pass into your network controller for check in and check out purposes.
-   10. Click **Save Changes**.
-  </Step>
-  <Step title="Create a Product">
-   1. Navigate to the **Inventory** section in the left sidebar.
-   2. Click on **Products** within the Sales section.
-   3. Click the **+ Add Product** button in the top right corner.
-   4. Select **Day pass**.
-   5. Set the **Product name** field to "Day Pass".
-   6. Verify the correct location in **Available at** (e.g., Coworking Central Street).
-   7. In the **Product description** field, enter a description of the day pass.
-   8. Set the **Unit price** to the desired price (e.g., $75).
-   9. Enable the **Display this product on the website and the App** option if you want customers to be able to purchase this online.
-   10. Set a position to display the product at (e.g., first position by setting the field to 1st).
-   11. Click **Save Changes**.
-  </Step>
-  <Step title="Connect the Pass to the Product">
-   1. Find and click on the recently created **Day Pass** product.
-   2. Click on the **Benefits** tab within the product details.
-   3. Click on the **Passes** tab.
-   4. Click **+ Add pass**.
-   5. In the credit details section, select the **Day Pass** in the Pass dropdown.
-   6. Set the **Amount** to `1` if you want customers to use it only once, or type a different number (e.g. `10` for a bundle of 10 day passes).
-   7. Set the **Expiration** to control how long customers have to use the credit. For example, to make it expire in one month set to “every 1 month”.
-   8. Click **Save Changes**.
-  </Step>
+ <Step title="Register a Pass">
+   <Info>
+   You only need to do this step if you have not yet registered a pass before.
+   </Info>
+    1. Navigate to the **Inventory** section in the left-hand menu.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_0_0.gif"/>
+    2. Click on **Passes** under the Sales section.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_0_1.gif"/>
+    3. Click the **Add pass** button on the top right of the screen.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_0_2.gif"/>
+    4. Select **Manual entry**.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_0_3.gif"/>
+    5. In the **Pass name** field, enter &#x60;Day Pass&#x60;.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_0_4.gif"/>
+    6. Ensure the **This pass can be used during a single calendar day** option is selected.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_0_5.gif"/>
+    7. Enable the **Allow customers holding this pass to connect to your IT network** option if you want to grant network access to day pass holders. This allows you to check them in and out of your network.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_0_6.gif"/>
+    8. Click **Save changes**.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_0_7.gif"/>
+ </Step>
+ <Step title="Create a Day Pass Product">
+    1. Navigate to the **Inventory** section in the left-hand menu.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_0.gif"/>
+    2. Click on **Products** under the Sales section.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_1.gif"/>
+    3. Click the **Add product** button on the top right of the screen.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_2.gif"/>
+    4. Select **Day pass**.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_3.gif"/>
+    5. In the **Product name** field, enter &#x60;Day Pass&#x60;.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_4.gif"/>
+    6. In the **Product description** field, enter &#x60;Day Pass&#x60;.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_5.gif"/>
+    7. Set the **Unit price** to &#x60;$75&#x60;.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_6.gif"/>
+    8. Enable the **Display this product on the website and the App** option if you want customers to be able to purchase the day pass online.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_7.gif"/>
+    9. Set the **The position to display this product at** to &#x60;1&#x60;.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_8.gif"/>
+    10. Click **Save changes**.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_1_9.gif"/>
+ </Step>
+ <Step title="Connect the Pass to the Product">
+    1. Click on the **Day Pass** product you just created.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_2_0.gif"/>
+    2. Navigate to the **Benefits** tab.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_2_1.gif"/>
+    3. Click the **Passes** tab.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_2_2.gif"/>
+    4. Click the **Add pass** button.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_2_3.gif"/>
+    5. Select the **Day Pass** from the dropdown menu.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_2_4.gif"/>
+    6. In the **Amount** field, enter &#x60;10&#x60; if you want to offer a bundle of 10 day passes. Otherwise, enter &#x60;1&#x60;.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_2_5.gif"/>
+    7. Set the **Expiration** to &#x60;every 1 month&#x60; if you want the passes to expire within a month.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_2_6.gif"/>
+    8. Click **Save changes**.
+    <img width="150" src="/images/guides/frames/billing/product/day-pass/step_2_7.gif"/>
+ </Step>
 </Steps>
-
-<Note>The "Network" option in the pass details enables integration with your IT network controller.</Note>
-<Note>When setting the Amount of passes, you can create bundles or limit the usage of the Day Pass by a customer.</Note>
-
-<Card horizontal title="Learn more about products" icon="book" href="/reference/billing/products">
+<Card horizontal title="Learn more about products" icon="book" href="/reference/billing/product">
     Access this section to learn in detail about products and their settings.
 </Card>
+
+

@@ -1,0 +1,43 @@
+- First, briefly introduce the feature in a way that addresses the needs of a coworking space or flexible workspace.
+- Produce detailed and complete step by step user instructions to be used as documentation for the Nexudus platform and based on the actions taken in the video and the audio prompts in it. 
+- Also, use the "Additional details about this video" section below as the basis for an introduction text paragraph. 
+- Also, use the sections, labels and steps found in the video to enhance the introduction and description of the feature.
+
+Feature description:
+
+- A simple guide showing how to set up your first product.
+
+Some examples of basic products:
+
+- Coffee or specialty drinks (e.g. latte, cold brew)
+- Bottled water or soft drinks
+- Snacks (protein bars, chips, fruit)
+- Pastries or baked goods
+- Notebooks or planners
+- Pens, markers, or highlighters
+- USB drives or chargers
+- Sticky notes
+- Projector or screen rental
+- Whiteboard or flipchart rental
+- One-time printing or photocopying jobs
+- Postage or mailing services
+- Envelopes or packaging materials
+- Day pass or hourly access
+- Guest pass for visitors
+- Branded mugs, t-shirts, or tote bags
+- Laptop stickers or water bottles
+- Coworking space gift cards
+- Lockers or personal storage rental (short term)
+
+
+Some notes to help you:
+- The audio of the video holds important details about a process in the Nexudus platform.
+- Make sure to include details based on the audio prompts in each step as needed.
+- Group the sequence of actions into related groups of actions (step) and list each action as a sub-step
+
+Additional details about output variables:
+- title: three words at most: a short and descriptive name for this document / video. 
+- description: 15 works at most: a brief description of what the document and video.
+- introduction_markdown: a detailed and clear explanation of the feature. Use different paragraphs, markdown formatting and word bolding for easier reading.
+- step_start_time: the time the sub step starts.
+- step_duration: How long this step takes in the video.

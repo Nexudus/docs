@@ -1,0 +1,31 @@
+- First, briefly introduce the feature in a way that addresses the needs of a coworking space or flexible workspace.
+- Produce detailed and complete step by step user instructions to be used as documentation for the Nexudus platform and based on the actions taken in the video and the audio prompts in it. 
+- Also, use the "Additional details about this video" section below as the basis for an introduction text paragraph. 
+- Also, use the sections, labels and steps found in the video to enhance the introduction and description of the feature.
+
+Feature description:
+
+- This video describes how to create a plan that includes an amount of meeting room credit.
+
+Explain these concepts in the introduction:
+
+- Plans can have any combination of passes, money credit and time credit.
+- Passes can be used to check customers in and control access to your IT network. When a customer is checked in, the pass is used.
+- Money credit can be set to be valid to pay for bookings, events, products or any other purchases, even plans.
+- Unlike benefits added to products, benefits added to plans must always expire.
+- You can make credit expires based on the billing cycle of the plan, every day, week or calendar month
+- Removing credit from an existing plan will not remove credits given to members in the plan.
+- Adding credit to an existing plan will immediately add this credit to members in that plan.
+
+
+Some notes to help you:
+- The audio of the video holds important details about a process in the Nexudus platform.
+- Make sure to include details based on the audio prompts in each step as needed.
+- Group the sequence of actions into related groups of actions (step) and list each action as a sub-step
+
+Additional details about output variables:
+- title: three words at most: a short and descriptive name for this document / video. 
+- description: 15 works at most: a brief description of what the document and video.
+- introduction_markdown: a detailed and clear explanation of the feature. Use different paragraphs, markdown formatting and word bolding for easier reading.
+- step_start_time: the time the sub step starts.
+- step_duration: How long this step takes in the video.

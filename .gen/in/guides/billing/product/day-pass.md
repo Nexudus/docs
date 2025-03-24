@@ -1,0 +1,6 @@
+- A day pass product includes one or more passes as part of its benefits.
+- A pass can be used to check customers in. When a customer is checked in, the pass is used.
+- Passes can be set to be valid by calendar day or for a number of hours across days.
+- You can connect a pass to your network controller to grant access to the network to those purchasing the day pass product.
+- If the buyer is a contact (i.e they are not a member - they don't have an active contract). The passes added to the product are only released when the product is paid
+- You can make passes expire a set amount of time after the purchase.

@@ -8,7 +8,9 @@ const client = new OpenAI({
 });
 
 export const complete = async ({ input, instructions = '' }) => {
-  const sharedInstructions = fs.readFileSync('./.gen/in/instructions.txt');
+  const sharedInstructions = fs.readFileSync(
+    './.gen/in/reference_instructions.txt'
+  );
   const response = await client.responses.create({
     model: 'gpt-4o',
     instructions: `${sharedInstructions}.\n${instructions}`,

@@ -16,7 +16,7 @@ async function getCompletion(templatePath, entityData, templateData) {
     `./.gen/out/${entityData.name.toLocaleLowerCase()}/${templatePath}.txt`,
     prompt
   );
-  return {};
+
   const responseJSON = await complete({
     input: prompt,
   });
@@ -57,15 +57,13 @@ async function writeFile(entity) {
   templateData = { ...templateData, ...introData };
 
   //All fields
-  await getCompletion('reference_all_fields_prompt.hbs', entityData, {
-    ...entityData,
-    tabFiles: entityData.frontEndFiles.map((file) => ({
-      name: file.name,
-      contents: fs.readFileSync(`${kb.paths.frontend}${file.path}`, 'utf-8'),
-    })),
-  });
-
-  return;
+  // await getCompletion('reference_all_fields_prompt.hbs', entityData, {
+  //   ...entityData,
+  //   tabFiles: entityData.frontEndFiles.map((file) => ({
+  //     name: file.name,
+  //     contents: fs.readFileSync(`${kb.paths.frontend}${file.path}`, 'utf-8'),
+  //   })),
+  // });
 
   //Fields reference
   for (let index = 0; index < entityData.frontEndFiles.length; index++) {
@@ -98,7 +96,7 @@ async function writeFile(entity) {
 
   const contents = referenceTemplate(templateData);
 
-  fs.writeFile(
+  fs.writeFileSync(
     `./.gen/out/${entityData.name.toLocaleLowerCase()}/${entityData.name.toLocaleLowerCase()}.mdx`,
     contents,
     (err) => {
@@ -111,4 +109,5 @@ async function writeFile(entity) {
   );
 }
 
-writeFile('Plan');
+const params = process.argv.slice(2);
+writeFile(params[0]);

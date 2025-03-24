@@ -1,0 +1,26 @@
+- First, briefly introduce the feature in a way that addresses the needs of a coworking space or flexible workspace.
+- Produce detailed and complete step by step user instructions to be used as documentation for the Nexudus platform and based on the actions taken in the video and the audio prompts in it. 
+- Also, use the "Additional details about this video" section below as the basis for an introduction text paragraph. 
+- Also, use the sections, labels and steps found in the video to enhance the introduction and description of the feature.
+
+Feature description:
+
+- This video describes how to create a prorated plan with a price that is adjusted based on when within a month a customer signs up to and cancels the plan.
+- Prorating discounts the initial and last invoices of a contract based on the number of day between the sign-up / cancellation dates and the billing day of the contract.
+- Benefits are not prorated.
+- The setting &quot;Discount the first invoice for up to X days based on how many days are left in the first billing cycle&quot; controls the max number of days between the start day and the next billing day for prorating to apply. (write an example for the user with an actual plan price)
+- The &quot;Discount the last invoice based on the day members leave contracts for this plan&quot; option adjusts the last invoice based on the number of days between the billing day and then
+- Prorating accounts for the actual number of days in each month.
+
+
+Some notes to help you:
+- The audio of the video holds important details about a process in the Nexudus platform.
+- Make sure to include details based on the audio prompts in each step as needed.
+- Group the sequence of actions into related groups of actions (step) and list each action as a sub-step
+
+Additional details about output variables:
+- title: three words at most: a short and descriptive name for this document / video. 
+- description: 15 works at most: a brief description of what the document and video.
+- introduction_markdown: a detailed and clear explanation of the feature. Use different paragraphs, markdown formatting and word bolding for easier reading.
+- step_start_time: the time the sub step starts.
+- step_duration: How long this step takes in the video.
