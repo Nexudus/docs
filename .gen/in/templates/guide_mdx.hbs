@@ -10,8 +10,8 @@ description: {{description}}
  <Step title="{{this.step_title}}">
     {{#each this.sub_steps}}
     {{inc @index}}. {{step_description_markdown}}
-    <img width="150" src="/images/guides/frames/{{@root.guideData.namespace}}/{{@root.guideData.name}}/step_{{@../index}}_{{@index}}.gif"/>
     {{/each}}
+    <img width="150" src="/images/guides/frames/{{@root.guideData.namespace}}/{{@root.guideData.name}}/step_{{@index}}.gif"/>
  </Step>
 {{/each}}
 </Steps>

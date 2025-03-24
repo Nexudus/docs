@@ -2,6 +2,7 @@
 - Produce detailed and complete step by step user instructions to be used as documentation for the Nexudus platform and based on the actions taken in the video and the audio prompts in it. 
 - Also, use the "Additional details about this video" section below as the basis for an introduction text paragraph. 
 - Also, use the sections, labels and steps found in the video to enhance the introduction.
+- Group updating related fields into a single sub step.
 
 Feature description:
 
@@ -27,5 +28,7 @@ Additional details about output variables:
 - title: a short and descriptive name for this document / video.
 - description: a brief description of what the document and video.
 - introduction_markdown: a clear explanation of what this document is about. Use different paragraphs, markdown formatting and word bolding for easier reading.
-- step_start_time: the time the sub step starts.
+- step_start_time: the time the step starts.
 - step_duration: How long this step takes in the video.
+- sub_step_start_time: the time the sub step starts.
+- sub_step_duration: How long this sub step takes in the video.
