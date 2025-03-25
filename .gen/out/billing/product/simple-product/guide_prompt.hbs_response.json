@@ -1,1 +1,73 @@
-{"description":"Learn how to set up your first product in Nexudus.","introduction_markdown":"This guide will walk you through the process of setting up your first product in Nexudus. This feature allows you to manage and sell various items or services to your customers, such as coffee, snacks, day passes, or branded merchandise. By adding products, you can easily track inventory, manage pricing, and offer additional services, enhancing your customer experience and streamlining your business operations. To get started, follow the steps below to add your first product.","steps":[{"step_duration":4.533,"step_start_time":"00:01","step_title":"Navigate to Products","sub_steps":[{"step_description_markdown":"In the main menu on the left, click on **Inventory** to access the inventory management section.","sub_step_duration":1.733,"sub_step_start_time":"00:01"},{"step_description_markdown":"On the Inventory page, locate the **Sales** section and click on **Products** to view the list of available products.","sub_step_duration":2.8,"sub_step_start_time":"00:02"}]},{"step_duration":2.167,"step_start_time":"00:05","step_title":"Add a product","sub_steps":[{"step_description_markdown":"On the Products page, click the **Add product** button, located at the top right of the screen.","sub_step_duration":1.437,"sub_step_start_time":"00:05"},{"step_description_markdown":"In the Add product window, select **Manual entry** to create a new product from scratch.","sub_step_duration":0.73,"sub_step_start_time":"00:06"}]},{"step_duration":28.933,"step_start_time":"00:08","step_title":"Enter product details","sub_steps":[{"step_description_markdown":"In the **Product name** field, enter the name of the product. For example, type **Keycard Replacement Chart**.","sub_step_duration":7.933,"sub_step_start_time":"00:08"},{"step_description_markdown":"In the **Product description** field, enter a description of the product. For example, type **A charge for customers having lost their key cards**.","sub_step_duration":10.867,"sub_step_start_time":"00:16"},{"step_description_markdown":"In the **Unit price** field, enter the price of the product. For example, type **25**.","sub_step_duration":2.533,"sub_step_start_time":"00:27"},{"step_description_markdown":"Scroll down to the **Portal and Apps** section and in the **The position to display this product at** field, enter the position number. For example, type **8**.","sub_step_duration":5.333,"sub_step_start_time":"00:30"},{"step_description_markdown":"Click the **Save changes** button to save the product.","sub_step_duration":2.267,"sub_step_start_time":"00:32"}]}],"title":"Add Product"}
+{
+  "description": "Learn how to set up your first product in Nexudus.",
+  "introduction_markdown": "This guide will walk you through the process of setting up your first product in Nexudus. This feature allows you to manage and sell various items or services to your customers, such as coffee, snacks, day passes, or branded merchandise. By adding products, you can easily track inventory, manage pricing, and offer additional services, enhancing your customer experience and streamlining your business operations. To get started, follow the steps below to add your first product.",
+  "steps": [
+    {
+      "step_duration": 4.533,
+      "step_start_time": "00:01",
+      "step_title": "Navigate to Products",
+      "sub_steps": [
+        {
+          "step_description_markdown": "In the main menu on the left, click on **Inventory** to access the inventory management section.",
+          "sub_step_duration": 1.733,
+          "sub_step_start_time": "00:01"
+        },
+        {
+          "step_description_markdown": "On the Inventory page, locate the **Sales** section and click on **Products** to view the list of available products.",
+          "sub_step_duration": 2.8,
+          "sub_step_start_time": "00:02"
+        }
+      ]
+    },
+    {
+      "step_duration": 2.167,
+      "step_start_time": "00:05",
+      "step_title": "Add a product",
+      "sub_steps": [
+        {
+          "step_description_markdown": "On the Products page, click the **Add product** button, located at the top right of the screen.",
+          "sub_step_duration": 1.437,
+          "sub_step_start_time": "00:05"
+        },
+        {
+          "step_description_markdown": "In the Add product window, select **Manual entry** to create a new product from scratch.",
+          "sub_step_duration": 0.73,
+          "sub_step_start_time": "00:06"
+        }
+      ]
+    },
+    {
+      "step_duration": 28.933,
+      "step_start_time": "00:08",
+      "step_title": "Enter product details",
+      "sub_steps": [
+        {
+          "step_description_markdown": "In the **Product name** field, enter the name of the product. For example, type **Keycard Replacement Chart**.",
+          "sub_step_duration": 7.933,
+          "sub_step_start_time": "00:08"
+        },
+        {
+          "step_description_markdown": "In the **Product description** field, enter a description of the product. For example, type **A charge for customers having lost their key cards**.",
+          "sub_step_duration": 10.867,
+          "sub_step_start_time": "00:16"
+        },
+        {
+          "step_description_markdown": "In the **Unit price** field, enter the price of the product. For example, type **25**.",
+          "sub_step_duration": 2.533,
+          "sub_step_start_time": "00:27"
+        },
+        {
+          "step_description_markdown": "Scroll down to the **Portal and Apps** section and in the **The position to display this product at** field, enter the position number. For example, type **8**.",
+          "sub_step_duration": 5.333,
+          "sub_step_start_time": "00:30"
+        },
+        {
+          "step_description_markdown": "Click the **Save changes** button to save the product.",
+          "sub_step_duration": 2.267,
+          "sub_step_start_time": "00:32"
+        }
+      ]
+    }
+  ],
+  "title": "Add Product"
+}
